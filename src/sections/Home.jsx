@@ -6,7 +6,7 @@ const tiles = [
   { id: 'players', icon: '👥', label: 'Hráči',        desc: 'Správa hráčů' },
 ];
 
-export default function Home({ players, matches, setMatches, editingMatch, setEditingMatch, setActiveTab }) {
+export default function Home({ players, matches, addMatch, updateMatch, editingMatch, setEditingMatch, setActiveTab }) {
   return (
     <div className="max-w-lg mx-auto px-4 pb-8">
 
@@ -50,7 +50,8 @@ export default function Home({ players, matches, setMatches, editingMatch, setEd
       <AddMatch
         players={players}
         matches={matches}
-        setMatches={setMatches}
+        addMatch={addMatch}
+        updateMatch={updateMatch}
         editingMatch={editingMatch}
         setEditingMatch={setEditingMatch}
         setActiveTab={setActiveTab}

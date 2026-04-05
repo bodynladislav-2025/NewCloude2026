@@ -3,19 +3,19 @@ import { formatDate } from '../utils/stats';
 import ConfirmDialog from '../components/ConfirmDialog';
 import EmptyState from '../components/EmptyState';
 
-export default function History({ players, matches, setMatches, setEditingMatch, setActiveTab }) {
+export default function History({ players, matches, deleteMatch, setEditingMatch, setActiveTab }) {
   const [confirmId, setConfirmId] = useState(null);
 
   const getPlayer = (id) => players.find((p) => p.id === id);
 
-  const handleDelete = (id) => {
-    setMatches((prev) => prev.filter((m) => m.id !== id));
+  const handleDelete = async (id) => {
+    await deleteMatch(id);
     setConfirmId(null);
   };
 
   const handleEdit = (match) => {
     setEditingMatch(match);
-    setActiveTab('add');
+    setActiveTab('home');
   };
 
   const sortedMatches = [...matches].sort((a, b) => {
