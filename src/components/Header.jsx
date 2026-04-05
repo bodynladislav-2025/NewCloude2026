@@ -6,8 +6,8 @@ export default function Header() {
           🎾
         </div>
         <div>
-          <h1 className="text-xl font-bold text-green-800 leading-tight">TenisStats</h1>
-          <p className="text-xs text-green-600 font-medium">Sledování výsledků</p>
+          <h1 className="text-xl font-bold text-green-800 leading-tight">Master of Tenis</h1>
+          <p className="text-xs text-green-600 font-medium">Tenisová škola Ladislava Bodyna</p>
         </div>
       </div>
     </header>

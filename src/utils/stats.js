@@ -35,13 +35,13 @@ export function computePlayerStats(players, matches) {
 }
 
 export function computeHeadToHead(players, matches) {
-  // Returns a map: { [attackerId]: { [opponentId]: { wins, total, pct } } }
+  // Returns a map: { [attackerId]: { [opponentId]: { wins, total, pct, gamesWon, gamesLost, gamePct } } }
   const matrix = {};
   players.forEach((p) => {
     matrix[p.id] = {};
     players.forEach((opp) => {
       if (opp.id !== p.id) {
-        matrix[p.id][opp.id] = { wins: 0, total: 0, pct: null };
+        matrix[p.id][opp.id] = { wins: 0, total: 0, pct: null, gamesWon: 0, gamesLost: 0, gamePct: null };
       }
     });
   });
@@ -53,6 +53,11 @@ export function computeHeadToHead(players, matches) {
     matrix[player1Id][player2Id].total++;
     matrix[player2Id][player1Id].total++;
 
+    matrix[player1Id][player2Id].gamesWon += score1;
+    matrix[player1Id][player2Id].gamesLost += score2;
+    matrix[player2Id][player1Id].gamesWon += score2;
+    matrix[player2Id][player1Id].gamesLost += score1;
+
     if (score1 > score2) {
       matrix[player1Id][player2Id].wins++;
     } else if (score2 > score1) {
@@ -60,12 +65,14 @@ export function computeHeadToHead(players, matches) {
     }
   });
 
-  // Compute pct
+  // Compute pct values
   players.forEach((p) => {
     players.forEach((opp) => {
       if (opp.id !== p.id) {
         const cell = matrix[p.id][opp.id];
         cell.pct = cell.total > 0 ? Math.round((cell.wins / cell.total) * 100) : null;
+        const totalGames = cell.gamesWon + cell.gamesLost;
+        cell.gamePct = totalGames > 0 ? Math.round((cell.gamesWon / totalGames) * 100) : null;
       }
     });
   });
