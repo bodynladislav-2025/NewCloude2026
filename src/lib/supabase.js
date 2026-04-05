@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 
 export const supabase = createClient(
   'https://rstuhinwhcguefpyfsdz.supabase.co',
-  'sb_publishable_xuyqGDGC09ZgMTRzHR0HFg_Zq6GslIY'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzdHVoaW53aGNndWVmcHlmc2R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MDcxNTMsImV4cCI6MjA5MDk4MzE1M30.TqjmhdwxTkU4pfubGXju5T124HEENcwnR1eFsX_FU2E'
 );
 
 // DB (snake_case) → App (camelCase)
