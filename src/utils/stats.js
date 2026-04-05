@@ -3,23 +3,34 @@ export function computePlayerStats(players, matches) {
     const playerMatches = matches.filter(
       (m) => m.player1Id === player.id || m.player2Id === player.id
     );
+
+    // Metrika A: vyhraných zápasů (sesí)
     let wins = 0;
     let losses = 0;
+    // Metrika B: vyhraných her (individuálních bodů/gamů)
+    let gamesWon = 0;
+    let gamesLost = 0;
 
     playerMatches.forEach((m) => {
-      if (m.player1Id === player.id) {
-        if (m.score1 > m.score2) wins++;
-        else if (m.score1 < m.score2) losses++;
-      } else {
-        if (m.score2 > m.score1) wins++;
-        else if (m.score2 < m.score1) losses++;
-      }
+      const myScore = m.player1Id === player.id ? m.score1 : m.score2;
+      const oppScore = m.player1Id === player.id ? m.score2 : m.score1;
+
+      if (myScore > oppScore) wins++;
+      else if (myScore < oppScore) losses++;
+
+      gamesWon += myScore;
+      gamesLost += oppScore;
     });
 
     const total = playerMatches.length;
-    const pct = total > 0 ? Math.round((wins / total) * 100) : null;
+    const totalGames = gamesWon + gamesLost;
 
-    return { ...player, wins, losses, total, pct };
+    // % vyhraných zápasů (sesí)
+    const pct = total > 0 ? Math.round((wins / total) * 100) : null;
+    // % vyhraných her
+    const gamePct = totalGames > 0 ? Math.round((gamesWon / totalGames) * 100) : null;
+
+    return { ...player, wins, losses, total, pct, gamesWon, gamesLost, totalGames, gamePct };
   });
 }
 
