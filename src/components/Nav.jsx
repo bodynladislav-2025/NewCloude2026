@@ -1,8 +1,8 @@
 const tabs = [
-  { id: 'add', label: 'Přidat zápas', icon: '🎾' },
-  { id: 'stats', label: 'Statistiky', icon: '📊' },
-  { id: 'history', label: 'Historie', icon: '📋' },
-  { id: 'players', label: 'Hráči', icon: '👥' },
+  { id: 'home',    label: 'Domů',      icon: '🏠' },
+  { id: 'stats',   label: 'Statistiky', icon: '📊' },
+  { id: 'history', label: 'Historie',   icon: '📋' },
+  { id: 'players', label: 'Hráči',      icon: '👥' },
 ];
 
 export default function Nav({ active, setActive }) {
@@ -22,7 +22,7 @@ export default function Nav({ active, setActive }) {
             >
               <span>{tab.icon}</span>
               <span className="hidden sm:inline">{tab.label}</span>
-              <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
+              <span className="sm:hidden">{tab.label}</span>
             </button>
           ))}
         </div>

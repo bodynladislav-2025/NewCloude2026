@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { todayISO } from '../utils/stats';
 import EmptyState from '../components/EmptyState';
 
-export default function AddMatch({ players, matches, setMatches, editingMatch, setEditingMatch, setActiveTab }) {
+export default function AddMatch({ players, matches, setMatches, editingMatch, setEditingMatch, setActiveTab, embedded = false }) {
   const today = todayISO();
   const [form, setForm] = useState({
     date: today,
@@ -32,6 +32,14 @@ export default function AddMatch({ players, matches, setMatches, editingMatch, s
   }, [editingMatch]);
 
   if (players.length < 2) {
+    if (embedded) {
+      return (
+        <div className="bg-gray-50 border border-gray-200 rounded-2xl px-4 py-6 text-center text-gray-500 text-sm">
+          👥 Pro přidání zápasu potřebujete alespoň 2 hráče.{' '}
+          <button onClick={() => setActiveTab('players')} className="text-green-600 font-semibold underline">Přidat hráče</button>
+        </div>
+      );
+    }
     return (
       <EmptyState
         icon="👥"
@@ -108,17 +116,17 @@ export default function AddMatch({ players, matches, setMatches, editingMatch, s
   const p2 = players.find((p) => p.id === form.player2Id);
 
   return (
-    <div className="max-w-lg mx-auto p-4">
+    <div className={embedded ? '' : 'max-w-lg mx-auto p-4'}>
       <div className="bg-white rounded-2xl shadow-sm border border-green-100 overflow-hidden">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-green-500 to-green-600 px-6 py-5">
+        {/* Header — skryto v embedded módu */}
+        {!embedded && <div className="bg-gradient-to-r from-green-500 to-green-600 px-6 py-5">
           <h2 className="text-white font-bold text-xl">
             {editingMatch ? '✏️ Upravit zápas' : '🎾 Přidat nový zápas'}
           </h2>
           <p className="text-green-100 text-sm mt-1">
             {editingMatch ? 'Upravte výsledek zápasu' : 'Zaznamenejte výsledek zápasu'}
           </p>
-        </div>
+        </div>}
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Date */}

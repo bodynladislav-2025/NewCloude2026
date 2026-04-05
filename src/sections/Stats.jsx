@@ -107,12 +107,12 @@ export default function Stats({ players, matches, setActiveTab }) {
                 {/* Celkové % */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="bg-white/80 rounded-xl px-3 py-2">
-                    <div className="text-xs font-semibold text-gray-500 mb-1">% vyhraných zápasů</div>
+                    <div className="text-xs font-semibold text-gray-500 mb-1">% vyhraných dní</div>
                     <PctBar value={s.pct} color={barColor} />
                     <div className="text-xs text-gray-400 mt-0.5">{s.wins} výher z {s.total} sesí</div>
                   </div>
                   <div className="bg-white/80 rounded-xl px-3 py-2">
-                    <div className="text-xs font-semibold text-gray-500 mb-1">% vyhraných gemů</div>
+                    <div className="text-xs font-semibold text-gray-500 mb-1">% vyhraných zápasů</div>
                     <PctBar value={s.gamePct} color={barColor} />
                     <div className="text-xs text-gray-400 mt-0.5">{s.gamesWon} gemů z {s.totalGames} celkem</div>
                   </div>
@@ -140,7 +140,7 @@ export default function Stats({ players, matches, setActiveTab }) {
                                 <div className="text-xs text-gray-400 mt-0.5">{cell.wins}V z {cell.total}</div>
                               </div>
                               <div>
-                                <div className="text-xs text-gray-400 mb-1">% gemů</div>
+                                <div className="text-xs text-gray-400 mb-1">% zápasů</div>
                                 <PctBar value={cell.gamePct} color={gameColor} />
                                 <div className="text-xs text-gray-400 mt-0.5">{cell.gamesWon}G z {cell.gamesWon + cell.gamesLost}</div>
                               </div>
@@ -172,13 +172,13 @@ export default function Stats({ players, matches, setActiveTab }) {
               onClick={() => setChartMetric('gamePct')}
               className={`px-3 py-1.5 rounded-lg transition-all ${chartMetric === 'gamePct' ? 'bg-white shadow text-green-700' : 'text-gray-500'}`}
             >
-              % gemů
+              % zápasů
             </button>
           </div>
         </div>
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
           <div className="text-xs text-gray-400 mb-2 text-center">
-            {chartMetric === 'pct' ? 'Vyhraných sesí / celkem sesí' : 'Vyhraných gemů / celkem gemů'}
+            {chartMetric === 'pct' ? 'Vyhraných dní / celkem dní' : 'Vyhraných zápasů / celkem zápasů'}
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={chartData} margin={{ top: 20, right: 10, left: -10, bottom: 0 }}>
@@ -186,7 +186,7 @@ export default function Stats({ players, matches, setActiveTab }) {
               <XAxis dataKey="name" tick={{ fontSize: 13, fontWeight: 600, fill: '#555' }} axisLine={false} tickLine={false} />
               <YAxis domain={[0, 100]} tickFormatter={(v) => `${v}%`} tick={{ fontSize: 11, fill: '#aaa' }} axisLine={false} tickLine={false} />
               <Tooltip
-                formatter={(value, name) => [`${value}%`, name === 'pct' ? '% zápasů (sesí)' : '% gemů']}
+                formatter={(value, name) => [`${value}%`, name === 'pct' ? '% vyhraných dní' : '% zápasů']}
                 contentStyle={{ borderRadius: '12px', border: '1px solid #e5e7eb', fontSize: '13px' }}
                 cursor={{ fill: 'rgba(0,0,0,0.04)' }}
               />
