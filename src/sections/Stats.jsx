@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList,
 } from 'recharts';
@@ -21,21 +21,29 @@ function PctBar({ value, color }) {
 }
 
 export default function Stats({ players, matches, setActiveTab }) {
+  const [chartMetric, setChartMetric] = useState('pct');
   const stats = useMemo(() => computePlayerStats(players, matches), [players, matches]);
   const h2h = useMemo(() => computeHeadToHead(players, matches), [players, matches]);
 
   // Pouze hráč označený jako "já"
   const me = stats.find((s) => s.isMe);
 
-  // Seřazeno pro graf — všichni hráči, % vyhraných dní
-  const chartData = [...stats]
-    .sort((a, b) => (b.pct ?? -1) - (a.pct ?? -1))
-    .map((s, i) => ({
-      name: s.name,
-      pct: s.pct ?? 0,
-      isMe: s.isMe,
-      color: BAR_COLORS[i % BAR_COLORS.length],
-    }));
+  // Graf: Láďovy % proti každému soupeři (bez Ládi)
+  const chartData = useMemo(() => {
+    if (!me) return [];
+    return players
+      .filter((p) => !p.isMe && h2h[me.id]?.[p.id]?.total > 0)
+      .map((opp, i) => {
+        const cell = h2h[me.id][opp.id];
+        return {
+          name: opp.name,
+          pct: cell.pct ?? 0,
+          gamePct: cell.gamePct ?? 0,
+          color: BAR_COLORS[i % BAR_COLORS.length],
+        };
+      })
+      .sort((a, b) => b[chartMetric] - a[chartMetric]);
+  }, [me, players, h2h, chartMetric]);
 
   if (players.length === 0) {
     return (
@@ -137,43 +145,46 @@ export default function Stats({ players, matches, setActiveTab }) {
         </section>
       )}
 
-      {/* === Graf — % vyhraných dní všech hráčů === */}
+      {/* === Graf — Láďovy % proti soupeřům === */}
+      {chartData.length > 0 && (
       <section>
-        <h2 className="text-lg font-bold text-gray-800 mb-3">📊 % vyhraných dní — porovnání</h2>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-bold text-gray-800">📊 Moje úspěšnost proti soupeřům</h2>
+          <div className="flex bg-gray-100 rounded-xl p-1 text-xs font-semibold">
+            <button
+              onClick={() => setChartMetric('pct')}
+              className={`px-3 py-1.5 rounded-lg transition-all ${chartMetric === 'pct' ? 'bg-white shadow text-green-700' : 'text-gray-500'}`}
+            >
+              % dní
+            </button>
+            <button
+              onClick={() => setChartMetric('gamePct')}
+              className={`px-3 py-1.5 rounded-lg transition-all ${chartMetric === 'gamePct' ? 'bg-white shadow text-green-700' : 'text-gray-500'}`}
+            >
+              % zápasů
+            </button>
+          </div>
+        </div>
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-          <div className="text-xs text-gray-400 mb-3 text-center">Počet vyhraných dní / celkem odehraných dní</div>
+          <div className="text-xs text-gray-400 mb-3 text-center">
+            {chartMetric === 'pct' ? 'Vyhraných dní / celkem dní vs daný soupeř' : 'Vyhraných zápasů / celkem zápasů vs daný soupeř'}
+          </div>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={chartData} margin={{ top: 20, right: 10, left: -10, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-              <XAxis
-                dataKey="name"
-                tick={({ x, y, payload, index }) => {
-                  const isMe = chartData[index]?.isMe;
-                  return (
-                    <text x={x} y={y + 12} textAnchor="middle" fill={isMe ? '#15803d' : '#555'} fontWeight={isMe ? 700 : 500} fontSize={13}>
-                      {payload.value}{isMe ? ' ★' : ''}
-                    </text>
-                  );
-                }}
-                axisLine={false}
-                tickLine={false}
-              />
+              <XAxis dataKey="name" tick={{ fontSize: 13, fontWeight: 600, fill: '#555' }} axisLine={false} tickLine={false} />
               <YAxis domain={[0, 100]} tickFormatter={(v) => `${v}%`} tick={{ fontSize: 11, fill: '#aaa' }} axisLine={false} tickLine={false} />
               <Tooltip
-                formatter={(value) => [`${value}%`, '% vyhraných dní']}
+                formatter={(value) => [`${value}%`, chartMetric === 'pct' ? '% vyhraných dní' : '% vyhraných zápasů']}
                 contentStyle={{ borderRadius: '12px', border: '1px solid #e5e7eb', fontSize: '13px' }}
                 cursor={{ fill: 'rgba(0,0,0,0.04)' }}
               />
-              <Bar dataKey="pct" radius={[8, 8, 0, 0]} maxBarSize={70}>
+              <Bar dataKey={chartMetric} radius={[8, 8, 0, 0]} maxBarSize={70}>
                 {chartData.map((entry, index) => (
-                  <Cell
-                    key={index}
-                    fill={entry.isMe ? '#FFD700' : BAR_COLORS[index % BAR_COLORS.length]}
-                    opacity={entry.isMe ? 1 : 0.7}
-                  />
+                  <Cell key={index} fill={entry.color} />
                 ))}
                 <LabelList
-                  dataKey="pct"
+                  dataKey={chartMetric}
                   position="top"
                   formatter={(v) => v > 0 ? `${v}%` : ''}
                   style={{ fontSize: '12px', fontWeight: 700, fill: '#555' }}
@@ -181,12 +192,9 @@ export default function Stats({ players, matches, setActiveTab }) {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-          <div className="flex items-center justify-center gap-4 mt-2 text-xs text-gray-400">
-            <span><span className="inline-block w-3 h-3 rounded-sm bg-yellow-400 mr-1 align-middle" />já</span>
-            <span><span className="inline-block w-3 h-3 rounded-sm bg-green-500 mr-1 align-middle opacity-70" />ostatní hráči</span>
-          </div>
         </div>
       </section>
+      )}
 
     </div>
   );
