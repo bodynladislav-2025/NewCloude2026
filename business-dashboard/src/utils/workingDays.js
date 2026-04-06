@@ -1,13 +1,13 @@
-import { getCzechHolidaySet } from './czechHolidays';
+import { getCzechHolidaySet, localDateKey } from './czechHolidays';
 
 /**
  * Check if a date is a working day (Mon–Fri, not a holiday).
+ * Uses local date key to avoid UTC offset issues.
  */
 export function isWorkingDay(date, holidaySet) {
   const dow = date.getDay(); // 0=Sun, 6=Sat
   if (dow === 0 || dow === 6) return false;
-  const key = date.toISOString().slice(0, 10);
-  return !holidaySet.has(key);
+  return !holidaySet.has(localDateKey(date));
 }
 
 /**
@@ -72,11 +72,10 @@ export function getPlanStatus(actualPct, expectedPct, threshold = 85) {
 
 /**
  * Calculate month-end forecast: if current pace continues.
- * Returns { forecastValue, forecastOrders }
+ * Returns { forecastValue }
  */
-export function calcForecast(actualValue, actualOrders, workingDaysSoFar, workingDaysTotal) {
-  if (workingDaysSoFar === 0) return { forecastValue: null, forecastOrders: null };
+export function calcForecast(actualValue, workingDaysSoFar, workingDaysTotal) {
+  if (workingDaysSoFar === 0) return { forecastValue: null };
   const forecastValue = (actualValue / workingDaysSoFar) * workingDaysTotal;
-  const forecastOrders = (actualOrders / workingDaysSoFar) * workingDaysTotal;
-  return { forecastValue, forecastOrders };
+  return { forecastValue };
 }

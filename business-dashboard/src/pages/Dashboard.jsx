@@ -72,24 +72,22 @@ export default function Dashboard() {
         fetchTrendData(year, month),
       ]);
 
-      // Company plan
+      // Company plan (revenue_target_czk column = margin plan)
       const companyPlan = plans?.find(p => p.level === 'company') || {};
-      const revPlan    = companyPlan.revenue_target_czk || 0;
-      const ordPlan    = companyPlan.orders_target || 0;
+      const marginPlan  = companyPlan.revenue_target_czk || 0;
 
-      // Totals
-      const totalRev   = salesRows?.reduce((s, r) => s + (r.revenue_czk || 0), 0) || 0;
-      const totalOrd   = salesRows?.reduce((s, r) => s + (r.orders_count || 0), 0) || 0;
-      const revPct     = revPlan > 0 ? (totalRev / revPlan) * 100 : null;
-      const ordPct     = ordPlan > 0 ? (totalOrd / ordPlan) * 100 : null;
+      // Totals (revenue_czk used as margin value)
+      const totalMargin = salesRows?.reduce((s, r) => s + (r.revenue_czk || 0), 0) || 0;
+      const totalOrd    = salesRows?.reduce((s, r) => s + (r.orders_count || 0), 0) || 0;
+      const marginPct   = marginPlan > 0 ? (totalMargin / marginPlan) * 100 : null;
 
       // Expected fulfillment
       const { expectedPct, workingDaysSoFar, workingDaysTotal } =
         calcExpectedFulfillment(year, month);
 
       // Forecast
-      const { forecastValue, forecastOrders } =
-        calcForecast(totalRev, totalOrd, workingDaysSoFar, workingDaysTotal);
+      const { forecastValue } =
+        calcForecast(totalMargin, workingDaysSoFar, workingDaysTotal);
 
       // Salesperson rows
       const spMap = {};
@@ -111,11 +109,8 @@ export default function Dashboard() {
 
       // Attach salesperson plans
       const spRows = Object.values(spMap).map(sp => {
-        const spPlan = plans?.find(p => p.level === 'salesperson' && p.entity_name === sp.name);
-        const plan   = spPlan?.revenue_target_czk || 0;
-        const pct    = plan > 0 ? (sp.revenue / plan) * 100 : null;
         const convRate = sp.total > 0 ? (sp.closed / sp.total) * 100 : 0;
-        return { ...sp, plan, pct, convRate };
+        return { ...sp, convRate };
       }).sort((a, b) => b.revenue - a.revenue);
 
       // Top 3 opportunities
@@ -136,9 +131,10 @@ export default function Dashboard() {
       const convRate      = totalOpps > 0 ? (closedOpps / totalOpps) * 100 : 0;
 
       setData({
-        totalRev, totalOrd, revPlan, ordPlan, revPct, ordPct,
+        totalMargin, marginPlan, marginPct,
+        totalOrd,
         expectedPct, workingDaysSoFar, workingDaysTotal,
-        forecastValue, forecastOrders,
+        forecastValue,
         spRows, top3,
         agingMap, agingTotal,
         totalPipeline, totalOpps: opps?.filter(o => !o.is_closed).length || 0, convRate,
@@ -215,78 +211,60 @@ export default function Dashboard() {
 // ── KPI Section ───────────────────────────────────────────────
 function KPISection({ data, period }) {
   const {
-    totalRev, revPlan, revPct, totalOrd, ordPlan, ordPct,
+    totalMargin, marginPlan, marginPct,
+    totalOrd,
     expectedPct, workingDaysSoFar, workingDaysTotal,
-    forecastValue, forecastOrders,
+    forecastValue,
   } = data;
 
-  const revStatus = revPct !== null ? getPlanStatus(revPct, expectedPct) : 'neutral';
-  const ordStatus = ordPct !== null ? getPlanStatus(ordPct, expectedPct) : 'neutral';
-
-  const expectedRevKc  = revPlan > 0 ? (revPlan * expectedPct) / 100 : null;
-  const expectedOrdCnt = ordPlan > 0 ? (ordPlan * expectedPct) / 100 : null;
+  const marginStatus = marginPct !== null ? getPlanStatus(marginPct, expectedPct) : 'neutral';
+  const expectedMarginKc = marginPlan > 0 ? (marginPlan * expectedPct) / 100 : null;
 
   return (
     <div>
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Klíčové ukazatele – {formatPeriod(period.year, period.month)}</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
-        {/* Revenue gauge */}
-        <div className={`rounded-xl border p-5 col-span-1 ${revStatus === 'green' ? 'border-emerald-200 bg-emerald-50' : revStatus === 'yellow' ? 'border-amber-200 bg-amber-50' : revStatus === 'red' ? 'border-red-200 bg-red-50' : 'border-slate-200 bg-white'}`}>
-          <p className="text-sm font-medium text-slate-600 mb-2">Tržby – plnění plánu</p>
+        {/* Margin gauge */}
+        <div className={`rounded-xl border p-5 ${marginStatus === 'green' ? 'border-emerald-200 bg-emerald-50' : marginStatus === 'yellow' ? 'border-amber-200 bg-amber-50' : marginStatus === 'red' ? 'border-red-200 bg-red-50' : 'border-slate-200 bg-white'}`}>
+          <p className="text-sm font-medium text-slate-600 mb-2">Marže – plnění plánu</p>
           <GaugeChart
-            pct={revPct ?? 0}
+            pct={marginPct ?? 0}
             expectedPct={expectedPct}
-            label={`${formatCZKShort(totalRev)} z ${formatCZKShort(revPlan)}`}
-            sublabel={revPlan > 0 ? `Plán: ${formatCZK(revPlan)}` : 'Plán nezadán'}
+            label={`${formatCZKShort(totalMargin)} z ${formatCZKShort(marginPlan)}`}
+            sublabel={marginPlan > 0 ? `Plán: ${formatCZK(marginPlan)}` : 'Plán nezadán'}
           />
-          {revStatus !== 'neutral' && (
+          {marginStatus !== 'neutral' && (
             <div className="text-center mt-2">
-              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${revStatus === 'green' ? 'bg-emerald-100 text-emerald-700' : revStatus === 'yellow' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
-                {STATUS_LABEL[revStatus]}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Orders gauge */}
-        <div className={`rounded-xl border p-5 ${ordStatus === 'green' ? 'border-emerald-200 bg-emerald-50' : ordStatus === 'yellow' ? 'border-amber-200 bg-amber-50' : ordStatus === 'red' ? 'border-red-200 bg-red-50' : 'border-slate-200 bg-white'}`}>
-          <p className="text-sm font-medium text-slate-600 mb-2">Zakázky – plnění plánu</p>
-          <GaugeChart
-            pct={ordPct ?? 0}
-            expectedPct={expectedPct}
-            label={`${formatInt(totalOrd)} z ${formatInt(ordPlan)} ks`}
-            sublabel={ordPlan > 0 ? `Plán: ${formatInt(ordPlan)} zakázek` : 'Plán nezadán'}
-          />
-          {ordStatus !== 'neutral' && (
-            <div className="text-center mt-2">
-              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${ordStatus === 'green' ? 'bg-emerald-100 text-emerald-700' : ordStatus === 'yellow' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
-                {STATUS_LABEL[ordStatus]}
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${marginStatus === 'green' ? 'bg-emerald-100 text-emerald-700' : marginStatus === 'yellow' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
+                {STATUS_LABEL[marginStatus]}
               </span>
             </div>
           )}
         </div>
 
         {/* Expected vs Actual */}
-        <KPICard title="Očekávané k dnešku" value={expectedRevKc !== null ? formatCZKShort(expectedRevKc) : '—'} status="neutral"
+        <KPICard
+          title="Očekávaná marže k dnešku"
+          value={expectedMarginKc !== null ? formatCZKShort(expectedMarginKc) : '—'}
+          status="neutral"
           subtitle={`Pracovní dny: ${workingDaysSoFar} / ${workingDaysTotal} (${formatPct(expectedPct)})`}
-          footer={expectedOrdCnt !== null ? `Zakázky: ${Math.round(expectedOrdCnt)} ks` : undefined}
+          footer={totalOrd > 0 ? `Zakázky celkem: ${formatInt(totalOrd)} ks` : undefined}
         />
 
         {/* Forecast */}
         <KPICard
-          title="Prognóza do konce měsíce"
+          title="Prognóza marže do konce měsíce"
           value={forecastValue !== null ? formatCZKShort(forecastValue) : '—'}
-          subtitle={forecastValue !== null && revPlan > 0 ? `${formatPct((forecastValue / revPlan) * 100)} plánu` : 'Nedostatek dat'}
-          footer={forecastOrders !== null ? `Zakázky: ~${Math.round(forecastOrders)} ks` : undefined}
+          subtitle={forecastValue !== null && marginPlan > 0 ? `${formatPct((forecastValue / marginPlan) * 100)} plánu` : 'Nedostatek dat'}
           status="neutral"
         >
-          {forecastValue !== null && revPlan > 0 && (
+          {forecastValue !== null && marginPlan > 0 && (
             <div className="mt-2">
               <div className="w-full bg-slate-200 rounded-full h-1.5">
                 <div
-                  className={`h-1.5 rounded-full ${forecastValue >= revPlan ? 'bg-emerald-500' : 'bg-blue-500'}`}
-                  style={{ width: `${Math.min((forecastValue / revPlan) * 100, 100)}%` }}
+                  className={`h-1.5 rounded-full ${forecastValue >= marginPlan ? 'bg-emerald-500' : 'bg-blue-500'}`}
+                  style={{ width: `${Math.min((forecastValue / marginPlan) * 100, 100)}%` }}
                 />
               </div>
             </div>
@@ -308,7 +286,7 @@ function TrendChart({ data }) {
     <div className="bg-white rounded-xl border border-slate-200 p-5">
       <h2 className="font-semibold text-slate-800 mb-4 flex items-center gap-2">
         <TrendingUp className="w-4 h-4 text-blue-600" />
-        Vývoj tržeb – měsíc po měsíci
+        Vývoj marže – měsíc po měsíci
       </h2>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={formatted} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
@@ -317,7 +295,7 @@ function TrendChart({ data }) {
           <YAxis tickFormatter={v => formatCZKShort(v)} tick={{ fontSize: 11 }} width={75} />
           <Tooltip formatter={(v) => formatCZK(v)} labelStyle={{ fontWeight: 600 }} />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          <Bar dataKey="revenue" name="Tržby (Kč)" fill="#3b82f6" radius={[3, 3, 0, 0]} />
+          <Bar dataKey="revenue" name="Marže (Kč)" fill="#3b82f6" radius={[3, 3, 0, 0]} />
           {formatted.some(d => d.plan > 0) && (
             <Line dataKey="plan" name="Plán" stroke="#94a3b8" strokeDasharray="4 4" dot={false} />
           )}
@@ -328,7 +306,7 @@ function TrendChart({ data }) {
 }
 
 // ── Sales Table ───────────────────────────────────────────────
-function SalesTable({ rows, expectedPct }) {
+function SalesTable({ rows }) {
   return (
     <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
       <div className="px-5 py-4 border-b border-slate-100">
@@ -340,38 +318,26 @@ function SalesTable({ rows, expectedPct }) {
             <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
               <th className="px-4 py-3 text-left font-medium">#</th>
               <th className="px-4 py-3 text-left font-medium">Obchodník</th>
-              <th className="px-4 py-3 text-right font-medium">Tržby</th>
-              <th className="px-4 py-3 text-right font-medium">% plánu</th>
+              <th className="px-4 py-3 text-right font-medium">Marže (Kč)</th>
               <th className="px-4 py-3 text-right font-medium">Zakázky</th>
               <th className="px-4 py-3 text-right font-medium">Pipeline</th>
               <th className="px-4 py-3 text-right font-medium">Konverze</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {rows.map((sp, i) => {
-              const status = sp.pct !== null ? getPlanStatus(sp.pct, expectedPct) : 'neutral';
-              const rowBg  = status === 'red' ? 'bg-red-50/40' : status === 'yellow' ? 'bg-amber-50/40' : '';
-              return (
-                <tr key={sp.name} className={`hover:bg-slate-50 transition-colors ${rowBg}`}>
-                  <td className="px-4 py-3 text-slate-400 font-mono">{i + 1}</td>
-                  <td className="px-4 py-3 font-medium text-slate-800">
-                    {sp.name}
-                    {sp.team && <span className="ml-2 text-xs text-slate-400">{sp.team}</span>}
-                  </td>
-                  <td className="px-4 py-3 text-right font-semibold text-slate-800">{formatCZK(sp.revenue)}</td>
-                  <td className="px-4 py-3 text-right">
-                    {sp.pct !== null ? (
-                      <span className={`font-medium ${status === 'green' ? 'text-emerald-600' : status === 'yellow' ? 'text-amber-600' : 'text-red-600'}`}>
-                        {formatPct(sp.pct)}
-                      </span>
-                    ) : <span className="text-slate-400">—</span>}
-                  </td>
-                  <td className="px-4 py-3 text-right text-slate-600">{formatInt(sp.orders)}</td>
-                  <td className="px-4 py-3 text-right text-slate-600">{formatCZK(sp.pipeline)}</td>
-                  <td className="px-4 py-3 text-right text-slate-600">{formatPct(sp.convRate)}</td>
-                </tr>
-              );
-            })}
+            {rows.map((sp, i) => (
+              <tr key={sp.name} className="hover:bg-slate-50 transition-colors">
+                <td className="px-4 py-3 text-slate-400 font-mono">{i + 1}</td>
+                <td className="px-4 py-3 font-medium text-slate-800">
+                  {sp.name}
+                  {sp.team && <span className="ml-2 text-xs text-slate-400">{sp.team}</span>}
+                </td>
+                <td className="px-4 py-3 text-right font-semibold text-slate-800">{formatCZK(sp.revenue)}</td>
+                <td className="px-4 py-3 text-right text-slate-600">{formatInt(sp.orders)}</td>
+                <td className="px-4 py-3 text-right text-slate-600">{formatCZK(sp.pipeline)}</td>
+                <td className="px-4 py-3 text-right text-slate-600">{formatPct(sp.convRate)}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

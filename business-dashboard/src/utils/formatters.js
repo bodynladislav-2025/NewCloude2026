@@ -55,8 +55,11 @@ export function formatPeriod(year, month) {
   return `${MESICE[month - 1]} ${year}`;
 }
 
-export function formatDate(dateStr) {
-  if (!dateStr) return '—';
-  const d = new Date(dateStr);
-  return d.toLocaleDateString('cs-CZ');
+export function formatDate(dateOrStr) {
+  if (!dateOrStr) return '—';
+  // Accept both Date objects and strings
+  const d = dateOrStr instanceof Date ? dateOrStr : new Date(dateOrStr);
+  if (isNaN(d.getTime())) return '—';
+  // Use local date parts to avoid UTC offset shifting
+  return `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`;
 }

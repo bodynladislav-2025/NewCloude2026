@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Save, Plus, Trash2, AlertCircle } from 'lucide-react';
-import { getCzechHolidays, HOLIDAY_NAMES } from '../utils/czechHolidays';
+import { getCzechHolidaysWithNames } from '../utils/czechHolidays';
 import { formatDate } from '../utils/formatters';
 
 export default function SettingsPage() {
@@ -11,7 +11,6 @@ export default function SettingsPage() {
   const [saving, setSaving]             = useState(false);
   const [saved, setSaved]               = useState('');
   const [loading, setLoading]           = useState(true);
-  const [logoFile, setLogoFile]         = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -33,30 +32,27 @@ export default function SettingsPage() {
   async function handleSaveSettings() {
     setSaving(true);
     try {
-      let logoUrl = settings.company_logo_url;
-
-      // Upload logo if new file selected
-      if (logoFile) {
-        const ext = logoFile.name.split('.').pop();
-        const path = `logos/company-logo.${ext}`;
-        const { error } = await supabase.storage.from('uploads').upload(path, logoFile, { upsert: true });
-        if (!error) {
-          const { data } = supabase.storage.from('uploads').getPublicUrl(path);
-          logoUrl = data.publicUrl;
-        }
-      }
-
       await Promise.all([
         saveSetting('company_name', settings.company_name),
-        saveSetting('company_logo_url', logoUrl),
+        saveSetting('company_logo_url', settings.company_logo_url),
         saveSetting('warning_threshold_pct', settings.warning_threshold_pct),
       ]);
-      setSettings(prev => ({ ...prev, company_logo_url: logoUrl }));
       setSaved('settings');
       setTimeout(() => setSaved(''), 2000);
     } finally {
       setSaving(false);
     }
+  }
+
+  // Logo: convert to base64 and store directly in settings
+  async function handleLogoChange(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      setSettings(prev => ({ ...prev, company_logo_url: reader.result }));
+    };
+    reader.readAsDataURL(file);
   }
 
   async function addSalesperson() {
@@ -80,7 +76,7 @@ export default function SettingsPage() {
   }
 
   const allowedEmails = (import.meta.env.VITE_ALLOWED_EMAILS || '').split(',').filter(Boolean);
-  const holidays = getCzechHolidays(new Date().getFullYear());
+  const holidays = getCzechHolidaysWithNames(new Date().getFullYear());
 
   if (loading) return (
     <div className="flex items-center justify-center py-24">
@@ -105,14 +101,14 @@ export default function SettingsPage() {
             />
           </Field>
 
-          <Field label="Logo firmy" hint="Logo se zobrazí v PDF exportu">
+          <Field label="Logo firmy" hint="Logo se zobrazí v PDF exportu. Bude uloženo po kliknutí na Uložit nastavení.">
             {settings.company_logo_url && (
-              <img src={settings.company_logo_url} alt="Logo" className="h-12 mb-2 rounded" />
+              <img src={settings.company_logo_url} alt="Logo" className="h-12 mb-2 rounded border border-slate-200" />
             )}
             <input
               type="file"
               accept="image/*"
-              onChange={e => setLogoFile(e.target.files[0])}
+              onChange={handleLogoChange}
               className="text-sm text-slate-600"
             />
           </Field>
@@ -172,7 +168,6 @@ export default function SettingsPage() {
           ))}
         </div>
 
-        {/* Add new */}
         <div className="flex gap-2">
           <input
             type="text"
@@ -203,7 +198,7 @@ export default function SettingsPage() {
         <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg mb-3">
           <AlertCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
           <p className="text-xs text-amber-700">
-            Whitelist se konfiguruje přes environment proměnnou <code className="bg-amber-100 px-1 rounded">VITE_ALLOWED_EMAILS</code> v souboru <code className="bg-amber-100 px-1 rounded">.env.local</code>. Prázdný whitelist povolí všechny přihlášené Google účty.
+            Whitelist se konfiguruje přes environment proměnnou <code className="bg-amber-100 px-1 rounded">VITE_ALLOWED_EMAILS</code> v souboru <code className="bg-amber-100 px-1 rounded">.env.local</code>.
           </p>
         </div>
         {allowedEmails.length === 0 ? (
@@ -223,12 +218,10 @@ export default function SettingsPage() {
       {/* Czech holidays */}
       <Section title={`České státní svátky ${new Date().getFullYear()}`}>
         <div className="space-y-1.5">
-          {holidays.map((d, i) => (
+          {holidays.map(({ date, name }, i) => (
             <div key={i} className="flex items-center justify-between text-sm">
-              <span className="text-slate-600">{formatDate(d)}</span>
-              <span className="text-slate-800 text-right">
-                {HOLIDAY_NAMES[d.toISOString().slice(5, 10)] || 'Velikonoční pondělí'}
-              </span>
+              <span className="text-slate-500">{formatDate(date)}</span>
+              <span className="text-slate-800 text-right font-medium">{name}</span>
             </div>
           ))}
         </div>
