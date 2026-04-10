@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BarChart, Bar, LineChart, Line, XAxis, YAxis,
-  CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine,
 } from 'recharts';
 import { Download, RefreshCw, TrendingUp } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -113,6 +113,65 @@ export default function Dashboard() {
         return { ...sp, convRate };
       }).sort((a, b) => b.revenue - a.revenue);
 
+      // Pipeline analysis
+      const isLostOpp = (status) => {
+        const s = String(status || '').toLowerCase();
+        return ['ztraceno', 'lost', 'nerealizováno', 'zamítnuto', 'zrušeno', 'cancel'].some(k => s.includes(k));
+      };
+
+      // Per-salesperson conversion stats
+      const spConvMap = {};
+      opps?.forEach(o => {
+        const sp = o.salesperson_name || 'Neznámý';
+        if (!spConvMap[sp]) spConvMap[sp] = { name: sp, total: 0, won: 0, lost: 0, backlog: 0, valueTotal: 0 };
+        spConvMap[sp].total += 1;
+        spConvMap[sp].valueTotal += o.value_czk || 0;
+        if (o.is_closed) spConvMap[sp].won += 1;
+        else if (isLostOpp(o.status)) spConvMap[sp].lost += 1;
+        else spConvMap[sp].backlog += 1;
+      });
+      const spConvRows = Object.values(spConvMap)
+        .map(sp => ({ ...sp, convRate: (sp.won + sp.lost) > 0 ? (sp.won / (sp.won + sp.lost)) * 100 : null }))
+        .sort((a, b) => b.won - a.won);
+
+      // Pareto data
+      const totalWins = spConvRows.reduce((s, sp) => s + sp.won, 0);
+      let cumWins = 0;
+      const paretoData = spConvRows.map((sp, i) => {
+        cumWins += sp.won;
+        return { rank: i + 1, name: sp.name.split(' ')[0], cumPct: totalWins > 0 ? Math.round((cumWins / totalWins) * 100) : 0 };
+      });
+
+      // Value bands
+      const VALUE_BANDS = [
+        { key: '0–100 tis. Kč',    min: 0,       max: 100000 },
+        { key: '101–500 tis. Kč',  min: 100001,  max: 500000 },
+        { key: '501 tis.–1 M Kč',  min: 500001,  max: 1000000 },
+        { key: '1–5 M Kč',         min: 1000001, max: 5000000 },
+        { key: '5 M+ Kč',          min: 5000001, max: Infinity },
+      ];
+      const bandStats = VALUE_BANDS.map(b => ({ ...b, count: 0, won: 0, lost: 0, backlog: 0, value: 0 }));
+      opps?.forEach(o => {
+        const v = o.value_czk || 0;
+        const band = bandStats.find(b => v >= b.min && v <= b.max);
+        if (!band) return;
+        band.count += 1; band.value += v;
+        if (o.is_closed) band.won += 1;
+        else if (isLostOpp(o.status)) band.lost += 1;
+        else band.backlog += 1;
+      });
+      const totalOppsForBands = opps?.length || 0;
+      const totalValueForBands = opps?.reduce((s, o) => s + (o.value_czk || 0), 0) || 0;
+      const valueBands = bandStats
+        .filter(b => b.count > 0)
+        .map(b => ({
+          key: b.key, count: b.count, value: b.value,
+          pctCount: totalOppsForBands > 0 ? (b.count / totalOppsForBands) * 100 : 0,
+          pctValue: totalValueForBands > 0 ? (b.value / totalValueForBands) * 100 : 0,
+          won: b.won, lost: b.lost, backlog: b.backlog,
+          convRate: (b.won + b.lost) > 0 ? (b.won / (b.won + b.lost)) * 100 : null,
+        }));
+
       // Top 3 opportunities
       const top3 = (opps || [])
         .filter(o => !o.is_closed)
@@ -139,6 +198,7 @@ export default function Dashboard() {
         agingMap, agingTotal,
         totalPipeline, totalOpps: opps?.filter(o => !o.is_closed).length || 0, convRate,
         trendData: historySales || [],
+        spConvRows, paretoData, valueBands,
         hasData: (salesRows && salesRows.length > 0) || (opps && opps.length > 0),
       });
     } catch (err) {
@@ -202,6 +262,15 @@ export default function Dashboard() {
 
           {/* Aging */}
           {data.agingTotal > 0 && <AgingSection agingMap={data.agingMap} agingTotal={data.agingTotal} />}
+
+          {/* Pipeline Analysis */}
+          {data.spConvRows?.length > 0 && (
+            <PipelineAnalysisSection
+              spConvRows={data.spConvRows}
+              paretoData={data.paretoData}
+              valueBands={data.valueBands}
+            />
+          )}
         </div>
       )}
     </div>
@@ -428,6 +497,152 @@ function AgingSection({ agingMap, agingTotal }) {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+// ── Pipeline Analysis Section ─────────────────────────────────
+function PipelineAnalysisSection({ spConvRows, paretoData, valueBands }) {
+  const validRows = spConvRows.filter(sp => sp.convRate !== null);
+  const avgConv = validRows.length > 0
+    ? validRows.reduce((s, sp) => s + sp.convRate, 0) / validRows.length
+    : 0;
+
+  return (
+    <div className="space-y-5">
+      <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Dashboard příležitostí</h2>
+
+      {/* Conversion table */}
+      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+          <h3 className="font-semibold text-slate-800">Konverze obchodníků</h3>
+          <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
+            Prům. konverze: <strong>{formatPct(avgConv)}</strong>
+          </span>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
+                <th className="px-4 py-3 text-left font-medium">Obchodník</th>
+                <th className="px-4 py-3 text-right font-medium">Celkem</th>
+                <th className="px-4 py-3 text-right font-medium text-emerald-600">Výhry</th>
+                <th className="px-4 py-3 text-right font-medium text-red-500">Ztraceno</th>
+                <th className="px-4 py-3 text-right font-medium text-slate-400">Backlog</th>
+                <th className="px-4 py-3 text-right font-medium">Konverze</th>
+                <th className="px-4 py-3 text-right font-medium">vs. průměr</th>
+                <th className="px-4 py-3 text-right font-medium">Pipeline</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {spConvRows.map(sp => {
+                const diff = sp.convRate !== null ? sp.convRate - avgConv : null;
+                return (
+                  <tr key={sp.name} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-3 font-medium text-slate-800">{sp.name}</td>
+                    <td className="px-4 py-3 text-right text-slate-600">{sp.total}</td>
+                    <td className="px-4 py-3 text-right font-semibold text-emerald-700">{sp.won}</td>
+                    <td className="px-4 py-3 text-right text-red-600">{sp.lost}</td>
+                    <td className="px-4 py-3 text-right text-slate-400">{sp.backlog}</td>
+                    <td className="px-4 py-3 text-right font-semibold text-slate-800">
+                      {sp.convRate !== null ? formatPct(sp.convRate) : '—'}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {diff !== null ? (
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${diff >= 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>
+                          {diff >= 0 ? '+' : ''}{diff.toFixed(1)} p.b.
+                        </span>
+                      ) : <span className="text-slate-400">—</span>}
+                    </td>
+                    <td className="px-4 py-3 text-right text-slate-600">{formatCZKShort(sp.valueTotal)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Pareto chart */}
+      {paretoData.length > 1 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
+          <h3 className="font-semibold text-slate-800 mb-1 flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-blue-600" />
+            Koncentrace výher – Pareto
+          </h3>
+          <p className="text-xs text-slate-500 mb-4">Kumulativní podíl výher podle pořadí obchodníka (sestupně)</p>
+          <ResponsiveContainer width="100%" height={220}>
+            <LineChart data={paretoData} margin={{ top: 5, right: 30, left: 10, bottom: 25 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+              <XAxis
+                dataKey="rank"
+                label={{ value: 'Pořadí obchodníka (kumulativní podíl uzavřených)', position: 'insideBottom', offset: -15, fontSize: 10, fill: '#94a3b8' }}
+                tick={{ fontSize: 11 }}
+              />
+              <YAxis domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
+              <Tooltip
+                formatter={(v) => [`${v}%`, 'Kum. podíl výher']}
+                labelFormatter={(rank) => {
+                  const d = paretoData[rank - 1];
+                  return d ? `#${rank} – ${d.name}` : `#${rank}`;
+                }}
+              />
+              <ReferenceLine y={80} stroke="#f59e0b" strokeDasharray="4 4"
+                label={{ value: '80 %', position: 'insideRight', fontSize: 10, fill: '#f59e0b' }} />
+              <Line type="monotone" dataKey="cumPct" name="Kum. podíl výher (%)"
+                stroke="#3b82f6" strokeWidth={2.5} dot={{ fill: '#3b82f6', r: 5 }} activeDot={{ r: 7 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {/* Value bands table */}
+      {valueBands.length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-slate-100">
+            <h3 className="font-semibold text-slate-800">Příležitosti podle objemu</h3>
+            <p className="text-xs text-slate-500 mt-0.5">Konverze a rozložení příležitostí v objemových pásmech</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left font-medium">Objemové pásmo</th>
+                  <th className="px-4 py-3 text-right font-medium">Počet</th>
+                  <th className="px-4 py-3 text-right font-medium">% počtu</th>
+                  <th className="px-4 py-3 text-right font-medium">Hodnota</th>
+                  <th className="px-4 py-3 text-right font-medium">% hodnoty</th>
+                  <th className="px-4 py-3 text-right font-medium text-emerald-600">Výhry</th>
+                  <th className="px-4 py-3 text-right font-medium text-red-500">Ztraceno</th>
+                  <th className="px-4 py-3 text-right font-medium text-slate-400">Backlog</th>
+                  <th className="px-4 py-3 text-right font-medium">Konverze</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {valueBands.map(b => (
+                  <tr key={b.key} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-3 font-medium text-slate-800">{b.key}</td>
+                    <td className="px-4 py-3 text-right text-slate-600">{b.count}</td>
+                    <td className="px-4 py-3 text-right text-slate-500">{formatPct(b.pctCount)}</td>
+                    <td className="px-4 py-3 text-right font-semibold text-slate-800">{formatCZKShort(b.value)}</td>
+                    <td className="px-4 py-3 text-right text-slate-500">{formatPct(b.pctValue)}</td>
+                    <td className="px-4 py-3 text-right font-semibold text-emerald-700">{b.won}</td>
+                    <td className="px-4 py-3 text-right text-red-600">{b.lost}</td>
+                    <td className="px-4 py-3 text-right text-slate-400">{b.backlog}</td>
+                    <td className="px-4 py-3 text-right">
+                      {b.convRate !== null ? (
+                        <span className={`font-semibold ${b.convRate >= 50 ? 'text-emerald-600' : b.convRate >= 25 ? 'text-amber-600' : 'text-red-600'}`}>
+                          {formatPct(b.convRate)}
+                        </span>
+                      ) : <span className="text-slate-400">—</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
