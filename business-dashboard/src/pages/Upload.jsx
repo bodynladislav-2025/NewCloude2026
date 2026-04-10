@@ -450,9 +450,9 @@ async function saveParsedData(periodId, uploadId, dataType, rows) {
     const records = rows.map(r => ({
       period_id:        periodId,
       upload_id:        uploadId,
-      salesperson_name: String(r['Obchodník'] || r['Jméno'] || r['Salesperson'] || r['Prodejce'] || r['Name'] || 'Neznámý'),
+      salesperson_name: String(r['Referent'] || r['Obchodník'] || r['Jméno'] || r['Salesperson'] || r['Prodejce'] || r['Name'] || 'Neznámý'),
       team:             String(r['Tým'] || r['Oddělení'] || r['Team'] || '') || null,
-      revenue_czk:      parseCZK(r['Tržby'] || r['Marže'] || r['Obrat'] || r['Revenue'] || r['Hodnota'] || r['Částka'] || 0),
+      revenue_czk:      parseCZK(r['Tržby'] || r['Marže'] || r['Obrat'] || r['Revenue'] || r['Hodnota'] || r['Objem'] || r['Částka'] || 0),
       orders_count:     parseInt(r['Zakázky'] || r['Počet'] || r['Orders'] || r['Count'] || 0) || 0,
     }));
     const { error } = await supabase.from('sales_data').insert(records);
@@ -464,10 +464,10 @@ async function saveParsedData(periodId, uploadId, dataType, rows) {
       period_id:        periodId,
       upload_id:        uploadId,
       partner_name:     String(r['Partner'] || r['Zákazník'] || r['Customer'] || r['Firma'] || r['Company'] || 'Neznámý'),
-      value_czk:        parseCZK(r['Hodnota'] || r['Objem'] || r['Value'] || r['Amount'] || 0),
+      value_czk:        parseCZK(r['Objem'] || r['Hodnota'] || r['Value'] || r['Amount'] || 0),
       status:           String(r['Stav'] || r['Fáze'] || r['Status'] || r['Stage'] || ''),
-      created_at_k2:    parseDate(r['Datum'] || r['Vytvořeno'] || r['Created'] || null),
-      salesperson_name: String(r['Obchodník'] || r['Přiřazeno'] || r['Salesperson'] || '') || null,
+      created_at_k2:    parseDate(r['Vytvořeno'] || r['Datum'] || r['Created'] || null),
+      salesperson_name: String(r['Referent'] || r['Obchodník'] || r['Přiřazeno'] || r['Salesperson'] || '') || null,
       is_closed:        isClosed(r['Stav'] || r['Status'] || ''),
     }));
     const { error } = await supabase.from('opportunities').insert(records);
