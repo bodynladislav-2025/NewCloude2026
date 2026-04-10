@@ -89,9 +89,9 @@ export default function UploadPage() {
       // Check existing data for this period + data type → ask about overwrite
       await deleteExistingData(per.id, item.dataType);
 
-      // Save file to storage
+      // Save file to storage (optional – ignore if bucket doesn't exist)
       const storagePath = `uploads/${year}-${month}/${Date.now()}-${item.name}`;
-      await supabase.storage.from('uploads').upload(storagePath, item.file, { upsert: true });
+      await supabase.storage.from('uploads').upload(storagePath, item.file, { upsert: true }).catch(() => {});
 
       // Create upload record
       const { data: upload, error: upErr } = await supabase
@@ -452,10 +452,11 @@ async function saveParsedData(periodId, uploadId, dataType, rows) {
       upload_id:        uploadId,
       salesperson_name: String(r['Obchodník'] || r['Jméno'] || r['Salesperson'] || r['Prodejce'] || r['Name'] || 'Neznámý'),
       team:             String(r['Tým'] || r['Oddělení'] || r['Team'] || '') || null,
-      revenue_czk:      parseCZK(r['Tržby'] || r['Obrat'] || r['Revenue'] || r['Hodnota'] || r['Částka'] || 0),
+      revenue_czk:      parseCZK(r['Tržby'] || r['Marže'] || r['Obrat'] || r['Revenue'] || r['Hodnota'] || r['Částka'] || 0),
       orders_count:     parseInt(r['Zakázky'] || r['Počet'] || r['Orders'] || r['Count'] || 0) || 0,
     }));
-    await supabase.from('sales_data').insert(records);
+    const { error } = await supabase.from('sales_data').insert(records);
+    if (error) throw new Error(`Chyba ukládání tržeb: ${error.message}`);
   }
 
   if (dataType === 'opportunities') {
@@ -469,11 +470,11 @@ async function saveParsedData(periodId, uploadId, dataType, rows) {
       salesperson_name: String(r['Obchodník'] || r['Přiřazeno'] || r['Salesperson'] || '') || null,
       is_closed:        isClosed(r['Stav'] || r['Status'] || ''),
     }));
-    await supabase.from('opportunities').insert(records);
+    const { error } = await supabase.from('opportunities').insert(records);
+    if (error) throw new Error(`Chyba ukládání příležitostí: ${error.message}`);
   }
 
   if (dataType === 'invoices') {
-    // Try to auto-map aging bands
     const aging = { '0-30': 0, '31-60': 0, '61-90': 0, '90+': 0 };
     rows.forEach(r => {
       const keys = Object.keys(r);
@@ -488,7 +489,10 @@ async function saveParsedData(periodId, uploadId, dataType, rows) {
     const records = Object.entries(aging)
       .filter(([, v]) => v > 0)
       .map(([days_range, total_czk]) => ({ period_id: periodId, upload_id: uploadId, days_range, total_czk }));
-    if (records.length > 0) await supabase.from('invoices_aging').insert(records);
+    if (records.length > 0) {
+      const { error } = await supabase.from('invoices_aging').insert(records);
+      if (error) throw new Error(`Chyba ukládání faktur: ${error.message}`);
+    }
   }
 }
 
