@@ -53,7 +53,7 @@ export default function UploadZone({ onClose }) {
   const [hodnoceniFile, setHodnoceniFile] = useState(null);
   const [obchodniciFile, setObchodniciFile] = useState(null);
 
-  const canSubmit = !!hodnoceniFile && !isLoading;
+  const canSubmit = !!(aktivityFile || hodnoceniFile || obchodniciFile) && !isLoading;
 
   const handleSubmit = async () => {
     if (!canSubmit) return;
@@ -97,7 +97,7 @@ export default function UploadZone({ onClose }) {
             label="hodnoceni.xlsx"
             desc="Hodnocení hovorů"
             icon="⭐"
-            required={true}
+            required={false}
             file={hodnoceniFile}
             onFile={setHodnoceniFile}
           />
@@ -113,7 +113,7 @@ export default function UploadZone({ onClose }) {
         </div>
 
         <p className="text-center text-xs text-[#9CA3AF] mb-6">
-          * Povinné pole — hodnoceni.xlsx musí být nahrán
+          Nahrajte jeden nebo více souborů — všechna pole jsou volitelná
         </p>
 
         {uploadError && (

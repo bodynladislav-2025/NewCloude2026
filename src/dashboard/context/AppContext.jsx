@@ -92,7 +92,10 @@ export function AppProvider({ children }) {
       if (aktivityFile) {
         rawAktivity = await parseAktivityCSV(aktivityFile);
       }
-      const rawHodnoceni = await parseHodnoceniSheet(hodnoceniFile);
+      let rawHodnoceni = [];
+      if (hodnoceniFile) {
+        rawHodnoceni = await parseHodnoceniSheet(hodnoceniFile);
+      }
       if (obchodniciFile) {
         rawObchodnici = await parseObchodniciSheet(obchodniciFile);
       }

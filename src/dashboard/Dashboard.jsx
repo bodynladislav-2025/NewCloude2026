@@ -10,11 +10,11 @@ import DetailView from './components/views/DetailView';
 import RisksView from './components/views/RisksView';
 
 function DashboardInner() {
-  const { activeView, rawHodnoceni, loadDemoData, usingDemoData } = useApp();
+  const { activeView, rawHodnoceni, rawAktivity, rawObchodnici, loadDemoData, usingDemoData } = useApp();
   const [showUpload, setShowUpload] = useState(false);
 
-  // Auto-show upload zone if no data yet
-  const hasData = rawHodnoceni.length > 0;
+  // Auto-show upload zone if no data yet (any file counts)
+  const hasData = rawHodnoceni.length > 0 || rawAktivity.length > 0 || rawObchodnici.length > 0;
 
   useEffect(() => {
     if (!hasData) setShowUpload(true);
