@@ -57,8 +57,8 @@ export default function UploadZone({ onClose }) {
 
   const handleSubmit = async () => {
     if (!canSubmit) return;
-    await loadFiles(aktivityFile, hodnoceniFile, obchodniciFile);
-    if (!uploadError) onClose?.();
+    const success = await loadFiles(aktivityFile, hodnoceniFile, obchodniciFile);
+    if (success) onClose?.();
   };
 
   const handleDemo = () => {
@@ -117,8 +117,15 @@ export default function UploadZone({ onClose }) {
         </p>
 
         {uploadError && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-3 mb-4 text-sm text-red-700 text-center">
-            {uploadError}
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 text-sm text-red-700">
+            <div className="font-semibold mb-1">Chyba při zpracování souboru:</div>
+            <div>{uploadError}</div>
+            <div className="mt-2 text-xs text-red-500">Zkontrolujte formát souboru nebo zkuste Demo data.</div>
+          </div>
+        )}
+        {isLoading && (
+          <div className="text-center text-sm text-[#7B3FF2] mb-4 font-medium">
+            ⏳ Zpracovávám soubory...
           </div>
         )}
 

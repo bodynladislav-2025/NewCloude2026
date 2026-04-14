@@ -82,17 +82,18 @@ export function AppProvider({ children }) {
     });
   }, []);
 
-  // Upload real files
+  // Upload real files — returns true on success, false on error
   const loadFiles = useCallback(async (aktivityFile, hodnoceniFile, obchodniciFile) => {
     dispatch({ type: 'SET_LOADING', payload: true });
+    dispatch({ type: 'SET_ERROR', payload: null });
     try {
       let rawAktivity = [];
+      let rawHodnoceni = [];
       let rawObchodnici = [];
 
       if (aktivityFile) {
         rawAktivity = await parseAktivityCSV(aktivityFile);
       }
-      let rawHodnoceni = [];
       if (hodnoceniFile) {
         rawHodnoceni = await parseHodnoceniSheet(hodnoceniFile);
       }
@@ -104,8 +105,11 @@ export function AppProvider({ children }) {
         type: 'LOAD_DATA',
         payload: { rawAktivity, rawHodnoceni, rawObchodnici, usingDemoData: false },
       });
+      return true;
     } catch (err) {
-      dispatch({ type: 'SET_ERROR', payload: err.message });
+      console.error('loadFiles error:', err);
+      dispatch({ type: 'SET_ERROR', payload: err.message || 'Chyba při zpracování souboru.' });
+      return false;
     }
   }, []);
 
