@@ -1,22 +1,27 @@
 #!/bin/bash
-# Načtení kontextu z Obsidianu při startu Claude sezení
-# Spouští se na začátku každého sezení (SessionStart hook)
+# Zápis zahájení sezení do Obsidianu
+# Spouští se na začátku každého Claude sezení (SessionStart hook)
 
 set -euo pipefail
 
 VAULT="/Users/ladislavbodyn/Desktop/Obsidian_2026"
-PROFILE="$VAULT/Claude/Profil.md"
-ENV_FILE="${CLAUDE_ENV_FILE:-}"
+CLAUDE_DIR="$VAULT/Claude"
+PROFILE="$CLAUDE_DIR/Profil.md"
 
 # Pokud vault neexistuje (web prostředí), přeskočit
 if [ ! -d "$VAULT" ]; then
     exit 0
 fi
 
-# Zapsat profilové informace do env pro Claude
-if [ -n "$ENV_FILE" ] && [ -f "$PROFILE" ]; then
-    echo "export CLAUDE_USER_PROFILE_PATH='$PROFILE'" >> "$ENV_FILE"
-fi
+DATE=$(date +%Y-%m-%d)
+TIME=$(date +%H:%M)
+DAILY_DIR="$CLAUDE_DIR/Denní zápisky"
+DAILY_NOTE="$DAILY_DIR/$DATE.md"
+CWD="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+PROJECT=$(basename "$CWD")
+
+mkdir -p "$DAILY_DIR"
+mkdir -p "$CLAUDE_DIR/Projekty"
 
 # Vytvořit profil pokud neexistuje
 if [ ! -f "$PROFILE" ]; then
@@ -25,54 +30,56 @@ if [ ! -f "$PROFILE" ]; then
 ---
 typ: uživatelský-profil
 vlastník: Ladislav Bodyn
-aktualizováno: auto
+tagy:
+  - claude/profil
 ---
 
-# Profil uživatele — Ladislav Bodyn
+# Profil — Ladislav Bodyn
 
 ## Osobní informace
-- **Jméno:** Ladislav Bodyn
-- **Vault:** /Users/ladislavbodyn/Desktop/Obsidian_2026
-- **Jazyk:** Česky (preferovaný jazyk komunikace)
 
-## Pracovní styl
-- Preferuje stručné a přímé odpovědi
-- Chce vidět hotové řešení, ne jen popis
-- Pracuje primárně ve webovém prostředí Claude Code
+| Pole | Hodnota |
+|------|---------|
+| **Jméno** | Ladislav Bodyn |
+| **Vault** | `/Users/ladislavbodyn/Desktop/Obsidian_2026` |
+| **Jazyk** | Čeština |
 
 ## Aktivní projekty
+
 - [[Projekty/NewCloude2026|NewCloude2026]] — hlavní vývojový projekt
 
 ## Technologie
+
 - Frontend: React, Vite, JavaScript
 - Verzování: Git, GitHub
 - Nástroje: Claude Code, Obsidian
 
 ## Preference Claude
-- Vždy zapisovat výsledky sezení do Obsidianu
-- Commitovat změny na větev claude/claude-obsidian-integration-8yor0
-- Komunikovat v češtině
 
-## Poznámky
-<!-- Sem si zapisuj osobní poznámky pro Claude -->
+> [!tip] Instrukce pro Claude
+> - Vždy komunikuj česky
+> - Zapisuj výsledky každého sezení do Obsidianu
+> - Commituj na větev `claude/claude-obsidian-integration-8yor0`
+> - Dávej přednost hotovému řešení před popisem
+
+## Osobní poznámky
+
+<!-- Sem si piš poznámky pro Claude -->
 
 PROFILE_TEMPLATE
-    echo "✅ Vytvořen nový profil: $PROFILE"
+    echo "✅ Vytvořen profil: $PROFILE"
 fi
 
-DATE=$(date +%Y-%m-%d)
-TIME=$(date +%H:%M)
-DAILY_DIR="$VAULT/Claude/Denní zápisky"
-DAILY_NOTE="$DAILY_DIR/$DATE.md"
-
-mkdir -p "$DAILY_DIR"
-
-# Přidat záznam o startu sezení
+# Vytvořit denní zápisek pokud neexistuje
 if [ ! -f "$DAILY_NOTE" ]; then
     cat > "$DAILY_NOTE" << HEADER
 ---
 datum: $DATE
-typ: claude-denní-log
+typ: claude-log
+tagy:
+  - claude/denní-log
+  - projekt/$PROJECT
+projekt: $PROJECT
 ---
 
 # Claude zápisky — $DATE
@@ -80,10 +87,16 @@ typ: claude-denní-log
 HEADER
 fi
 
-CWD="${CLAUDE_PROJECT_DIR:-$(pwd)}"
-PROJECT=$(basename "$CWD")
-
-echo "" >> "$DAILY_NOTE"
-echo "▶️ **Sezení zahájeno** $TIME — projekt: $PROJECT" >> "$DAILY_NOTE"
+# Přidat záznam o startu — zkontrolovat obsidian CLI
+if command -v obsidian &>/dev/null 2>&1; then
+    obsidian append path="Claude/Denní zápisky/$DATE.md" \
+        content="\n> [!abstract] Sezení zahájeno $TIME — [[Projekty/$PROJECT|$PROJECT]]\n" \
+        silent 2>/dev/null || \
+        echo "" >> "$DAILY_NOTE" && \
+        echo "> [!abstract] Sezení zahájeno **$TIME** — [[Projekty/$PROJECT|$PROJECT]]" >> "$DAILY_NOTE"
+else
+    echo "" >> "$DAILY_NOTE"
+    echo "> [!abstract] Sezení zahájeno **$TIME** — [[Projekty/$PROJECT|$PROJECT]]" >> "$DAILY_NOTE"
+fi
 
 echo "✅ Obsidian start sync: $DAILY_NOTE"
