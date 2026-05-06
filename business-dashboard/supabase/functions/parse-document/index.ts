@@ -5,7 +5,7 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 
 const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
-const CLAUDE_MODEL      = 'claude-sonnet-4-20250514';
+const CLAUDE_MODEL      = 'claude-sonnet-4-6';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin':  '*',
