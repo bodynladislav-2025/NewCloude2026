@@ -43,3 +43,21 @@ tagy:
 - `a0476fc` Upgradovat Obsidian integraci na proper Obsidian-flavored markdown
 - `68c72ab` Přidat kompletní Obsidian integraci pro automatické zápisky
 
+
+## 2026-05-06 20:13 | Větev: `claude/export-to-obsidian-9chaf`
+
+- `02720d0` Update Obsidian session logs
+- `4ec5df3` Update Obsidian session logs and project notes
+- `61eaca8` Add Obsidian export notes: user profile and project documentation
+- `a0476fc` Upgradovat Obsidian integraci na proper Obsidian-flavored markdown
+- `68c72ab` Přidat kompletní Obsidian integraci pro automatické zápisky
+
+
+## 2026-05-06 20:15 | Větev: `claude/export-to-obsidian-9chaf`
+
+- `02720d0` Update Obsidian session logs
+- `4ec5df3` Update Obsidian session logs and project notes
+- `61eaca8` Add Obsidian export notes: user profile and project documentation
+- `a0476fc` Upgradovat Obsidian integraci na proper Obsidian-flavored markdown
+- `68c72ab` Přidat kompletní Obsidian integraci pro automatické zápisky
+

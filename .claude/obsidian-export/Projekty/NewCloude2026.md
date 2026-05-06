@@ -21,3 +21,5 @@ tagy:
 - [[Denní zápisky/2026-05-06|2026-05-06 20:10]] #NewCloude2026
 - [[Denní zápisky/2026-05-06|2026-05-06 20:10]] #NewCloude2026
 - [[Denní zápisky/2026-05-06|2026-05-06 20:13]] #NewCloude2026
+- [[Denní zápisky/2026-05-06|2026-05-06 20:13]] #NewCloude2026
+- [[Denní zápisky/2026-05-06|2026-05-06 20:15]] #NewCloude2026
