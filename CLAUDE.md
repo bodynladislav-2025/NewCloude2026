@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Session Start
+
+At the beginning of every session, read these two files before doing anything else:
+- `tasks/lessons.md` — past mistakes and patterns to avoid
+- `tasks/todo.md` — active tasks and their current status
+
 ## Repository Overview
 
 This monorepo contains two independent React/Vite applications:
