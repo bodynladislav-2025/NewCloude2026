@@ -1,13 +1,11 @@
 #!/bin/bash
-# Automatický zápis Claude sezení do Obsidianu (Obsidian-flavored markdown)
-# Spouští se po každém ukončení Claude sezení (Stop hook)
+# Stop hook — zápis sezení do Obsidianu
 
 set -euo pipefail
 
 VAULT="/Users/ladislavbodyn/Desktop/Obsidian_2026"
 CLAUDE_DIR="$VAULT/Claude"
 
-# Fallback pro web prostředí kde vault není dostupný
 if [ ! -d "$VAULT" ]; then
     CLAUDE_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}/.claude/obsidian-export"
 fi
@@ -16,20 +14,17 @@ DATE=$(date +%Y-%m-%d)
 TIME=$(date +%H:%M)
 DAILY_DIR="$CLAUDE_DIR/Denní zápisky"
 DAILY_NOTE="$DAILY_DIR/$DATE.md"
+STATE_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}/.claude/obsidian-state"
 
-mkdir -p "$DAILY_DIR"
-mkdir -p "$CLAUDE_DIR/Projekty"
-mkdir -p "$CLAUDE_DIR/Git logy"
+mkdir -p "$DAILY_DIR" "$CLAUDE_DIR/Projekty" "$CLAUDE_DIR/Git logy" "$STATE_DIR"
 
-# Načíst vstup
 INPUT=$(cat)
 
-# Parsovat JSON vstup
-TRANSCRIPT_PATH=$(echo "$INPUT" | python3 -c "
+SESSION_ID=$(echo "$INPUT" | python3 -c "
 import sys, json
 try:
     d = json.load(sys.stdin)
-    print(d.get('transcript_path', ''))
+    print(d.get('session_id', '')[:8])
 except:
     print('')
 " 2>/dev/null || echo "")
@@ -43,209 +38,194 @@ except:
     print('')
 " 2>/dev/null || echo "")
 
-SESSION_ID=$(echo "$INPUT" | python3 -c "
+TRANSCRIPT_PATH=$(echo "$INPUT" | python3 -c "
 import sys, json
 try:
     d = json.load(sys.stdin)
-    print(d.get('session_id', 'neznámé')[:8])
+    print(d.get('transcript_path', ''))
 except:
-    print('neznámé')
-" 2>/dev/null || echo "neznámé")
+    print('')
+" 2>/dev/null || echo "")
 
 PROJECT=$(basename "$CWD" 2>/dev/null || echo "neznámý")
+STATE_FILE="$STATE_DIR/$PROJECT.last_commit"
 
-# Git informace
+# === Git: pouze nové commity od posledního záznamu ===
 GIT_BRANCH="N/A"
-GIT_COMMITS=""
-GIT_DIFF_STATS=""
-GIT_FILES_CHANGED=""
+NEW_COMMITS=""
 
 if [ -n "$CWD" ] && [ -d "$CWD/.git" ]; then
     GIT_BRANCH=$(cd "$CWD" && git branch --show-current 2>/dev/null || echo "N/A")
-    GIT_COMMITS=$(cd "$CWD" && git log --oneline --since="8 hours ago" --format="- \`%h\` %s" 2>/dev/null | head -10 || echo "")
-    GIT_DIFF_STATS=$(cd "$CWD" && git diff --stat HEAD~1 HEAD 2>/dev/null | head -10 || echo "")
-    GIT_FILES_CHANGED=$(cd "$CWD" && git diff --name-only HEAD~1 HEAD 2>/dev/null | head -20 || echo "")
+
+    LAST_COMMIT=""
+    if [ -f "$STATE_FILE" ]; then
+        LAST_COMMIT=$(cat "$STATE_FILE")
+    fi
+
+    if [ -n "$LAST_COMMIT" ]; then
+        # Commity novější než poslední logovaný
+        NEW_COMMITS=$(cd "$CWD" && git log --oneline "$LAST_COMMIT"..HEAD --format="- \`%h\` %s" 2>/dev/null | head -10 || echo "")
+    else
+        # První záznam — pouze commity z posledních 24h
+        NEW_COMMITS=$(cd "$CWD" && git log --oneline --since="24 hours ago" --format="- \`%h\` %s" 2>/dev/null | head -10 || echo "")
+    fi
+
+    # Uložit aktuální HEAD jako nový referenční bod
+    CURRENT_HEAD=$(cd "$CWD" && git rev-parse HEAD 2>/dev/null || echo "")
+    if [ -n "$CURRENT_HEAD" ]; then
+        echo "$CURRENT_HEAD" > "$STATE_FILE"
+    fi
 fi
 
-# Parsovat transkript — extrahovat aktivity
-ACTIONS_TEXT=""
+# === Parsovat transkript ===
+SUMMARY_LINES=""
 FILES_EDITED=""
-BASH_COMMANDS=""
-SUMMARY_TEXT=""
 
 if [ -n "$TRANSCRIPT_PATH" ] && [ -f "$TRANSCRIPT_PATH" ]; then
-    PARSED=$(python3 << PYEOF
-import json, sys
+    PARSED=$(python3 << 'PYEOF'
+import json, sys, os
 
+transcript_path = os.environ.get('TRANSCRIPT_PATH', '')
 summaries = []
 files_edited = []
-bash_cmds = []
 
 try:
-    with open('$TRANSCRIPT_PATH', encoding='utf-8') as f:
+    with open(transcript_path, encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if not line:
                 continue
             try:
                 data = json.loads(line)
-                msg_type = data.get('type', '')
-
-                if msg_type == 'assistant':
-                    content = data.get('message', {}).get('content', [])
-                    for block in content:
-                        if not isinstance(block, dict):
-                            continue
-                        btype = block.get('type', '')
-
-                        if btype == 'text':
-                            text = block.get('text', '').strip()
-                            if len(text) > 40:
-                                # Vzít první větu nebo prvních 200 znaků
-                                first = text.split('\n')[0][:200]
+                if data.get('type') != 'assistant':
+                    continue
+                content = data.get('message', {}).get('content', [])
+                for block in content:
+                    if not isinstance(block, dict):
+                        continue
+                    btype = block.get('type', '')
+                    if btype == 'text':
+                        text = block.get('text', '').strip()
+                        if len(text) > 60:
+                            first = text.split('\n')[0][:150]
+                            if first not in summaries:
                                 summaries.append(first)
-
-                        elif btype == 'tool_use':
-                            name = block.get('name', '')
-                            inp = block.get('input', {})
-
-                            if name in ('Edit', 'Write'):
-                                fp = inp.get('file_path', '')
-                                if fp and fp not in files_edited:
-                                    files_edited.append(fp)
-
-                            elif name == 'Bash':
-                                cmd = inp.get('command', '').strip()
-                                if cmd and len(cmd) > 3:
-                                    short = cmd.split('\n')[0][:100]
-                                    if short not in bash_cmds:
-                                        bash_cmds.append(short)
+                    elif btype == 'tool_use' and block.get('name') in ('Edit', 'Write'):
+                        fp = block.get('input', {}).get('file_path', '')
+                        if fp and fp not in files_edited:
+                            files_edited.append(fp)
             except:
                 pass
 except:
     pass
 
-# Výstup
 print('SUMMARIES_START')
-for s in summaries[-4:]:
-    clean = s.replace('|', '\\|')
-    print(f'- {clean}')
+for s in summaries[-3:]:
+    print(f'- {s.replace("|", "/")}')
 print('SUMMARIES_END')
 
 print('FILES_START')
-for f in files_edited[:15]:
-    print(f'- [[{f}|{f.split("/")[-1]}]]')
+for f in files_edited[:8]:
+    name = f.split('/')[-1]
+    print(f'[[{f}|{name}]]')
 print('FILES_END')
-
-print('BASH_START')
-for c in bash_cmds[:10]:
-    print(f'- \`{c}\`')
-print('BASH_END')
 PYEOF
 )
 
-    SUMMARY_TEXT=$(echo "$PARSED" | awk '/SUMMARIES_START/{f=1;next}/SUMMARIES_END/{f=0}f')
-    FILES_EDITED=$(echo "$PARSED" | awk '/FILES_START/{f=1;next}/FILES_END/{f=0}f')
-    BASH_COMMANDS=$(echo "$PARSED" | awk '/BASH_START/{f=1;next}/BASH_END/{f=0}f')
+    export TRANSCRIPT_PATH
+    PARSED=$(TRANSCRIPT_PATH="$TRANSCRIPT_PATH" python3 << 'PYEOF'
+import json, sys, os
+
+transcript_path = os.environ.get('TRANSCRIPT_PATH', '')
+summaries = []
+files_edited = []
+
+try:
+    with open(transcript_path, encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                data = json.loads(line)
+                if data.get('type') != 'assistant':
+                    continue
+                content = data.get('message', {}).get('content', [])
+                for block in content:
+                    if not isinstance(block, dict):
+                        continue
+                    btype = block.get('type', '')
+                    if btype == 'text':
+                        text = block.get('text', '').strip()
+                        if len(text) > 60:
+                            first = text.split('\n')[0][:150]
+                            if first not in summaries:
+                                summaries.append(first)
+                    elif btype == 'tool_use' and block.get('name') in ('Edit', 'Write'):
+                        fp = block.get('input', {}).get('file_path', '')
+                        if fp and fp not in files_edited:
+                            files_edited.append(fp)
+            except:
+                pass
+except:
+    pass
+
+print('SUMMARIES_START')
+for s in summaries[-3:]:
+    print(f'- {s.replace("|", "/")}')
+print('SUMMARIES_END')
+
+print('FILES_START')
+for f in files_edited[:8]:
+    name = f.split('/')[-1]
+    print(f'[[{f}|{name}]]')
+print('FILES_END')
+PYEOF
+)
+
+    SUMMARY_LINES=$(echo "$PARSED" | awk '/SUMMARIES_START/{f=1;next}/SUMMARIES_END/{f=0}f')
+    FILES_EDITED=$(echo "$PARSED" | awk '/FILES_START/{f=1;next}/FILES_END/{f=0}f' | tr '\n' ' ')
 fi
 
-# === Vytvořit denní zápisek s YAML frontmatter pokud neexistuje ===
+# === Vytvořit denní zápisek pokud neexistuje ===
 if [ ! -f "$DAILY_NOTE" ]; then
     cat > "$DAILY_NOTE" << HEADER
 ---
 datum: $DATE
-typ: claude-log
-tagy:
-  - claude/denní-log
-  - projekt/$PROJECT
+tags: [log, dev]
 projekt: $PROJECT
 ---
 
-# Claude zápisky — $DATE
+# Zápisky — $DATE
 
 HEADER
 fi
 
-# === Zkusit obsidian CLI (pokud běží Obsidian a má CLI) ===
-USE_CLI=false
-if command -v obsidian &>/dev/null 2>&1; then
-    USE_CLI=true
-fi
+# === Sestavit blok sezení (čistý formát) ===
+{
+    echo ""
+    echo "## $TIME | $PROJECT"
+    echo ""
+    echo "**Větev:** \`$GIT_BRANCH\`"
 
-# === Sestavit obsah sezení ===
-SESSION_CONTENT=$(cat << SESSIONEOF
+    if [ -n "$SUMMARY_LINES" ]; then
+        echo "**Shrnutí:**"
+        echo "$SUMMARY_LINES"
+    fi
 
----
+    if [ -n "$FILES_EDITED" ]; then
+        echo "**Soubory:** $FILES_EDITED"
+    fi
 
-## Sezení $TIME | $PROJECT
+    if [ -n "$NEW_COMMITS" ]; then
+        echo "**Commity:**"
+        echo "$NEW_COMMITS"
+    fi
 
-> [!info] Informace o sezení
-> **Čas:** $DATE $TIME
-> **Projekt:** \[\[$PROJECT\]\]
-> **Session ID:** \`$SESSION_ID\`
-> **Git větev:** \`$GIT_BRANCH\`
-> **Cesta:** \`$CWD\`
+    echo ""
+} >> "$DAILY_NOTE"
 
-SESSIONEOF
-)
-
-# Přidat shrnutí pokud existuje
-if [ -n "$SUMMARY_TEXT" ]; then
-    SESSION_CONTENT="$SESSION_CONTENT
-> [!summary]- Shrnutí aktivity
-$( echo "$SUMMARY_TEXT" | sed 's/^/> /' )
-
-"
-fi
-
-# Přidat upravené soubory
-if [ -n "$FILES_EDITED" ]; then
-    SESSION_CONTENT="$SESSION_CONTENT
-> [!example] Upravené soubory
-$( echo "$FILES_EDITED" | sed 's/^/> /' )
-
-"
-fi
-
-# Přidat bash příkazy
-if [ -n "$BASH_COMMANDS" ]; then
-    SESSION_CONTENT="$SESSION_CONTENT
-> [!note]- Spuštěné příkazy
-$( echo "$BASH_COMMANDS" | sed 's/^/> /' )
-
-"
-fi
-
-# Přidat git commity
-if [ -n "$GIT_COMMITS" ]; then
-    SESSION_CONTENT="$SESSION_CONTENT
-> [!success] Git commity (posledních 8h)
-$( echo "$GIT_COMMITS" | sed 's/^/> /' )
-
-"
-fi
-
-# Přidat změněné soubory z gitu
-if [ -n "$GIT_DIFF_STATS" ]; then
-    SESSION_CONTENT="$SESSION_CONTENT
-\`\`\`
-$GIT_DIFF_STATS
-\`\`\`
-
-"
-fi
-
-# === Zapsat do Obsidianu ===
-if [ "$USE_CLI" = true ]; then
-    # Použít obsidian CLI pokud je dostupné
-    obsidian append path="Claude/Denní zápisky/$DATE.md" content="$SESSION_CONTENT" silent 2>/dev/null || \
-        echo "$SESSION_CONTENT" >> "$DAILY_NOTE"
-else
-    # Přímý zápis do souboru
-    echo "$SESSION_CONTENT" >> "$DAILY_NOTE"
-fi
-
-# === Aktualizovat projektový přehled ===
+# === Aktualizovat projektovou notu ===
 PROJECT_NOTE="$CLAUDE_DIR/Projekty/$PROJECT.md"
 if [ ! -f "$PROJECT_NOTE" ]; then
     cat > "$PROJECT_NOTE" << PROJ
@@ -253,48 +233,50 @@ if [ ! -f "$PROJECT_NOTE" ]; then
 projekt: $PROJECT
 cesta: $CWD
 vytvořeno: $DATE
-tagy:
-  - claude/projekt
-  - projekt/$PROJECT
+tags: [projekt, dev]
 ---
 
-# Projekt: $PROJECT
+# $PROJECT
 
-> [!info] Metadata
-> **Cesta:** \`$CWD\`
-> **Git větev:** \`$GIT_BRANCH\`
-> **Vytvořeno:** $DATE
+**Cesta:** \`$CWD\`
+**Git větev:** \`$GIT_BRANCH\`
 
-## Historie sezení
+## Sezení
 
 PROJ
 fi
 
-echo "- [[Denní zápisky/$DATE|$DATE $TIME]] #$PROJECT" >> "$PROJECT_NOTE"
+# Přidat dnešní datum pouze jednou
+if ! grep -q "$DATE" "$PROJECT_NOTE" 2>/dev/null; then
+    echo "- [[Denní zápisky/$DATE|$DATE]]" >> "$PROJECT_NOTE"
+fi
 
-# === Git log soubor ===
-if [ -n "$GIT_COMMITS" ]; then
+# === Git log — pouze nové commity ===
+if [ -n "$NEW_COMMITS" ]; then
     GIT_LOG_FILE="$CLAUDE_DIR/Git logy/$PROJECT.md"
     if [ ! -f "$GIT_LOG_FILE" ]; then
         cat > "$GIT_LOG_FILE" << GITHEAD
 ---
 projekt: $PROJECT
-tagy:
-  - claude/git-log
-  - projekt/$PROJECT
+tags: [log, git]
 ---
 
 # Git log — $PROJECT
 
 GITHEAD
     fi
-    cat >> "$GIT_LOG_FILE" << GITENTRY
 
-## $DATE $TIME | Větev: \`$GIT_BRANCH\`
-
-$GIT_COMMITS
-
-GITENTRY
+    # Přidat pouze pokud tyto commity ještě nejsou v souboru
+    FIRST_COMMIT=$(echo "$NEW_COMMITS" | head -1 | grep -o '`[a-f0-9]\{7\}`' | tr -d '`' || echo "")
+    if [ -z "$FIRST_COMMIT" ] || ! grep -q "$FIRST_COMMIT" "$GIT_LOG_FILE" 2>/dev/null; then
+        {
+            echo ""
+            echo "## $DATE | \`$GIT_BRANCH\`"
+            echo ""
+            echo "$NEW_COMMITS"
+            echo ""
+        } >> "$GIT_LOG_FILE"
+    fi
 fi
 
-echo "✅ Obsidian sync dokončen: $DAILY_NOTE"
+echo "✅ Obsidian sync: $DAILY_NOTE"
