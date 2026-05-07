@@ -24,3 +24,8 @@ tags: [log, git]
 
 - `9980ed1` Přepsat Obsidian hooks — čistší struktura a eliminace duplikát
 - `6be0585` Aktualizovat Obsidian export logy — 2026-05-07
+
+## 2026-05-07 | `claude/improve-obsidian-structure-ccxbi`
+
+- `7ee8763` Vyčistit stávající Obsidian zápisky do nového formátu
+
