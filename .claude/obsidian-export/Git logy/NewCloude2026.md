@@ -188,3 +188,17 @@ tagy:
 - `61eaca8` Add Obsidian export notes: user profile and project documentation
 - `a0476fc` Upgradovat Obsidian integraci na proper Obsidian-flavored markdown
 
+
+## 2026-05-07 | `claude/improve-obsidian-structure-ccxbi`
+
+- `9980ed1` Přepsat Obsidian hooks — čistší struktura a eliminace duplikát
+- `9223b7b` Update Obsidian session logs
+- `9efa689` Update Obsidian session logs
+- `e9c4816` Update Obsidian session logs
+- `7d5aa47` Update Obsidian session logs
+- `d0aac75` Update Obsidian session logs
+- `828c852` Update Claude model to claude-sonnet-4-6
+- `a6079fa` Update Obsidian session logs
+- `02720d0` Update Obsidian session logs
+- `4ec5df3` Update Obsidian session logs and project notes
+
