@@ -2,35 +2,15 @@
 projekt: NewCloude2026
 cesta: /home/user/NewCloude2026
 vytvořeno: 2026-05-06
-tagy:
-  - claude/projekt
-  - projekt/NewCloude2026
+tags: [projekt, dev]
 ---
 
-# Projekt: NewCloude2026
+# NewCloude2026
 
-> [!info] Metadata
-> **Cesta:** `/home/user/NewCloude2026`
-> **Git větev:** `claude/export-to-obsidian-9chaf`
-> **Vytvořeno:** 2026-05-06
+**Cesta:** `/home/user/NewCloude2026`
+**Stack:** React 18 + Vite + JavaScript
 
-## Historie sezení
+## Sezení
 
-- [[Denní zápisky/2026-05-06|2026-05-06 20:09]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:09]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:10]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:10]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:13]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:13]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:15]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:15]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:16]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:16]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:17]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:17]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:18]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:18]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:19]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:19]] #NewCloude2026
-- [[Denní zápisky/2026-05-06|2026-05-06 20:22]] #NewCloude2026
-- [[Denní zápisky/2026-05-07|2026-05-07 18:36]] #NewCloude2026
+- [[Denní zápisky/2026-05-06|2026-05-06]]
+- [[Denní zápisky/2026-05-07|2026-05-07]]
