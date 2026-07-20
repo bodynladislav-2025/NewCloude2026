@@ -163,8 +163,9 @@ export default function TemplatesView() {
   return (
     <div className="space-y-3">
       <p className="rounded-2xl border border-blue-100 bg-blue-50 p-3 text-sm text-blue-900">
-        Položky šablony se automaticky předvyplní do každého nově otevřeného měsíce. Změny se
-        projeví až v měsících, které otevřete poprvé — už založené měsíce zůstávají beze změny.
+        Nová položka šablony se hned přidá i do aktuálního a budoucích měsíců. Úpravy (název,
+        částka, kategorie) a vypnutí/zapnutí se projeví od následujícího měsíce — aktuální a
+        starší měsíce zůstávají beze změny.
       </p>
 
       {error && <p className="rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
