@@ -8,7 +8,7 @@ Všechny ceny bez DPH. Čísla konverzí a nákladů jsou **odhady** (vycházej�
 |---|---|---|---|---|
 | 0 | **Kalkulačka ztraceného času obchodu** (web) + **25 promptů pro obchodníka** (PDF) | Lead magnety | zdarma | Kontakt a první číslo v Kč |
 | 1 | **Audit ztraceného času** (30 min, online) | Diagnostika s výsledkem v hodinách a Kč, jednostránkový report | zdarma | Kvalifikace a nabídka |
-| 2 | **AI Start den** | 1 den (7 hodin) u klienta pro celý obchodní tým: bezpečnostní pravidla, příprava schůzky a zápis s AI, měření výchozího stavu | **39 000 Kč**; při objednání programu do 30 dnů se celá částka odečte | Nízkoriziková zkouška, zároveň první den programu |
+| 2 | **AI Start den** | 1 den (7 hodin) u klienta pro celý obchodní tým: bezpečnostní pravidla, příprava schůzky a zápis s AI, měření výchozího stavu | **39 000 Kč**; při objednání programu do 30 dnů se celá částka odečte | Nízkoriziková zkouška. Samostatný workshop mimo 50 hodin programu (kvůli dotaci nesmí být jeho součástí) |
 | 3 | **AI Obchod 50** (hlavní nabídka A) | 50 hodin, 8 týdnů, 1 den týdně, tým do 12 lidí | **290 000 Kč** (13. až 16. účastník +15 000 Kč/os.) | Jádro obratu |
 | 4a | **Mapa automatizace** | 2týdenní analýza: 3 procesy, návrh agentů, pevná cena a návratnost | **45 000 Kč**, odečte se z implementace | Placená vstupenka k nabídce B |
 | 4b | **AI Agent na klíč** (nabídka B) | Návrh, stavba, napojení na CRM a e-mail, zaškolení, 60 dní ladění | **od 180 000 Kč**, typicky 240 000–450 000 Kč za první agent | Druhý zdroj obratu, vyšší LTV |
