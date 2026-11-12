@@ -9,9 +9,9 @@ function FlowFallback() {
   return (
     <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" className="absolute inset-0 h-full w-full">
       {ys.map((y, i) => (
-        <path key={i} d={`M0 ${y} C 35 ${y}, 60 ${46 + (y - 46) * 0.25}, 82 46`} fill="none" stroke="#4DA3FF" strokeOpacity={0.12 + (i % 3) * 0.06} strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        <path key={i} d={`M0 ${y} C 35 ${y}, 60 ${46 + (y - 46) * 0.25}, 82 46`} fill="none" stroke="var(--color-flow)" strokeOpacity={0.12 + (i % 3) * 0.06} strokeWidth="1" vectorEffect="non-scaling-stroke" />
       ))}
-      <path d="M82 46 H100" stroke="#C8FF3E" strokeOpacity=".7" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+      <path d="M82 46 H100" stroke="var(--color-accent)" strokeOpacity=".7" strokeWidth="2" vectorEffect="non-scaling-stroke" />
     </svg>
   )
 }

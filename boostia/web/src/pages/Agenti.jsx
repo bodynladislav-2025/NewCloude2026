@@ -42,7 +42,7 @@ export default function Agenti() {
         <SectionHead title="Co obvykle stavíme" />
         <Reveal className="grid gap-4 md:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
           {AGENTS.map(([I, h, t, flow]) => (
-            <Card key={h} spotlight className="flex flex-col">
+            <Card key={h} spotlight tilt className="flex flex-col">
               <I size={24} className="text-accent" aria-hidden="true" />
               <h3 className="mt-5 text-[22px]">{h}</h3>
               <p className="mt-3 flex-1 text-muted">{t}</p>

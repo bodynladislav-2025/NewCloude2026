@@ -38,6 +38,9 @@ Web a PDF už používají novou podobu nabídky. Dokumenty fází 1–10, email
 | Cena programu | 290 000 Kč, tým do 12 lidí; zakladatelská cena 220 000 Kč | 197 000 Kč, jedna cena pro tým až 16 lidí; zakladatelská cena zrušena |
 | Dotace | „cca 160 000 Kč po dotaci pro 10 lidí" | při 16 účastnících pokryje příspěvek celou cenu, při 12 lidech 79 %, při 10 lidech 66 % |
 | Garance | Garance 3 hodin (doučení + vrácení 25 %) | první den na naše riziko · bez schválené dotace se neplatí · doučení zdarma až 20 hodin |
+| Rozsah | 50 hodin, 8 týdnů (3 h + 6 × 7 h + 5 h) | 50 hodin v 9 školicích dnech (4 h + 7 × 6 h + 4 h) |
+| Velikost běhu | do 12 lidí | nejvýš 15 lidí; dotace pak pokryje 99 % ceny |
+| Vzhled | jen tmavý režim | tmavý i světlý režim s přepínačem v hlavičce |
 | Primární cílovka | obchodní ředitel | HR / L&D (materiály zdarma), obchodní ředitel a jednatel jako spolurozhodující |
 
 ## Jak číst značky

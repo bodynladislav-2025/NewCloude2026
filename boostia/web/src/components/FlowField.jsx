@@ -11,6 +11,11 @@ export default function FlowField({ focus = { x: 0.82, y: 0.46 } }) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const N = window.innerWidth < 768 ? 26 : 48
     const mouse = { x: -9999, y: -9999 }
+    // Barvy bere z CSS proměnných, aby fungoval i světlý režim
+    const rgb = (name) => { const h = getComputedStyle(document.documentElement).getPropertyValue(name).trim().replace('#', ''); return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)).join(',') }
+    let FL = rgb('--color-flow'), AC = rgb('--color-accent')
+    const onTheme = () => { FL = rgb('--color-flow'); AC = rgb('--color-accent') }
+    window.addEventListener('boostia:theme', onTheme)
     const lines = Array.from({ length: N }, (_, i) => ({
       y0: (i + 0.5) / N, wob: Math.random() * Math.PI * 2, speed: 0.12 + Math.random() * 0.22,
       t: Math.random(), alpha: 0.1 + Math.random() * 0.3, c1: 0.25 + Math.random() * 0.2, c2: 0.5 + Math.random() * 0.2,
@@ -45,21 +50,21 @@ export default function FlowField({ focus = { x: 0.82, y: 0.46 } }) {
           }
         }
         ctx.beginPath(); ctx.moveTo(-10, y0); ctx.bezierCurveTo(c1x, c1y, c2x, c2y, fx, fy)
-        ctx.strokeStyle = `rgba(77,163,255,${l.alpha})`; ctx.lineWidth = 1; ctx.stroke()
+        ctx.strokeStyle = `rgba(${FL},${l.alpha})`; ctx.lineWidth = 1; ctx.stroke()
         // světelný puls putující po lince
         l.t += dt * l.speed; if (l.t > 1) l.t -= 1
         const px = bez(-10, c1x, c2x, fx, l.t), py = bez(y0, c1y, c2y, fy, l.t)
         ctx.beginPath(); ctx.arc(px, py, 1.6, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(200,255,62,${0.25 + l.t * 0.7})`; ctx.fill()
+        ctx.fillStyle = `rgba(${AC},${0.25 + l.t * 0.7})`; ctx.fill()
       }
       // výstupní linka k výsledku
       const g = ctx.createLinearGradient(fx, fy, w, fy)
-      g.addColorStop(0, 'rgba(200,255,62,.9)'); g.addColorStop(1, 'rgba(200,255,62,0)')
+      g.addColorStop(0, `rgba(${AC},.9)`); g.addColorStop(1, `rgba(${AC},0)`)
       ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(w, fy); ctx.strokeStyle = g; ctx.lineWidth = 2; ctx.stroke()
       const rg = ctx.createRadialGradient(fx, fy, 0, fx, fy, 90)
-      rg.addColorStop(0, 'rgba(200,255,62,.22)'); rg.addColorStop(1, 'rgba(200,255,62,0)')
+      rg.addColorStop(0, `rgba(${AC},.22)`); rg.addColorStop(1, `rgba(${AC},0)`)
       ctx.fillStyle = rg; ctx.fillRect(fx - 90, fy - 90, 180, 180)
-      ctx.beginPath(); ctx.arc(fx, fy, 4, 0, Math.PI * 2); ctx.fillStyle = '#C8FF3E'; ctx.fill()
+      ctx.beginPath(); ctx.arc(fx, fy, 4, 0, Math.PI * 2); ctx.fillStyle = `rgb(${AC})`; ctx.fill()
     }
     const onMove = (e) => { const r = canvas.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top }
     const io = new IntersectionObserver(([e]) => { running = e.isIntersecting })
@@ -67,7 +72,7 @@ export default function FlowField({ focus = { x: 0.82, y: 0.46 } }) {
     window.addEventListener('resize', resize)
     window.addEventListener('pointermove', onMove, { passive: true })
     raf = requestAnimationFrame(draw)
-    return () => { cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener('resize', resize); window.removeEventListener('pointermove', onMove) }
+    return () => { cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener('resize', resize); window.removeEventListener('pointermove', onMove); window.removeEventListener('boostia:theme', onTheme) }
   }, [focus.x, focus.y])
   return <canvas ref={ref} className="absolute inset-0 h-full w-full" aria-hidden="true" />
 }

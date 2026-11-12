@@ -8,7 +8,7 @@ import { track } from '../lib/tracking'
 export const PROGRAM_PRICE = 197000
 export const HOURS = 50
 export const RATE = 260.73 // Kč / hodina / účastník, projekt Vzdělávání pro firmy. OVĚŘIT před zveřejněním.
-export const MAX_TEAM = 16
+export const MAX_TEAM = 15 // nejvýš 15 lidí v jednom běhu
 export const HOURS_PER_MONTH = 12 // cíl programu: hodin měsíčně navíc na obchodníka
 const SELLING_HOURS_WEEK = 12 // kolik hodin týdně dnes obchodník jedná s klienty (modelový předpoklad)
 
@@ -53,7 +53,7 @@ export default function SubsidyCalc({ id = 'dotacni-kalkulacka' }) {
             <p className="font-mono text-[12px] uppercase tracking-wider text-accent">Kalkulačka</p>
             <h3 className="mt-3 text-[26px]">Kolik zaplatíte vy a kolik to může vydělat</h3>
           </div>
-          <Row id={id + '-people'} label="Kolik lidí pošlete na školení?" value={people} set={touch(setPeople)} min={4} max={MAX_TEAM} step={1} unit="" hint={`Jedna cena pro tým až ${MAX_TEAM} lidí.`} />
+          <Row id={id + '-people'} label="Kolik lidí pošlete na školení?" value={people} set={touch(setPeople)} min={4} max={MAX_TEAM} step={1} unit="" hint={`Jedna cena pro tým. V jednom běhu nejvýš ${MAX_TEAM} lidí.`} />
           <Row id={id + '-rev'} label="Roční tržby na jednoho obchodníka" value={rev} set={touch(setRev)} min={1} max={60} step={1} unit=" mil. Kč" hint="Průměr za tým. Opatrněji: zadejte hrubou marži." />
         </div>
 
@@ -64,8 +64,8 @@ export default function SubsidyCalc({ id = 'dotacni-kalkulacka' }) {
           </dl>
           <div className="mt-5 rounded-[12px] border border-line bg-bg p-5">
             <p className="text-[14px] text-muted">Doplatíte z vlastního</p>
-            <p className={`mt-1 whitespace-nowrap font-display text-[clamp(1.9rem,4.4vw,2.6rem)] font-semibold leading-none ${r.full ? 'text-accent' : ''}`}><SpringNumber value={r.pay} format={(x) => fmt(Math.round(x))} /> Kč</p>
-            <p className="mt-2 text-[14px] text-muted">{r.full ? 'Příspěvek pokryje celou cenu programu.' : <>Příspěvek pokryje <span className="text-ink">{fmt(r.pct)} %</span> ceny. Celou cenu pokryje od {MAX_TEAM} účastníků.</>}</p>
+            <p className={`mt-1 whitespace-nowrap font-display text-[clamp(1.9rem,4.4vw,2.6rem)] font-semibold leading-none ${people >= MAX_TEAM ? 'text-accent' : ''}`}><SpringNumber value={r.pay} format={(x) => fmt(Math.round(x))} /> Kč</p>
+            <p className="mt-2 text-[14px] text-muted">Příspěvek pokryje <span className="text-ink">{fmt(r.pct)} %</span> ceny. {people >= MAX_TEAM ? `Víc než ${MAX_TEAM} lidí v jednom běhu být nemůže.` : `Při plném běhu ${MAX_TEAM} lidí pokryje 99 %.`}</p>
           </div>
           <div className="mt-3 rounded-[12px] border border-accent/50 bg-accent/[0.06] p-5">
             <p className="text-[14px] text-muted">Co to může obchodu přinést navíc</p>

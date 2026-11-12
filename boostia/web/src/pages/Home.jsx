@@ -4,7 +4,10 @@ import Seo, { ORG, faqSchema } from '../components/Seo'
 import HeroBackground from '../components/HeroBackground'
 import Calculator from '../components/Calculator'
 import SubsidyCalc from '../components/SubsidyCalc'
-import { Badge, Button, Card, Container, Faq, Magnetic, Marquee, Placeholder, Reveal, Section, SectionHead, SplitHeadline } from '../components/ui'
+import { useRef } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { Badge, Button, Card, Container, Faq, Magnetic, Marquee, NumberTicker, Placeholder, Reveal, Section, SectionHead, SplitHeadline } from '../components/ui'
 import { FinalCta, FoundingBanner, GuaranteeBlock } from '../components/blocks'
 import { FAQ_HOME, MODULES, PRICE, TOOLS } from '../content'
 import { MATERIALS, MaterialsGrid } from './Materialy'
@@ -20,17 +23,30 @@ const BEFORE_AFTER = [
 
 const COURSE = {
   '@context': 'https://schema.org', '@type': 'Course', name: 'AI Obchod 50',
-  description: 'Osmitýdenní měřený AI trénink pro obchodní týmy: příprava schůzek, zápisy, nabídky, prospecting a práce se stávajícími klienty.',
+  description: 'Měřený AI trénink pro obchodní týmy v devíti školicích dnech: příprava schůzek, zápisy, nabídky, prospecting a práce se stávajícími klienty.',
   provider: { '@type': 'Organization', name: 'Boostia' }, inLanguage: 'cs',
   hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'onsite', courseWorkload: 'PT50H' },
   offers: { '@type': 'Offer', price: '197000', priceCurrency: 'CZK', category: 'Paid' },
+}
+
+// Linka, která se při scrollu vykreslí nad čtyřmi kroky
+function StepsLine() {
+  const ref = useRef(null)
+  useGSAP(() => {
+    const mm = gsap.matchMedia()
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.fromTo(ref.current.firstChild, { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: ref.current, start: 'top 85%', end: 'top 35%', scrub: 0.6 } })
+    })
+    return () => mm.revert()
+  }, { scope: ref })
+  return <div ref={ref} aria-hidden="true" className="mb-6 hidden h-px bg-line lg:block"><div className="h-px origin-left bg-accent" /></div>
 }
 
 export default function Home() {
   return (
     <>
       <Seo title="AI školení pro obchodní týmy s měřeným výsledkem · Boostia" path="/"
-        description="12 hodin měsíčně navíc na prodej pro každého obchodníka. Osmitýdenní AI trénink obchodního týmu za 197 000 Kč, s dotací Úřadu práce a měřeným výsledkem."
+        description="12 hodin měsíčně navíc na prodej pro každého obchodníka. AI trénink obchodního týmu v 9 dnech za 197 000 Kč, s dotací Úřadu práce a měřeným výsledkem."
         schema={[ORG, COURSE, faqSchema(FAQ_HOME)]} />
 
       {/* 1 – Hero */}
@@ -40,20 +56,20 @@ export default function Home() {
           <Badge>Měřený AI trénink pro obchodní týmy</Badge>
           <SplitHeadline className="mt-6 max-w-[18ch] text-[clamp(2.4rem,6.2vw,4.6rem)] leading-[1.03]"
             parts={[{ t: '12 hodin měsíčně', hl: true }, { t: ' navíc na prodej pro každého obchodníka. ' }, { t: 'Kolik vám vydělají?', hl: true }]} />
-          <p className="mt-6 max-w-[60ch] text-[19px] text-muted">Čas, který dnes spolknou přípravy, zápisy a nabídky, vrátíme obchodu. Za 8 týdnů naučíme váš tým pracovat s AI bezpečně a na vlastních zakázkách. <span className="hidden sm:inline">Výsledek změříme v hodinách i v korunách.</span></p>
+          <p className="mt-6 max-w-[60ch] text-[19px] text-muted">Čas, který dnes spolknou přípravy, zápisy a nabídky, vrátíme obchodu. Za 9 školicích dní naučíme váš tým pracovat s AI bezpečně a na vlastních zakázkách. <span className="hidden sm:inline">Výsledek změříme v hodinách i v korunách.</span></p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <Magnetic><Button href="#kalkulacka" ctaId="hero_calc" section="hero">Spočítat, kolik to vydělá</Button></Magnetic>
+            <Magnetic><Button href="#kalkulacka" ctaId="hero_calc" section="hero" shine>Spočítat, kolik to vydělá</Button></Magnetic>
             <Button to="/audit" variant="secondary" ctaId="hero_audit" section="hero" arrow={false}>Audit zdarma (30 min)</Button>
           </div>
-          <p className="mt-4 text-[14px] text-muted">Cena 197 000 Kč pro celý tým · při 16 účastnících ji pokryje dotace Úřadu práce</p>
+          <p className="mt-4 text-[14px] text-muted">Cena 197 000 Kč pro celý tým · při 15 účastnících ji z 99 % pokryje dotace Úřadu práce</p>
           <dl className="mt-10 grid max-w-[900px] gap-3 sm:grid-cols-3">
-            {[['144 hodin', 'ročně navíc na jednoho obchodníka', '12 hodin měsíčně, cíl programu'], ['1 440 hodin', 'ročně u týmu deseti lidí', 'skoro celý úvazek navíc pro obchod'], ['13 mil. Kč', 'tržeb ročně navíc, modelový tým', '10 lidí, 10 mil. Kč tržeb na obchodníka. Spočítejte si svoje.']].map(([n, l, s], i) => (
+            {[[144, ' hodin', 'ročně navíc na jednoho obchodníka', '12 hodin měsíčně, cíl programu'], [1440, ' hodin', 'ročně u týmu deseti lidí', 'skoro celý úvazek navíc pro obchod'], [13, ' mil. Kč', 'tržeb ročně navíc, modelový tým', '10 lidí, 10 mil. Kč tržeb na obchodníka. Spočítejte si svoje.']].map(([n, u, l, s], i) => (
               <div key={n} className="rounded-[14px] border border-line bg-surface/80 p-5 backdrop-blur-sm">
                 <dt className="sr-only">{l}</dt>
                 <dd>
                   {i === 2
-                    ? <a href="#kalkulacka" className="num text-[26px] font-medium leading-none text-accent underline decoration-accent/40 underline-offset-4">{n}</a>
-                    : <span className="num text-[26px] font-medium leading-none text-accent">{n}</span>}
+                    ? <a href="#kalkulacka" className="text-[26px] font-medium leading-none text-accent underline decoration-accent/40 underline-offset-4"><NumberTicker value={n} suffix={u} /></a>
+                    : <span className="text-[26px] font-medium leading-none text-accent"><NumberTicker value={n} suffix={u} /></span>}
                   <span className="mt-2 block text-[15px] text-ink">{l}</span>
                   <span className="mt-1 block text-[13px] text-muted">{s}</span>
                 </dd>
@@ -61,7 +77,7 @@ export default function Home() {
             ))}
           </dl>
           <ul className="mt-8 grid max-w-[900px] gap-x-8 gap-y-3 text-[15px] text-muted sm:grid-cols-2 lg:grid-cols-4">
-            {[[Timer, '50 hodin, 8 týdnů'], [ShieldCheck, 'První den na naše riziko'], [FileCheck2, 'Dotace Úřadu práce'], [GraduationCap, 'Vede obchodník se 17 lety praxe']].map(([I, t]) => (
+            {[[Timer, '50 hodin v 9 dnech'], [ShieldCheck, 'První den na naše riziko'], [FileCheck2, 'Dotace Úřadu práce'], [GraduationCap, 'Vede obchodník se 17 lety praxe']].map(([I, t]) => (
               <li key={t} className="flex items-center gap-2.5"><I size={18} className="shrink-0 text-accent" aria-hidden="true" />{t}</li>
             ))}
           </ul>
@@ -78,12 +94,12 @@ export default function Home() {
           {BEFORE_AFTER.map(([label, before, after]) => (
             <Card key={label}>
               <p className="text-[15px] text-muted">{label}</p>
-              <p className="mt-5 num text-[17px] text-warn line-through decoration-warn/70">{before}</p>
-              <p className="mt-1 font-display text-[28px] font-semibold leading-tight text-accent">{after}</p>
+              <p className="mt-5 num text-[17px] text-warn"><span className="strike">{before}</span></p>
+              <p className="after-pop mt-1 font-display text-[28px] font-semibold leading-tight text-accent">{after}</p>
             </Card>
           ))}
         </Reveal>
-        <p className="mt-5 text-[14px] text-muted">Cílové hodnoty programu. Vaše skutečná čísla změříme první týden.<Placeholder kind="PROOF">nahradit průměry z pilotních týmů</Placeholder></p>
+        <p className="mt-5 text-[14px] text-muted">Cílové hodnoty programu. Vaše skutečná čísla změříme první den.<Placeholder kind="PROOF">nahradit průměry z pilotních týmů</Placeholder></p>
       </Section>
 
       {/* 3 – Kalkulačka */}
@@ -96,11 +112,11 @@ export default function Home() {
 
       {/* 4 – Řešení */}
       <Section>
-        <SectionHead badge="AI Obchod 50" title="Osm týdnů, po kterých tým pracuje jinak">
-          <p>Žádná přednáška o umělé inteligenci. Jeden den v týdnu u vás ve firmě, na vašich klientech a vašich nabídkách. Každý týden jedna dovednost, kterou obchodník druhý den použije.</p>
+        <SectionHead badge="AI Obchod 50" title="9 dní, po kterých tým pracuje jinak">
+          <p>Žádná přednáška o umělé inteligenci. Devět školicích dní u vás ve firmě, na vašich klientech a vašich nabídkách. Každý den jedna dovednost, kterou obchodník hned použije.</p>
         </SectionHead>
         <Reveal className="grid gap-4 lg:grid-cols-3">
-          {[[Ruler, 'Měříme', 'První týden stopujeme pět běžných činností. Osmý týden znovu. Vedení dostane rozdíl v hodinách a korunách.'],
+          {[[Ruler, 'Měříme', 'První den stopujeme pět běžných činností. Devátý den znovu. Vedení dostane rozdíl v hodinách a korunách.'],
             [Target, 'Trénujeme na vaší práci', 'Příprava na skutečnou zítřejší schůzku. Skutečná nabídka. Skutečný zápis do vašeho CRM.'],
             [Wrench, 'Necháme vám nástroje', 'Čtyři asistenti nastavení na vaše podklady a Playbook AI obchodu vaší firmy.']].map(([I, h, t]) => (
             <Card key={h}><I size={26} className="text-accent" aria-hidden="true" /><h3 className="mt-5 text-[24px]">{h}</h3><p className="mt-3 text-muted">{t}</p></Card>
@@ -112,8 +128,8 @@ export default function Home() {
       <Section tight>
         <SectionHead title="Co se tým naučí" />
         <Reveal className="grid gap-4 md:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
-          {MODULES.map(([n, h, t], i) => (
-            <Card key={n} spotlight className={i === 0 || i === 5 ? 'lg:col-span-1' : ''}>
+          {MODULES.map(([n, h, t]) => (
+            <Card key={n} spotlight tilt>
               <p className="num text-[13px] text-accent">{n}</p>
               <h3 className="mt-4 text-[22px]">{h}</h3>
               <p className="mt-3 text-muted">{t}</p>
@@ -126,7 +142,7 @@ export default function Home() {
       <Section className="border-y border-line bg-surface/40">
         <div className="grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionHead badge="Ukázka" title="Podívejte se, jak to vypadá v praxi">
-            <p>Ukázka je simulovaná, postup je skutečný. Tohle se tým naučí druhý, třetí a čtvrtý týden.</p>
+            <p>Ukázka je simulovaná, postup je skutečný. Tohle se tým naučí třetí, čtvrtý a pátý den.</p>
             <p className="pt-2"><Button to="/audit" ctaId="demo_audit" section="demo">Chci tohle pro svůj tým</Button></p>
           </SectionHead>
           <Suspense fallback={<div className="min-h-[640px] rounded-[14px] border border-line bg-surface" />}><AgentDemo /></Suspense>
@@ -136,10 +152,11 @@ export default function Home() {
       {/* 7 – Jak to funguje */}
       <Section>
         <SectionHead title="Od prvního hovoru k výsledku ve čtyřech krocích" />
+        <StepsLine />
         <Reveal as="ol" className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {[[CalendarCheck, 'Audit (30 minut, zdarma)', 'Spočítáme, kolik času a peněz váš obchod ztrácí.'],
             [FileCheck2, 'Dotace', 'Ověříme nárok a žádost připravíme s vaším HR.'],
-            [GraduationCap, 'Osm týdnů tréninku', 'Jeden den týdně u vás. Měření na začátku a na konci.'],
+            [GraduationCap, '9 dní tréninku', 'U vás ve firmě, obvykle jeden den týdně. Měření na začátku a na konci.'],
             [Target, 'Výsledek a co dál', 'Report pro vedení. Tým, který AI používá každý den. Když to dává smysl, postavíme vám AI agenty.']].map(([I, h, t], i) => (
             <li key={h} className="rounded-[14px] border border-line bg-surface p-6">
               <div className="flex items-center justify-between"><span className="num text-[13px] text-muted">0{i + 1}</span><I size={22} className="text-accent" aria-hidden="true" /></div>
@@ -147,7 +164,7 @@ export default function Home() {
             </li>
           ))}
         </Reveal>
-        <p className="mt-8"><Button to="/jak-to-funguje" variant="ghost" ctaId="home_how" section="jak">Celý průběh týden po týdnu</Button></p>
+        <p className="mt-8"><Button to="/jak-to-funguje" variant="ghost" ctaId="home_how" section="jak">Celý průběh den po dni</Button></p>
       </Section>
 
       {/* 8 – Garance */}
@@ -156,19 +173,19 @@ export default function Home() {
       {/* 9 – Cena a dotace */}
       <Section id="cena" className="scroll-mt-20">
         <SectionHead title="Kolik to stojí">
-          <p>Jedna cena pro celý tým. A většinu nebo celou částku může pokrýt dotace Úřadu práce.</p>
+          <p>Jedna cena pro celý tým. A většinu, při plném běhu skoro celou částku, může pokrýt dotace Úřadu práce.</p>
         </SectionHead>
         <Reveal className="grid gap-4 lg:grid-cols-[1.1fr_1fr]">
           <Card className="!border-accent/60 !bg-surface2">
             <p className="font-mono text-[12px] uppercase tracking-wider text-accent">AI Obchod 50</p>
-            <p className="mt-4 num text-[clamp(2.6rem,6vw,3.6rem)] font-medium leading-none">{PRICE.program}</p>
-            <p className="mt-3 text-[15px] text-muted">bez DPH · jedna cena pro tým až 16 lidí · 50 hodin u vás ve firmě</p>
+            <p className="mt-4 text-[clamp(2.6rem,6vw,3.6rem)] font-medium leading-none"><NumberTicker value={197000} suffix=" Kč" /></p>
+            <p className="mt-3 text-[15px] text-muted">bez DPH · jedna cena pro tým až 15 lidí · 50 hodin v 9 dnech u vás ve firmě</p>
             <ul className="mt-6 grid gap-2 text-[15px] text-muted sm:grid-cols-2"><li>Měření před a po, report pro vedení</li><li>Playbook a 4 týmoví asistenti</li><li>AI směrnice a semafor dat</li><li>Pomoc s dotací v ceně</li><li>Osvědčení pro každého účastníka</li><li>3 měsíce Boostia Klubu</li></ul>
           </Card>
           <Card className="flex flex-col justify-center !border-flow/50">
             <p className="font-mono text-[12px] uppercase tracking-wider text-flow">Dotace Úřadu práce</p>
-            <p className="mt-4 font-display text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">Při 16 účastnících zaplatí <span className="text-accent">celých 197 000 Kč</span> Úřad práce.</p>
-            <p className="mt-4 text-muted">U menšího týmu pokryje příspěvek většinu ceny: při 12 lidech zhruba 79 %, při 10 lidech 66 %. K tomu stát přispívá na mzdy za dobu školení. Žádost připravíme s vaším HR.<Placeholder kind="OVĚŘIT">sazba 260,73 Kč/h a podmínky</Placeholder></p>
+            <p className="mt-4 font-display text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">Při 15 účastnících zaplatí Úřad práce <span className="text-accent">99 % ceny</span>. Doplatíte zhruba 1 500 Kč.</p>
+            <p className="mt-4 text-muted">V jednom běhu může být nejvýš 15 lidí. U menšího týmu pokryje příspěvek většinu ceny: při 12 lidech zhruba 79 %, při 10 lidech 66 %. K tomu stát přispívá na mzdy za dobu školení. Žádost připravíme s vaším HR.<Placeholder kind="OVĚŘIT">sazba 260,73 Kč/h a podmínky</Placeholder></p>
           </Card>
         </Reveal>
         <div className="mt-4"><SubsidyCalc /></div>

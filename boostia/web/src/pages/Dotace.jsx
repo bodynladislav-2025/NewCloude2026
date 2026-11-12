@@ -10,7 +10,7 @@ const STEPS = [
   ['Ověření', '2 dny', 'Pošlete IČO a počet účastníků. Řekneme, jestli a z čeho můžete čerpat.'],
   ['Žádost', '1–2 týdny', 'Dodáme osnovu, harmonogram, hodinovou dotaci a profil lektora. Žádost s vaším HR předvyplníme. Podáváte vy.'],
   ['Schválení', null, 'Rozhoduje Úřad práce.'],
-  ['Program', '8 týdnů', 'Vedeme prezenční listiny a vystavíme osvědčení.'],
+  ['Program', '9 dní', 'Vedeme prezenční listiny a vystavíme osvědčení.'],
   ['Vyúčtování', null, 'Připravíme podklady. Příspěvek dostáváte zpětně po dokončení.'],
 ]
 
@@ -21,13 +21,13 @@ export default function Dotace() {
         description="Program má 50 hodin a lze na něj čerpat příspěvek Úřadu práce. Nárok ověříme do 2 dnů a žádost připravíme s vaším HR." schema={[faqSchema(FAQ_DOTACE)]} />
       <PageHero badge="Dotace"
         parts={<SplitHeadline className="max-w-[20ch] text-[clamp(2.2rem,5.4vw,4rem)]" parts={[{ t: 'Na AI Obchod 50 můžete čerpat dotaci. ' }, { t: 'Papíry připravíme s vámi.', hl: true }]} />}
-        sub={<>Program má 50 hodin, což je minimální rozsah pro projekt Vzdělávání pro firmy Úřadu práce. Při 16 účastnících pokryje příspěvek celou cenu 197 000 Kč, při deseti zhruba dvě třetiny. K tomu stát přispívá na mzdy.<Placeholder kind="OVĚŘIT" /></>}>
+        sub={<>Program má 50 hodin, což je minimální rozsah pro projekt Vzdělávání pro firmy Úřadu práce. V jednom běhu může být nejvýš 15 lidí. Při 15 účastnících pokryje příspěvek 99 % ceny 197 000 Kč, při deseti zhruba dvě třetiny. K tomu stát přispívá na mzdy.<Placeholder kind="OVĚŘIT" /></>}>
         <Button href="#overit" ctaId="dotace_hero" section="hero">Ověřit nárok do 2 pracovních dnů</Button>
       </PageHero>
 
       <Section tight>
         <SectionHead title="Kolik to dělá">
-          <p>Program stojí 197 000 Kč bez DPH pro tým až 16 lidí. Posuňte počet účastníků a uvidíte, kolik pokryje příspěvek a kolik doplatíte.</p>
+          <p>Program stojí 197 000 Kč bez DPH pro tým až 15 lidí. Posuňte počet účastníků a uvidíte, kolik pokryje příspěvek a kolik doplatíte.</p>
         </SectionHead>
         <SubsidyCalc />
       </Section>

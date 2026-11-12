@@ -26,10 +26,10 @@ export default function Studie() {
   return (
     <>
       <Seo title="Výsledky AI tréninku obchodních týmů · Boostia" path="/pripadove-studie"
-        description="Změřené výsledky týmů po osmi týdnech: čas na přípravu schůzky, zápis a nabídku před a po." />
+        description="Změřené výsledky týmů po devíti dnech programu: čas na přípravu schůzky, zápis a nabídku před a po." />
       <PageHero badge="Případové studie"
         parts={<SplitHeadline className="max-w-[16ch] text-[clamp(2.2rem,5.4vw,4rem)]" parts={[{ t: 'Výsledky, které jsme ' }, { t: 'změřili', hl: true }]} />}
-        sub="U každého týmu uvádíme výchozí stav, výsledek po osmi týdnech a jak jsme měřili." />
+        sub="U každého týmu uvádíme výchozí stav, výsledek po devíti dnech programu a jak jsme měřili." />
       <Section tight>
         {CASE_STUDIES.length > 0
           ? <Reveal className="grid gap-4 lg:grid-cols-2">{CASE_STUDIES.map((c, i) => <CaseStudyCard key={i} c={c} />)}</Reveal>
@@ -37,9 +37,9 @@ export default function Studie() {
             <>
               <FoundingBanner />
               <Reveal className="mt-4 grid gap-4 md:grid-cols-3">
-                <Card><h3 className="text-[21px]">Metodika měření</h3><p className="mt-3 text-muted">Pět činností, stopky, každý účastník, první a osmý týden. Můžete si ji projít předem.</p></Card>
+                <Card><h3 className="text-[21px]">Metodika měření</h3><p className="mt-3 text-muted">Pět činností, stopky, každý účastník, první a devátý den. Můžete si ji projít předem.</p></Card>
                 <Card><h3 className="text-[21px]">Bez rizika</h3><p className="mt-3 text-muted">První den na naše riziko. Bez schválené dotace neplatíte. Když tým AI nepoužívá, doučíme zdarma.</p></Card>
-                <Card><h3 className="text-[21px]">Jedna cena</h3><p className="mt-3 text-muted">{PRICE.program} pro celý tým. Při 16 účastnících ji pokryje dotace Úřadu práce.</p></Card>
+                <Card><h3 className="text-[21px]">Jedna cena</h3><p className="mt-3 text-muted">{PRICE.program} pro celý tým. Při 15 účastnících ji z 99 % pokryje dotace Úřadu práce.</p></Card>
               </Reveal>
             </>
           )}

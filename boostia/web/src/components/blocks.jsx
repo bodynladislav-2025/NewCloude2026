@@ -22,7 +22,7 @@ export function GuaranteeBlock() {
               </div>
               <div>
                 <h3 className="text-[21px]">Doučíme zdarma</h3>
-                <p className="mt-2 text-muted">Když vedoucí týmu po osmi týdnech řekne, že lidé AI v denní práci nepoužívají, pokračujeme zdarma, až 20 hodin.</p>
+                <p className="mt-2 text-muted">Když vedoucí týmu po devíti dnech programu řekne, že lidé AI v denní práci nepoužívají, pokračujeme zdarma, až 20 hodin.</p>
               </div>
             </div>
             <p className="mt-6 text-[14px] text-muted">Doučení platí pro týmy s účastí aspoň 80 % a splněnými týdenními úkoly.</p>
@@ -63,14 +63,14 @@ export function FinalCta({ title = 'Začněte číslem', text = 'Za 30 minut bud
       <Container>
         <Reveal>
           <div className="relative overflow-hidden rounded-[20px] border border-line bg-surface px-6 py-16 text-center lg:py-24">
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" className="absolute inset-0 h-full w-full opacity-70">
-              {[5, 20, 35, 65, 80, 95].map((y, i) => <path key={i} d={`M0 ${y} C 25 ${y}, 30 50, 38 50`} fill="none" stroke="#4DA3FF" strokeOpacity=".22" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
-              {[5, 20, 35, 65, 80, 95].map((y, i) => <path key={'r' + i} d={`M100 ${y} C 75 ${y}, 70 50, 62 50`} fill="none" stroke="#4DA3FF" strokeOpacity=".22" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" className="flowlines absolute inset-0 h-full w-full opacity-70">
+              {[5, 20, 35, 65, 80, 95].map((y, i) => <path key={i} d={`M0 ${y} C 25 ${y}, 30 50, 38 50`} fill="none" stroke="var(--color-flow)" strokeOpacity=".22" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
+              {[5, 20, 35, 65, 80, 95].map((y, i) => <path key={'r' + i} d={`M100 ${y} C 75 ${y}, 70 50, 62 50`} fill="none" stroke="var(--color-flow)" strokeOpacity=".22" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
             </svg>
             <div className="relative">
               <h2 className="text-[clamp(2.1rem,5vw,3.6rem)]">{title}</h2>
               <p className="mx-auto mt-5 max-w-[54ch] text-[18px] text-muted">{text}</p>
-              <div className="mt-8"><Magnetic><Button to={to} ctaId={id} section="final">{cta}</Button></Magnetic></div>
+              <div className="mt-8"><Magnetic><Button to={to} ctaId={id} section="final" shine>{cta}</Button></Magnetic></div>
               <CohortLine className="mt-6" />
             </div>
           </div>
@@ -83,9 +83,9 @@ export function FinalCta({ title = 'Začněte číslem', text = 'Za 30 minut bud
 export function PageHero({ badge, parts, sub, children }) {
   return (
     <section className="relative overflow-hidden pb-16 pt-[140px] lg:pb-24 lg:pt-[190px]">
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 h-full w-2/3 opacity-60 [mask-image:linear-gradient(to_right,transparent,#000)]">
-        {[10, 25, 40, 60, 75, 90].map((y, i) => <path key={i} d={`M0 ${y} C 40 ${y}, 60 ${50 + (y - 50) * 0.2}, 85 50`} fill="none" stroke="#4DA3FF" strokeOpacity=".2" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
-        <path d="M85 50 H100" stroke="#C8FF3E" strokeOpacity=".6" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" className="flowlines pointer-events-none absolute inset-y-0 right-0 h-full w-2/3 opacity-60 [mask-image:linear-gradient(to_right,transparent,#000)]">
+        {[10, 25, 40, 60, 75, 90].map((y, i) => <path key={i} d={`M0 ${y} C 40 ${y}, 60 ${50 + (y - 50) * 0.2}, 85 50`} fill="none" stroke="var(--color-flow)" strokeOpacity=".2" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
+        <path className="out" d="M85 50 H100" stroke="var(--color-accent)" strokeOpacity=".6" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
       </svg>
       <Container className="relative">
         {badge && <div className="mb-6"><span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[12px] uppercase tracking-wider text-muted"><span className="h-1.5 w-1.5 rounded-full bg-accent" />{badge}</span></div>}

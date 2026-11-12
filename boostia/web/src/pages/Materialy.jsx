@@ -55,7 +55,7 @@ function MaterialCard({ m, group, unlocked, onUnlock }) {
   }
 
   return (
-    <Card spotlight className="flex flex-col">
+    <Card spotlight tilt className="flex flex-col">
       <div className="flex items-center justify-between">
         <span className="font-mono text-[12px] uppercase tracking-wider text-accent">{m.type}</span>
         <span className="flex items-center gap-1.5 num text-[12px] text-muted"><FileText size={14} aria-hidden="true" />PDF · {m.pages} {m.pages < 5 ? 'strany' : 'stran'}</span>
@@ -64,7 +64,7 @@ function MaterialCard({ m, group, unlocked, onUnlock }) {
       <p className="mt-3 flex-1 text-muted">{m.text}</p>
       <div className="mt-6">
         {unlocked ? (
-          <a href={href} download onClick={again} className="group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 font-medium text-accentink transition-colors hover:bg-[#d6ff6a]">
+          <a href={href} download onClick={again} className="group inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 font-medium text-accentink transition-colors hover:brightness-110">
             <Download size={18} aria-hidden="true" /> Stáhnout PDF
           </a>
         ) : open ? (
@@ -74,7 +74,7 @@ function MaterialCard({ m, group, unlocked, onUnlock }) {
               onChange={(e) => { setEmail(e.target.value); if (state === 'error') setState('idle') }} aria-invalid={state === 'error'}
               className="min-h-[48px] w-full rounded-full border border-line bg-bg px-5 text-[16px] outline-none placeholder:text-muted/60 focus:border-accent aria-[invalid=true]:border-warn" />
             {state === 'error' && <p className="text-[14px] text-warn">Zkontrolujte prosím e-mail.</p>}
-            <label className="flex items-start gap-2 text-[13px] text-muted"><input type="checkbox" checked={news} onChange={(e) => setNews(e.target.checked)} className="mt-1 h-4 w-4 accent-[#C8FF3E]" /> Chci jednou za 14 dní praktický tip k AI ve firmě.</label>
+            <label className="flex items-start gap-2 text-[13px] text-muted"><input type="checkbox" checked={news} onChange={(e) => setNews(e.target.checked)} className="mt-1 h-4 w-4 accent-[var(--color-accent)]" /> Chci jednou za 14 dní praktický tip k AI ve firmě.</label>
             <Button type="submit" disabled={state === 'sending'} arrow={false} className="w-full">{state === 'sending' ? 'Odesílám…' : 'Stáhnout PDF'}</Button>
             <p className="text-[12px] text-muted">Stažení začne hned. E-mail zadáváte jen jednou, pak se odemknou všechny materiály.</p>
           </form>

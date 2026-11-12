@@ -66,7 +66,7 @@ export default function DayScrolly() {
             <svg viewBox="0 0 300 120" className="ml-auto mt-4 h-28 w-full max-w-[340px]" aria-hidden="true">
               {[10, 30, 50, 70, 90, 110].map((y, i) => {
                 const mess = (1 - pct) * ((i % 2 ? 1 : -1) * (18 + i * 5))
-                return <path key={i} d={`M0 ${y + mess} C 100 ${y - mess}, 200 ${y + mess * 0.6}, 300 ${60 + (y - 60) * (1 - pct)}`} fill="none" stroke="#FF8A4C" strokeOpacity={0.25 + (1 - pct) * 0.4} strokeWidth="1.2" style={{ transition: 'd .6s ease, stroke-opacity .6s' }} />
+                return <path key={i} d={`M0 ${y + mess} C 100 ${y - mess}, 200 ${y + mess * 0.6}, 300 ${60 + (y - 60) * (1 - pct)}`} fill="none" stroke="var(--color-warn)" strokeOpacity={0.25 + (1 - pct) * 0.4} strokeWidth="1.2" style={{ transition: 'd .6s ease, stroke-opacity .6s' }} />
               })}
             </svg>
           </div>

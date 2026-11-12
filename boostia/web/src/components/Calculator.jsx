@@ -128,7 +128,7 @@ export default function Calculator() {
                 <Button type="submit" disabled={state === 'sending'} ctaId="calc_email" section="kalkulacka" arrow={false} className="whitespace-nowrap">{state === 'sending' ? 'Odesílám…' : 'Poslat výpočet'}</Button>
               </div>
               {state === 'error' && <p id="calc-email-err" className="text-[14px] text-warn">Zkontrolujte prosím e-mail.</p>}
-              <label className="flex items-start gap-2 text-[13px] text-muted"><input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-4 w-4 accent-[#C8FF3E]" /> Chci jednou za 14 dní dostávat praktický tip pro obchod s AI. Odhlásit se dá kdykoli.</label>
+              <label className="flex items-start gap-2 text-[13px] text-muted"><input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-4 w-4 accent-[var(--color-accent)]" /> Chci jednou za 14 dní dostávat praktický tip pro obchod s AI. Odhlásit se dá kdykoli.</label>
             </form>
           )}
           <Button to="/audit" variant="secondary" ctaId="calc_audit" section="kalkulacka" className="mt-3 w-full">Probrat to na auditu zdarma</Button>

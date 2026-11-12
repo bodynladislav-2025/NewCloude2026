@@ -13,30 +13,32 @@ export const MODULES = [
   ['06', 'Týmoví asistenti a trénink hovorů', 'Knihovna, kterou používá celý tým. AI jako sparing partner před těžkým jednáním.'],
 ]
 
-export const WEEKS = [
-  ['1', 'Start, 3 h online', 'Měření výchozího stavu (stopky na 5 činnostech), účty, cíle', 'Výchozí čísla týmu'],
-  ['2', 'Den 1, 7 h', 'Bezpečná AI a základy zadávání pro obchod', 'Podepsaná AI směrnice, semafor dat'],
-  ['3', 'Den 2, 7 h', 'Příprava na schůzku za 10 minut', 'Asistent Příprava schůzky'],
-  ['4', 'Den 3, 7 h', 'Zápisy, CRM a follow-up do 15 minut', 'Šablona zápisu, napojení na CRM'],
-  ['5', 'Den 4, 7 h', 'Nabídka do 24 hodin, cena a námitky', 'Asistent Nabídka, banka námitek'],
-  ['6', 'Den 5, 7 h', 'Prospecting, cross-sell a up-sell', 'Sekvence oslovení, mapa příležitostí'],
-  ['7', 'Den 6, 7 h', 'Týmoví asistenti a trénink hovorů s AI', 'Playbook AI obchodu'],
-  ['8', 'Finále, 5 h', 'Měření po, prezentace vedení, plán na 90 dní, osvědčení', 'Report úspor v hodinách a Kč'],
+// 9 školicích dní, dohromady 50 hodin (4 + 7 × 6 + 4). Obvykle jeden den týdně.
+export const DAYS = [
+  ['1', 'Start, 4 h', 'Měření výchozího stavu (stopky na 5 činnostech), účty, cíle', 'Výchozí čísla týmu'],
+  ['2', '6 h', 'Bezpečná AI a základy zadávání pro obchod', 'Podepsaná AI směrnice, semafor dat'],
+  ['3', '6 h', 'Příprava na schůzku za 10 minut', 'Asistent Příprava schůzky'],
+  ['4', '6 h', 'Zápisy, CRM a follow-up do 15 minut', 'Šablona zápisu, napojení na CRM'],
+  ['5', '6 h', 'Nabídka do 24 hodin, cena a námitky', 'Asistent Nabídka, banka námitek'],
+  ['6', '6 h', 'Prospecting a oslovení, které nezní jako šablona', 'Sekvence oslovení'],
+  ['7', '6 h', 'Stávající klienti: cross-sell a up-sell', 'Mapa příležitostí v portfoliu'],
+  ['8', '6 h', 'Týmoví asistenti a trénink hovorů s AI', 'Playbook AI obchodu'],
+  ['9', 'Finále, 4 h', 'Měření po, prezentace vedení, plán na 90 dní, osvědčení', 'Report úspor v hodinách a Kč'],
 ]
 
 export const TOOLS = ['Raynet', 'Pipedrive', 'HubSpot', 'Salesforce', 'eWay-CRM', 'Microsoft 365 Copilot', 'ChatGPT', 'Claude', 'Google Workspace', 'Excel']
 
 export const FAQ_HOME = [
-  { q: 'Musí být obchodníci celý den mimo terén?', a: 'V ten den dělají svoji práci, jen jinak: připravují skutečné schůzky a píšou skutečné nabídky. Program jde rozdělit na dva půldny týdně.' },
-  { q: 'Bude to fungovat s naším CRM?', a: 'Ano. Pracujeme s tím, co máte: Raynet, Pipedrive, HubSpot, Salesforce, eWay i Excel. První týden si ověříme, co vaše CRM umožňuje.' },
+  { q: 'Musí být obchodníci celý den mimo terén?', a: 'V ten den dělají svoji práci, jen jinak: připravují skutečné schůzky a píšou skutečné nabídky. Devět dní je rozložených zhruba do dvou měsíců, obvykle jeden den týdně.' },
+  { q: 'Bude to fungovat s naším CRM?', a: 'Ano. Pracujeme s tím, co máte: Raynet, Pipedrive, HubSpot, Salesforce, eWay i Excel. První den si ověříme, co vaše CRM umožňuje.' },
   { q: 'Jaké nástroje budeme potřebovat?', a: 'Firemní účet ChatGPT, Microsoft Copilot nebo Claude, podle toho, co už máte nebo co vám doporučíme. Licence stojí řádově stovky korun na osobu měsíčně a nejsou v ceně.' },
   { q: 'Co když někdo z týmu s počítačem moc nekamarádí?', a: 'Každý účastník má individuální konzultaci s lektorem a pracujeme ve dvojicích. Kdo umí napsat e-mail, zvládne i tohle.' },
   { q: 'Jak je to s bezpečností dat?', a: 'Je to první téma programu. Nastavíme účty, kde se vaše data nepoužívají k trénování modelů, a tým podepíše pravidla, co do AI nepatří.' },
-  { q: 'Jak přesně měříte výsledek?', a: 'Stopujeme pět činností (příprava schůzky, zápis, follow-up, nabídka, vyhledání informací) u každého účastníka první a osmý týden. Vedení dostane rozdíl v hodinách a korunách. Metodiku dostanete předem.' },
-  { q: 'Opravdu to celé zaplatí Úřad práce?', a: 'Záleží na počtu účastníků. Příspěvek je 260,73 Kč za hodinu a účastníka, při 50 hodinách tedy zhruba 13 000 Kč na člověka. Při 16 účastnících pokryje celou cenu 197 000 Kč, při 10 účastnících zhruba dvě třetiny. Přesné číslo ukáže kalkulačka v sekci Cena. K tomu stát přispívá i na mzdy za dobu školení.' },
+  { q: 'Jak přesně měříte výsledek?', a: 'Stopujeme pět činností (příprava schůzky, zápis, follow-up, nabídka, vyhledání informací) u každého účastníka první a devátý den programu. Vedení dostane rozdíl v hodinách a korunách. Metodiku dostanete předem.' },
+  { q: 'Opravdu to zaplatí Úřad práce?', a: 'Záleží na počtu účastníků. Příspěvek je 260,73 Kč za hodinu a účastníka, při 50 hodinách tedy zhruba 13 000 Kč na člověka. V jednom běhu může být nejvýš 15 lidí. Při 15 účastnících pokryje příspěvek 99 % ceny (doplatíte zhruba 1 500 Kč), při 10 účastnících zhruba dvě třetiny. Přesné číslo ukáže kalkulačka v sekci Cena. K tomu stát přispívá i na mzdy za dobu školení.' },
   { q: 'Co když dotaci nedostaneme?', a: 'Rozhodnete se až po ověření nároku. Když Úřad práce žádost zamítne, můžete od smlouvy odstoupit bez sankce a neplatíte nic.' },
   { q: 'Děláte i otevřené kurzy pro jednotlivce?', a: 'Zatím ne. Program stojí na tom, že se mění práce celého týmu.' },
-  { q: 'Čím se lišíte od běžného AI školení?', a: 'Délkou (8 týdnů místo jednoho dne), zaměřením (jen obchod) a tím, že výsledek měříme v hodinách a korunách.' },
+  { q: 'Čím se lišíte od běžného AI školení?', a: 'Rozsahem (9 školicích dní místo jednoho), zaměřením (jen obchod) a tím, že výsledek měříme v hodinách a korunách.' },
 ]
 
 export const FAQ_AGENTI = [

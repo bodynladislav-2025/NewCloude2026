@@ -51,8 +51,8 @@ export function VslFacade({ url, title, eventPrefix = 'vsl', length = '4 min' })
       ) : (
         <button onClick={() => { setOn(true); track(`${eventPrefix}_play`) }} className="group absolute inset-0 flex flex-col items-center justify-center gap-4 text-center" aria-label={`Přehrát video: ${title}`}>
           <svg viewBox="0 0 100 56" preserveAspectRatio="none" aria-hidden="true" className="absolute inset-0 h-full w-full opacity-60">
-            {[8, 18, 28, 38, 48].map((y, i) => <path key={i} d={`M0 ${y} C 30 ${y}, 40 28, 50 28`} fill="none" stroke="#4DA3FF" strokeOpacity=".25" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
-            <path d="M50 28 H100" stroke="#C8FF3E" strokeOpacity=".5" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+            {[8, 18, 28, 38, 48].map((y, i) => <path key={i} d={`M0 ${y} C 30 ${y}, 40 28, 50 28`} fill="none" stroke="var(--color-flow)" strokeOpacity=".25" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
+            <path d="M50 28 H100" stroke="var(--color-accent)" strokeOpacity=".5" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
           </svg>
           <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-accent text-accentink transition-transform duration-200 group-hover:scale-105"><Play size={30} fill="currentColor" className="ml-1" /></span>
           <span className="relative font-display text-[20px] font-semibold">{title}</span>

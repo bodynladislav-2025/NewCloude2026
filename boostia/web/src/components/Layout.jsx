@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { Menu, X } from 'lucide-react'
+import { Menu, Moon, Sun, X } from 'lucide-react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -24,10 +24,44 @@ const BARE = ['/audit', '/dekujeme', '/dekujeme-prompty'] // stránky bez naviga
 export function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2.5 font-display text-[21px] font-bold tracking-tight" aria-label="Boostia, úvodní stránka">
-      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 8c9 0 9 8 16 8M3 16h16M3 24c9 0 9-8 16-8" stroke="#4DA3FF" strokeWidth="1.8" fill="none" opacity=".75" /><path d="M18 16h10m-4-4 4 4-4 4" stroke="#C8FF3E" strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 8c9 0 9 8 16 8M3 16h16M3 24c9 0 9-8 16-8" stroke="var(--color-flow)" strokeWidth="1.8" fill="none" opacity=".75" /><path d="M18 16h10m-4-4 4 4-4 4" stroke="var(--color-accent)" strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
       Boostia
     </Link>
   )
+}
+
+function ThemeToggle() {
+  const [light, setLight] = useState(() => document.documentElement.getAttribute('data-theme') === 'light')
+  const toggle = () => {
+    const next = !light
+    setLight(next)
+    if (next) document.documentElement.setAttribute('data-theme', 'light'); else document.documentElement.removeAttribute('data-theme')
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next ? '#F5F6F2' : '#07090D')
+    try { localStorage.setItem('boostia_theme', next ? 'light' : 'dark') } catch { /* soukromý režim */ }
+    window.dispatchEvent(new Event('boostia:theme'))
+    track('theme_toggle', { theme: next ? 'light' : 'dark' })
+  }
+  return (
+    <button onClick={toggle} aria-pressed={light} aria-label={light ? 'Přepnout na tmavý režim' : 'Přepnout na světlý režim'} title={light ? 'Tmavý režim' : 'Světlý režim'}
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-muted transition-colors hover:text-ink">
+      <span key={light ? 's' : 'm'} className="inline-flex animate-[spin_.4s_ease-out_1]">{light ? <Moon size={18} /> : <Sun size={18} />}</span>
+    </button>
+  )
+}
+
+// Tenká linka nahoře ukazuje, jak daleko návštěvník na stránce je
+function ScrollProgress() {
+  useEffect(() => {
+    const el = document.getElementById('scroll-progress')
+    let raf = 0
+    const on = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => {
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      el.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`
+    }) }
+    on(); window.addEventListener('scroll', on, { passive: true }); window.addEventListener('resize', on)
+    return () => { window.removeEventListener('scroll', on); window.removeEventListener('resize', on); cancelAnimationFrame(raf) }
+  }, [])
+  return <div id="scroll-progress" aria-hidden="true" className="fixed inset-x-0 top-0 z-[55] h-[2px] origin-left scale-x-0 bg-accent" />
 }
 
 function Header({ bare }) {
@@ -47,12 +81,13 @@ function Header({ bare }) {
         <Logo />
         {!bare && (
           <>
-            <nav aria-label="Hlavní navigace" className="hidden items-center gap-6 xl:flex">
+            <nav aria-label="Hlavní navigace" className="hidden items-center gap-4 xl:flex 2xl:gap-6">
               {NAV.map(([to, label]) => (
-                <NavLink key={to} to={to} end className={({ isActive }) => `whitespace-nowrap text-[14px] xl:text-[15px] transition-colors hover:text-ink ${isActive ? 'text-ink' : 'text-muted'}`}>{label}</NavLink>
+                <NavLink key={to} to={to} end className={({ isActive }) => `whitespace-nowrap text-[14px] transition-colors hover:text-ink ${isActive ? 'text-ink' : 'text-muted'}`}>{label}</NavLink>
               ))}
             </nav>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <ThemeToggle />
               <span className="hidden sm:block"><Button to="/audit" ctaId="header_audit" section="header" className="!min-h-[42px] !px-5 !py-2 !text-[15px]">Audit zdarma</Button></span>
               <button className="flex h-11 w-11 items-center justify-center rounded-full border border-line xl:hidden" aria-label={open ? 'Zavřít menu' : 'Otevřít menu'} aria-expanded={open} onClick={() => setOpen(!open)}>
                 {open ? <X size={20} /> : <Menu size={20} />}
@@ -60,7 +95,7 @@ function Header({ bare }) {
             </div>
           </>
         )}
-        {bare && <a href="tel:+420000000000" className="text-[15px] text-muted hover:text-ink">Potřebujete poradit? Zavolejte</a>}
+        {bare && <div className="flex items-center gap-3"><a href="tel:+420000000000" className="hidden text-[15px] text-muted hover:text-ink sm:block">Potřebujete poradit? Zavolejte</a><ThemeToggle /></div>}
       </Container>
       {open && (
         <nav aria-label="Mobilní navigace" className="h-[calc(100dvh-68px)] overflow-y-auto border-t border-line bg-bg px-6 py-8 xl:hidden">
@@ -145,9 +180,9 @@ function Consent() {
       <p className="text-[15px] text-muted"><strong className="text-ink">Cookies.</strong> Nezbytné používáme vždy. Analytické a marketingové jen s vaším souhlasem, pomáhají nám web zlepšovat. <Link to="/ochrana-osobnich-udaju" className="underline">Podrobnosti</Link></p>
       {detail && (
         <div className="mt-4 space-y-2 text-[15px]">
-          <label className="flex items-center gap-3"><input type="checkbox" checked disabled className="h-4 w-4 accent-[#C8FF3E]" /> Nezbytné</label>
-          <label className="flex items-center gap-3"><input type="checkbox" className="h-4 w-4 accent-[#C8FF3E]" checked={c.analytics} onChange={(e) => setC({ ...c, analytics: e.target.checked })} /> Analytické</label>
-          <label className="flex items-center gap-3"><input type="checkbox" className="h-4 w-4 accent-[#C8FF3E]" checked={c.marketing} onChange={(e) => setC({ ...c, marketing: e.target.checked })} /> Marketingové</label>
+          <label className="flex items-center gap-3"><input type="checkbox" checked disabled className="h-4 w-4 accent-[var(--color-accent)]" /> Nezbytné</label>
+          <label className="flex items-center gap-3"><input type="checkbox" className="h-4 w-4 accent-[var(--color-accent)]" checked={c.analytics} onChange={(e) => setC({ ...c, analytics: e.target.checked })} /> Analytické</label>
+          <label className="flex items-center gap-3"><input type="checkbox" className="h-4 w-4 accent-[var(--color-accent)]" checked={c.marketing} onChange={(e) => setC({ ...c, marketing: e.target.checked })} /> Marketingové</label>
         </div>
       )}
       <div className="mt-4 flex flex-wrap gap-2">
@@ -202,6 +237,7 @@ export default function Layout() {
   return (
     <>
       <a href="#obsah" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-accentink">Přeskočit na obsah</a>
+      <ScrollProgress />
       <Header bare={bare} />
       <AnimatePresence mode="wait">
         <motion.main id="obsah" key={loc.pathname} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>

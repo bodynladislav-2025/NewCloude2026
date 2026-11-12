@@ -28,15 +28,15 @@ export function Section({ id, className = '', children, tight }) {
 export function Badge({ children, className = '' }) {
   return (
     <span className={`inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[12px] uppercase tracking-wider text-muted ${className}`}>
-      <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />{children}
+      <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />{children}
     </span>
   )
 }
 
-export function Button({ to, href, onClick, variant = 'primary', children, ctaId, section, className = '', type, disabled, arrow = true }) {
+export function Button({ to, href, onClick, variant = 'primary', children, ctaId, section, className = '', type, disabled, arrow = true, shine = false }) {
   const base = 'group inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-6 py-3 text-[16px] font-medium leading-tight transition-[transform,background-color,border-color] duration-200 active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none'
   const styles = {
-    primary: 'bg-accent text-accentink hover:bg-[#d6ff6a]',
+    primary: 'bg-accent text-accentink hover:brightness-110',
     secondary: 'border border-line bg-surface text-ink hover:border-muted',
     ghost: 'text-ink underline decoration-line underline-offset-4 hover:decoration-accent px-0',
   }[variant]
@@ -47,7 +47,7 @@ export function Button({ to, href, onClick, variant = 'primary', children, ctaId
     </>
   )
   const handle = (e) => { if (ctaId) trackCta(ctaId, typeof children === 'string' ? children : ctaId, section); onClick?.(e) }
-  const cls = `${base} ${styles} ${className}`
+  const cls = `${base} ${styles} ${shine ? 'shine' : ''} ${className}`
   if (to) return <Link to={to} onClick={handle} className={cls}>{inner}</Link>
   if (href) return <a href={href} onClick={handle} className={cls}>{inner}</a>
   return <button type={type || 'button'} onClick={handle} disabled={disabled} className={cls}>{inner}</button>
@@ -100,7 +100,9 @@ export function Reveal({ children, className = '', stagger = 0.08, as: Tag = 'di
         scrollTrigger: { trigger: ref.current, start: 'top 85%', once: true },
       })
     })
-    return () => mm.revert()
+    // Třída in-view spouští CSS animace uvnitř (přeškrtnutí, naběhnutí)
+    const st = ScrollTrigger.create({ trigger: ref.current, start: 'top 85%', once: true, onEnter: () => ref.current?.classList.add('in-view') })
+    return () => { mm.revert(); st.kill() }
   }, { scope: ref })
   return <Tag ref={ref} className={className}>{children}</Tag>
 }
@@ -138,15 +140,22 @@ export function SpringNumber({ value, format = (v) => fmt(v), className = '' }) 
   return <span ref={ref} className={`num ${className}`}>{format(value)}</span>
 }
 
-export function Card({ children, className = '', spotlight = false, ...p }) {
+export function Card({ children, className = '', spotlight = false, tilt = false, ...p }) {
   const onMove = (e) => {
-    if (!spotlight) return
-    const r = e.currentTarget.getBoundingClientRect()
-    e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
-    e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+    if (!spotlight && !tilt) return
+    const el = e.currentTarget, r = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`)
+    el.style.setProperty('--my', `${e.clientY - r.top}px`)
+    // Jemný náklon karty za kurzorem, jen s myší
+    if (tilt && window.matchMedia('(pointer: fine)').matches && !prefersReducedMotion()) {
+      const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5
+      // vlastnost rotate, ne transform: transform patří animaci odhalení (GSAP)
+      el.style.rotate = `${(-y).toFixed(3)} ${x.toFixed(3)} 0 ${(Math.hypot(x, y) * 9).toFixed(2)}deg`
+    }
   }
+  const onLeave = (e) => { if (tilt) e.currentTarget.style.rotate = '' }
   return (
-    <div onMouseMove={onMove} className={`rounded-[14px] border border-line bg-surface p-6 lg:p-8 ${spotlight ? 'spot' : ''} ${className}`} {...p}>
+    <div onMouseMove={onMove} onMouseLeave={onLeave} className={`rounded-[14px] border border-line bg-surface p-6 lg:p-8 ${spotlight ? 'spot' : ''} ${tilt ? 'tilt' : ''} ${className}`} {...p}>
       {children}
     </div>
   )
@@ -206,11 +215,11 @@ export function Marquee({ items }) {
 // Motiv značky: rozptýlené linky se sbíhají do jedné a míří k výsledku.
 export function FlowDivider({ className = '' }) {
   return (
-    <svg viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true" className={`h-16 w-full ${className}`}>
+    <svg viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true" className={`flowlines h-16 w-full ${className}`}>
       {[6, 22, 40, 58, 74].map((y, i) => (
-        <path key={i} d={`M0 ${y} C 400 ${y}, 620 40, 900 40`} fill="none" stroke="#4DA3FF" strokeOpacity={0.18 + i * 0.04} strokeWidth="1" />
+        <path key={i} d={`M0 ${y} C 400 ${y}, 620 40, 900 40`} fill="none" stroke="var(--color-flow)" strokeOpacity={0.18 + i * 0.04} strokeWidth="1" />
       ))}
-      <path d="M900 40 H1200" stroke="#C8FF3E" strokeWidth="1.5" strokeOpacity=".8" />
+      <path className="out" d="M900 40 H1200" stroke="var(--color-accent)" strokeWidth="1.5" strokeOpacity=".8" />
     </svg>
   )
 }
@@ -230,7 +239,7 @@ export function CheckList({ items, className = '' }) {
     <ul className={`space-y-3 ${className}`}>
       {items.map((t, i) => (
         <li key={i} className="flex gap-3">
-          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" className="mt-1 shrink-0"><circle cx="10" cy="10" r="10" fill="#C8FF3E" fillOpacity=".12" /><path d="m6 10.5 2.6 2.6L14 7.6" stroke="#C8FF3E" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" className="mt-1 shrink-0"><circle cx="10" cy="10" r="10" fill="var(--color-accent)" fillOpacity=".12" /><path d="m6 10.5 2.6 2.6L14 7.6" stroke="var(--color-accent)" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
           <span>{t}</span>
         </li>
       ))}
