@@ -25,7 +25,7 @@ const COURSE = {
   description: 'Měřený AI trénink pro obchodní týmy v devíti školicích dnech: příprava schůzek, zápisy, nabídky, prospecting a práce se stávajícími klienty.',
   provider: { '@type': 'Organization', name: 'Boostia' }, inLanguage: 'cs',
   hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'onsite', courseWorkload: 'PT50H' },
-  offers: { '@type': 'Offer', price: '197000', priceCurrency: 'CZK', category: 'Paid' },
+  offers: { '@type': 'Offer', price: '23900', priceCurrency: 'CZK', category: 'Paid' },
 }
 
 // Linka, která se při scrollu vykreslí nad čtyřmi kroky
@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <>
       <Seo title="AI školení pro obchodní týmy s měřeným výsledkem · Boostia" path="/"
-        description="12 hodin měsíčně navíc na prodej pro každého obchodníka. AI školení obchodního týmu v 9 dnech. Od 9 účastníků ho celé proplatí Úřad práce."
+        description="12 hodin měsíčně navíc na prodej pro každého obchodníka. AI školení obchodního týmu v 9 dnech. Celé ho proplatí Úřad práce."
         schema={[ORG, COURSE, faqSchema(FAQ_HOME)]} />
 
       {/* 1 – Hero: slib, dotace a kalkulačka hned nahoře */}
@@ -62,7 +62,7 @@ export default function Home() {
                 <span className="rise" style={{ '--i': 3 }}>vám proplatí Úřad práce.</span>
               </span>
             </h1>
-            <p className="mt-6 max-w-[54ch] text-[18px] text-muted">Až <span className="text-ink">23 909 Kč</span> za každého zaměstnance, který kurz dokončí. Od 9 lidí to pokryje celou cenu 197 000 Kč. Za 9 školicích dní u vás ve firmě naučíme obchodní tým pracovat s AI na vlastních zakázkách.</p>
+            <p className="mt-6 max-w-[54ch] text-[18px] text-muted">Až <span className="text-ink">23 909 Kč</span> za každého zaměstnance, který kurz dokončí. To pokryje celou cenu kurzu. Za 9 školicích dní u vás ve firmě naučíme obchodní tým pracovat s AI na vlastních zakázkách.</p>
             <p className="mt-3 flex items-center gap-2 text-[16px] font-medium"><ShieldCheck size={18} className="shrink-0 text-accent" aria-hidden="true" />Když Úřad práce žádost neschválí, neplatíte nic.</p>
             <div className="mt-7 flex flex-wrap items-center gap-3 lg:hidden">
               <Button href="#kalkulacka" ctaId="hero_calc" section="hero" shine>Spočítat příspěvek a přínos</Button>
@@ -71,7 +71,7 @@ export default function Home() {
               {['9 školicích dní u vás', 'max. 15 lidí', '50 hodin', 'měřený výsledek', 'vede obchodník se 17 lety praxe'].map((t) => <li key={t} className="rounded-full border border-line bg-surface/70 px-3 py-1.5">{t}</li>)}
             </ul>
             <dl className="mt-8 grid max-w-[640px] grid-cols-3 gap-3">
-              {[[144, ' h', 'ročně navíc na obchodníka'], [2160, ' h', 'ročně u týmu 15 lidí'], [0, ' Kč', 'doplatek od 9 účastníků']].map(([n, u, l]) => (
+              {[[144, ' h', 'ročně navíc na obchodníka'], [2160, ' h', 'ročně u týmu 15 lidí'], [0, ' Kč', 'doplatek při plné docházce']].map(([n, u, l]) => (
                 <div key={l} className="rounded-[14px] border border-line bg-surface/80 p-4 backdrop-blur-sm">
                   <dt className="sr-only">{l}</dt>
                   <dd><span className="text-[clamp(1.25rem,2.6vw,1.6rem)] font-medium leading-none text-accent"><NumberTicker value={n} suffix={u} /></span><span className="mt-2 block text-[13px] leading-snug text-muted">{l}</span></dd>
@@ -175,13 +175,13 @@ export default function Home() {
         <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
           <SectionHead badge="Dotace" title="Proč vám školení zaplatí Úřad práce?">
             <p>Úřad práce teď z evropských peněz platí firmám vzdělávání zaměstnanců. Projekt se jmenuje Vzdělávání pro firmy a práce s nástroji AI do něj patří.</p>
-            <p>Za každou hodinu výuky vrátí <span className="text-ink">478,19 Kč na účastníka</span>. Náš program má 50 hodin, tedy až 23 909 Kč na člověka. Program stojí 197 000 Kč, takže od devíti lidí pokryje příspěvek celou cenu. U plné skupiny 15 lidí je příspěvek až 358 643 Kč a cenu pokryje i při docházce 80 %.</p>
+            <p>Za každou hodinu výuky vrátí <span className="text-ink">478,19 Kč na účastníka</span>. Náš program má 50 hodin, tedy až 23 909 Kč na člověka. Program stojí 23 900 Kč za účastníka, takže ho příspěvek pokryje celý. U plné skupiny 15 lidí je cena 358 500 Kč a příspěvek až 358 643 Kč.</p>
             <p className="text-[14px]">Projekt Úřadu práce ČR Vzdělávání pro firmy, reg. č. CZ.03.01.03/00/23_048/0006351, Operační program Zaměstnanost plus. Podmínky najdete na up.gov.cz/vzdelavani-pro-firmy.</p>
           </SectionHead>
           <Reveal className="space-y-3">
             <div className="rounded-[14px] border border-line bg-surface p-6">
               <dl className="space-y-3 text-[16px]">
-                <div className="flex justify-between gap-4"><dt className="text-muted">Cena programu</dt><dd className="num">197 000 Kč</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-muted">Cena programu pro 15 lidí (15 × 23 900 Kč)</dt><dd className="num whitespace-nowrap">358 500 Kč</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-muted">Příspěvek za 15 lidí (15 × 50 h × 478,19 Kč)</dt><dd className="num whitespace-nowrap text-flow">až 358 643 Kč</dd></div>
                 <div className="flex justify-between gap-4 border-t border-line pt-3"><dt>Doplatíte</dt><dd className="num text-[22px] font-medium text-accent">0 Kč</dd></div>
               </dl>
@@ -197,7 +197,7 @@ export default function Home() {
         <SectionHead title="Kde je háček? Řekneme vám to rovnou." />
         <Reveal className="grid gap-4 md:grid-cols-2 lg:grid-cols-4" stagger={0.06}>
           {[[Wallet, 'Kurz předfinancujete', 'Program nejdřív uhradíte. Příspěvek přijde na účet po skončení kurzu a doložení docházky.'],
-            [CalendarCheck, 'Rozhoduje docházka', 'Každý musí odchodit aspoň 80 % výuky. Příspěvek se počítá z hodin, které člověk opravdu odseděl.'],
+            [CalendarCheck, 'Rozhoduje docházka', 'Každý musí odchodit aspoň 80 % výuky. Za každý zameškaný den klesne příspěvek o 2 869 Kč za člověka a rozdíl doplácíte.'],
             [Receipt, 'Něco příspěvek nepokryje', 'DPH (plátci si ho odečtou) a licence AI nástrojů pro účastníky.'],
             [Scale, 'Příspěvek není nárokový', 'Rozhoduje Úřad práce. Proto s vámi podmínky projdeme dřív, než žádost podáte.']].map(([I, h, t]) => (
             <Card key={h} tilt><I size={24} className="text-warn" aria-hidden="true" /><h3 className="mt-5 text-[20px]">{h}</h3><p className="mt-2 text-[15px] text-muted">{t}</p></Card>
@@ -261,19 +261,20 @@ export default function Home() {
       {/* Cena */}
       <Section id="cena" className="scroll-mt-20">
         <SectionHead title="Kolik to stojí">
-          <p>Jedna cena pro celý tým. Od devíti lidí ji celou pokryje příspěvek Úřadu práce.</p>
+          <p>Cena je za účastníka a je nastavená tak, aby ji příspěvek Úřadu práce pokryl celou.</p>
         </SectionHead>
         <Reveal className="grid gap-4 lg:grid-cols-[1.1fr_1fr]">
           <Card className="!border-accent/60 !bg-surface2">
             <p className="font-mono text-[12px] uppercase tracking-wider text-accent">AI Obchod 50</p>
-            <p className="mt-4 text-[clamp(2.6rem,6vw,3.6rem)] font-medium leading-none"><NumberTicker value={197000} suffix=" Kč" /></p>
-            <p className="mt-3 text-[15px] text-muted">bez DPH · jedna cena pro tým až 15 lidí · 50 hodin v 9 dnech u vás ve firmě</p>
+            <p className="mt-4 text-[clamp(2.6rem,6vw,3.6rem)] font-medium leading-none"><NumberTicker value={23900} suffix=" Kč" /></p>
+            <p className="mt-3 text-[15px] text-muted">za účastníka, bez DPH · 50 hodin v 9 dnech u vás ve firmě</p>
+            <p className="mt-2 text-[15px] text-muted">Plná skupina 15 lidí: <span className="num whitespace-nowrap text-ink">358 500 Kč</span> · účtujeme nejméně 9 míst (<span className="num whitespace-nowrap text-ink">215 100 Kč</span>)</p>
             <ul className="mt-6 grid gap-2 text-[15px] text-muted sm:grid-cols-2"><li>Měření před a po, report pro vedení</li><li>Playbook a 4 týmoví asistenti</li><li>AI směrnice a semafor dat</li><li>Podklady ke kurzu pro žádost</li><li>Osvědčení pro každého účastníka</li><li>3 měsíce Boostia Klubu</li></ul>
           </Card>
           <Card className="flex flex-col justify-center !border-flow/50">
             <p className="font-mono text-[12px] uppercase tracking-wider text-flow">S příspěvkem Úřadu práce</p>
-            <p className="mt-4 font-display text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">Od 9 účastníků <span className="marker">doplatíte 0 Kč</span>.</p>
-            <p className="mt-4 text-muted">Při 6 lidech pokryje příspěvek 73 % ceny, při 8 lidech 97 %. U plné skupiny 15 lidí stačí docházka 80 % a nedoplácíte nic.</p>
+            <p className="mt-4 font-display text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">Při plné docházce <span className="marker">doplatíte 0 Kč</span>.</p>
+            <p className="mt-4 text-muted">Úřad práce vrací až 23 909 Kč za každého, kdo kurz absolvuje. Platí od 9 účastníků. Každý zameškaný den sníží příspěvek o 2 869 Kč za člověka, proto termíny plánujeme s vámi předem.</p>
             <div className="mt-6"><Button href="#kalkulacka" ctaId="price_calc" section="cena">Spočítat pro náš počet lidí</Button></div>
           </Card>
         </Reveal>

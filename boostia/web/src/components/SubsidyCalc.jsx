@@ -7,7 +7,11 @@ import { submitLead } from '../lib/leadconnector'
 
 // Jediná kalkulačka na webu: kolik zaplatí Úřad práce, kolik doplatíte a co to může vydělat.
 // Parametry podle podmínek projektu Vzdělávání pro firmy (reg. č. CZ.03.01.03/00/23_048/0006351).
-export const PROGRAM_PRICE = 197000
+// Cena je za účastníka, těsně pod maximem příspěvku (50 h × 478,19 = 23 909,50 Kč).
+export const PRICE_PER_PERSON = 23900
+export const MIN_BILLED = 9 // účtuje se nejméně 9 míst, aby se vyplatily i menší skupiny
+export const priceFor = (people) => Math.max(MIN_BILLED, people) * PRICE_PER_PERSON
+export const FULL_PRICE = 15 * PRICE_PER_PERSON // 358 500 Kč za plnou skupinu
 export const HOURS = 50
 export const RATE = 478.19 // Kč za hodinu výuky a účastníka
 export const MAX_TEAM = 15 // nejvýš 15 lidí v jednom běhu (pravidlo projektu)
@@ -15,16 +19,17 @@ export const MIN_ATTENDANCE = 0.8
 export const HOURS_PER_MONTH = 12 // cíl programu: hodin měsíčně navíc na obchodníka
 const SELLING_HOURS_WEEK = 12
 export const PER_PERSON = HOURS * RATE // 23 909,50 Kč
-export const FULL_FROM = Math.ceil(PROGRAM_PRICE / PER_PERSON) // od kolika lidí pokryje příspěvek celou cenu
+export const FULL_FROM = MIN_BILLED // od kolika lidí pokryje příspěvek celou cenu
 
 export function subsidyCalc(people, revenueMil) {
+  const price = priceFor(people)
   const subsidy = people * PER_PERSON
-  const pay = Math.max(0, PROGRAM_PRICE - subsidy)
-  const payMin = Math.max(0, PROGRAM_PRICE - subsidy * MIN_ATTENDANCE)
+  const pay = Math.max(0, price - subsidy)
+  const payMin = Math.max(0, price - subsidy * MIN_ATTENDANCE)
   const hoursYear = people * HOURS_PER_MONTH * 12
   const perSellingHour = (revenueMil * 1e6) / (SELLING_HOURS_WEEK * WEEKS)
   const revenue = hoursYear * SELLING_SHARE * perSellingHour
-  return { subsidy, covered: Math.min(subsidy, PROGRAM_PRICE), pay, payMin, hoursYear, revenue }
+  return { price, subsidy, pay, payMin, hoursYear, revenue }
 }
 
 function Row({ id, label, value, set, min, max, step, unit, hint }) {
@@ -117,7 +122,7 @@ export default function SubsidyCalc({ id = 'kalkulacka', className = '' }) {
         <div className={`rounded-[12px] border p-4 ${free ? 'border-accent/60 bg-accent/[0.07]' : 'border-line bg-bg'}`}>
           <p className="text-[13px] text-muted">Doplatíte za školení</p>
           <p className={`mt-1 whitespace-nowrap font-display text-[clamp(1.45rem,2.3vw,1.75rem)] font-semibold leading-none ${free ? 'text-accent' : ''}`}><SpringNumber value={r.pay} format={(x) => fmt(Math.round(x))} /> Kč</p>
-          <p className="mt-2 text-[12px] leading-snug text-muted">Cena {fmt(PROGRAM_PRICE)} Kč, příspěvek až <SpringNumber className="text-ink" value={r.subsidy} format={(x) => fmt(Math.round(x))} /> Kč.{r.payMin > 0 ? <> Při docházce jen 80 % doplatíte <span className="text-ink">{fmt(Math.round(r.payMin))} Kč</span>.</> : ' Platí i při docházce 80 %.'}</p>
+          <p className="mt-2 text-[12px] leading-snug text-muted">Cena <SpringNumber className="text-ink" value={r.price} format={(x) => fmt(Math.round(x))} /> Kč, příspěvek až <SpringNumber className="text-ink" value={r.subsidy} format={(x) => fmt(Math.round(x))} /> Kč. {people < MIN_BILLED ? `Účtujeme nejméně ${MIN_BILLED} míst.` : 'Platí při plné docházce.'}</p>
         </div>
         <div className="rounded-[12px] border border-line bg-bg p-4">
           <p className="text-[13px] text-muted">Co to může vydělat navíc</p>
@@ -129,8 +134,8 @@ export default function SubsidyCalc({ id = 'kalkulacka', className = '' }) {
       <details className="mt-3 text-[12px] text-muted">
         <summary className="min-h-[28px] cursor-pointer underline decoration-line underline-offset-4">Jak to počítáme</summary>
         <ul className="mt-2 list-disc space-y-1 pl-5">
-          <li>Příspěvek {fmt(RATE, 2)} Kč za hodinu výuky a účastníka, {HOURS} hodin = {fmt(PER_PERSON, 2)} Kč na člověka. Od {FULL_FROM} lidí pokryje celou cenu.</li>
-          <li>Počítá se z hodin, které člověk opravdu odseděl. Pod 80 % docházky příspěvek za něj propadá.</li>
+          <li>Cena je {fmt(PRICE_PER_PERSON)} Kč za účastníka, nejméně za {MIN_BILLED} míst. Příspěvek {fmt(RATE, 2)} Kč za hodinu výuky a účastníka, {HOURS} hodin = {fmt(PER_PERSON, 2)} Kč na člověka. Od {FULL_FROM} lidí tak pokryje celou cenu.</li>
+          <li>Počítá se z hodin, které člověk opravdu odseděl. Každý zameškaný šestihodinový den sníží příspěvek o 2 869 Kč za člověka a ten rozdíl doplácíte. Při docházce 80 % by to u vaší skupiny bylo {fmt(Math.round(r.payMin))} Kč. Pod 80 % příspěvek za daného člověka propadá.</li>
           <li>Příspěvek není nárokový, rozhoduje Úřad práce. Nepokrývá DPH a licence AI nástrojů.</li>
           <li>Tržby: {HOURS_PER_MONTH} hodin měsíčně na člověka, polovinu počítáme jako prodejní čas, který vynáší jako dnes (při {SELLING_HOURS_WEEK} hodinách jednání s klienty týdně). Odhad podle vašich čísel, ne slib.</li>
         </ul>

@@ -17,16 +17,16 @@ export default function Dotace() {
   return (
     <>
       <Seo title="Dotace na AI školení zaměstnanců · Boostia" path="/dotace"
-        description="Úřad práce vrací 478,19 Kč za hodinu výuky a účastníka. Od 9 lidí pokryje celou cenu programu. Nárok vám ověříme do 2 pracovních dnů." schema={[faqSchema(FAQ_DOTACE)]} />
+        description="Úřad práce vrací 478,19 Kč za hodinu výuky a účastníka. Program stojí 23 900 Kč za účastníka, příspěvek ho pokryje celý. Nárok vám ověříme do 2 pracovních dnů." schema={[faqSchema(FAQ_DOTACE)]} />
       <PageHero badge="Dotace"
-        parts={<SplitHeadline className="max-w-[20ch] text-[clamp(2.2rem,5.4vw,4rem)]" parts={[{ t: 'Školení obchodního týmu vám ' }, { t: 'proplatí Úřad práce', hl: true }, { t: '. Od 9 lidí celé.' }]} />}
+        parts={<SplitHeadline className="max-w-[20ch] text-[clamp(2.2rem,5.4vw,4rem)]" parts={[{ t: 'Školení obchodního týmu vám ' }, { t: 'proplatí Úřad práce', hl: true }, { t: '. Celé.' }]} />}
         sub="Úřad práce vrací 478,19 Kč za každou hodinu výuky a účastníka. Náš program má 50 hodin, tedy až 23 909 Kč na člověka. Když žádost neschválí, neplatíte nic.">
         <Button href="#kalkulacka" ctaId="dotace_hero" section="hero">Spočítat a ověřit nárok</Button>
       </PageHero>
 
       <Section tight>
         <SectionHead title="Kolik to dělá">
-          <p>Program stojí 197 000 Kč bez DPH pro tým až 15 lidí. Příspěvek je 478,19 Kč za hodinu výuky a účastníka. Posuňte počet lidí a uvidíte, kolik doplatíte.</p>
+          <p>Program stojí 23 900 Kč bez DPH za účastníka, nejméně za 9 míst. Příspěvek je 478,19 Kč za hodinu výuky, tedy až 23 909 Kč na člověka. Posuňte počet lidí a uvidíte, kolik doplatíte.</p>
         </SectionHead>
         <div className="mx-auto max-w-[640px]"><SubsidyCalc /></div>
       </Section>

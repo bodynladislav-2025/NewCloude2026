@@ -39,7 +39,7 @@ export default function Studie() {
               <Reveal className="mt-4 grid gap-4 md:grid-cols-3">
                 <Card><h3 className="text-[21px]">Metodika měření</h3><p className="mt-3 text-muted">Pět činností, stopky, každý účastník, první a devátý den. Můžete si ji projít předem.</p></Card>
                 <Card><h3 className="text-[21px]">Bez rizika</h3><p className="mt-3 text-muted">První den na naše riziko. Bez schválené dotace neplatíte. Když tým AI nepoužívá, doučíme zdarma.</p></Card>
-                <Card><h3 className="text-[21px]">Jedna cena</h3><p className="mt-3 text-muted">{PRICE.program} pro celý tým. Od 9 účastníků ji celou pokryje příspěvek Úřadu práce.</p></Card>
+                <Card><h3 className="text-[21px]">Jedna cena</h3><p className="mt-3 text-muted">{PRICE.program} za účastníka. Při plné docházce ji celou pokryje příspěvek Úřadu práce.</p></Card>
               </Reveal>
             </>
           )}

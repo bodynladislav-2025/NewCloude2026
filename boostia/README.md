@@ -35,7 +35,7 @@ Web a PDF už používají novou podobu nabídky. Dokumenty fází 1–10, email
 | Co | Původně (dokumenty) | Nyní (web, PDF) |
 |---|---|---|
 | Hlavní slib | 3 hodiny týdně na obchodníka | 12 hodin měsíčně navíc na prodej; důraz na tržby, ne jen ušetřený čas |
-| Cena programu | 290 000 Kč, tým do 12 lidí; zakladatelská cena 220 000 Kč | 197 000 Kč, jedna cena pro tým až 16 lidí; zakladatelská cena zrušena |
+| Cena programu | 290 000 Kč, tým do 12 lidí; zakladatelská cena 220 000 Kč | 23 900 Kč za účastníka (těsně pod maximem příspěvku 23 909,50 Kč); účtuje se nejméně 9 míst = 215 100 Kč; plná skupina 15 lidí = 358 500 Kč |
 | Dotace | sazba 260,73 Kč/h, „cca 160 000 Kč po dotaci pro 10 lidí" | sazba 478,19 Kč/h (až 23 909 Kč na člověka); od 9 lidí pokryje celou cenu; žádost podává firma, dodavatel kurzu ji připravovat nesmí |
 | Hlavní výzva | rezervace 30min auditu | ověření nároku na dotaci (IČO + e-mail) přímo v kalkulačce v úvodu; audit je druhá možnost |
 | Kalkulačka | velká kalkulačka ztraceného času | jedna jednoduchá: počet lidí a tržby → doplatek a potenciál tržeb |
