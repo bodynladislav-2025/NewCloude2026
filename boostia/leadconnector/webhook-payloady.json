@@ -17,7 +17,8 @@
   "VITE_LC_WEBHOOK_CALC": {
     "form": "calc", "email": "jan@firma.cz", "consentMarketing": true,
     "calc_reps": 10, "calc_meetings": 5, "calc_prep_min": 40, "calc_notes_min": 40, "calc_offers": 1.5, "calc_offer_hours": 2, "calc_hour_cost": 600,
-    "calc_hours_week": 39, "calc_czk_year": 1067000, "calc_biggest": "pripravy",
+    "calc_revenue_per_rep_mil": 10, "calc_selling_hours": 12,
+    "calc_hours_week": 39, "calc_hours_year": 1779, "calc_czk_year": 1067000, "calc_revenue_year": 16113000, "calc_biggest": "pripravy",
     "pageUrl": "https://www.boostia.cz/", "submittedAt": "2026-11-12T10:10:00.000Z"
   },
   "VITE_LC_WEBHOOK_PREP__priprava": {

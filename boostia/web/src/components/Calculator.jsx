@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { Minus, Plus } from 'lucide-react'
 import { Button, Card, SpringNumber } from './ui'
-import { calculate, DEFAULTS, fmt, fmtCzk } from '../lib/calc'
+import { calculate, DEFAULTS, fmt, fmtCzk, fmtMil } from '../lib/calc'
 import { track } from '../lib/tracking'
 import { submitLead } from '../lib/leadconnector'
 
@@ -13,6 +13,8 @@ const FIELDS = [
   { k: 'offers', label: 'Nabídek týdně na obchodníka', min: 0, max: 10, step: 0.5, unit: '', hint: 'Průměr.', more: true },
   { k: 'offerHours', label: 'Hodin na jednu nabídku', min: 0.5, max: 10, step: 0.5, unit: ' h', hint: 'Čistý čas od poptávky po odeslání.', more: true },
   { k: 'hourCost', label: 'Plný náklad na hodinu obchodníka', min: 300, max: 1500, step: 50, unit: ' Kč', hint: 'Mzda s odvody, auto, režie. Nevíte? Roční náklad vydělte 1 700.', more: true },
+  { k: 'revenuePerRep', label: 'Roční tržby na jednoho obchodníka', min: 1, max: 60, step: 1, unit: ' mil. Kč', hint: 'Průměr za tým. Chcete počítat opatrněji? Zadejte místo tržeb hrubou marži.', more: true },
+  { k: 'sellingHours', label: 'Hodin týdně, kdy obchodník opravdu jedná s klienty', min: 4, max: 30, step: 1, unit: ' h', hint: 'Schůzky a obchodní hovory. Bez cest, příprav a administrativy.', more: true },
 ]
 
 function Slider({ f, value, onChange }) {
@@ -61,7 +63,9 @@ export default function Calculator() {
       email, consentMarketing: consent,
       calc_reps: v.reps, calc_meetings: v.meetings, calc_prep_min: v.prepMin, calc_notes_min: v.notesMin,
       calc_offers: v.offers, calc_offer_hours: v.offerHours, calc_hour_cost: v.hourCost,
-      calc_hours_week: Math.round(r.saved), calc_czk_year: Math.round(r.czkYear / 1000) * 1000, calc_biggest: r.biggest,
+      calc_revenue_per_rep_mil: v.revenuePerRep, calc_selling_hours: v.sellingHours,
+      calc_hours_week: Math.round(r.saved), calc_hours_year: Math.round(r.savedYear), calc_czk_year: Math.round(r.czkYear / 1000) * 1000,
+      calc_revenue_year: Math.round(r.revenueYear / 1000) * 1000, calc_biggest: r.biggest,
     })
     track('calc_email_submit', { czk_year: Math.round(r.czkYear) })
     setState(res.ok ? 'done' : 'queued')
@@ -78,26 +82,37 @@ export default function Calculator() {
         <div className={more ? 'space-y-6' : 'hidden space-y-6 lg:block'}>
           {FIELDS.filter((f) => f.more).map((f) => <Slider key={f.k} f={f} value={v[f.k]} onChange={set(f.k)} />)}
         </div>
-        {!more && <button type="button" onClick={() => setMore(true)} className="min-h-[44px] text-[15px] text-muted underline lg:hidden">Upřesnit nabídky a náklad na hodinu</button>}
+        {!more && <button type="button" onClick={() => setMore(true)} className="min-h-[44px] text-[15px] text-muted underline lg:hidden">Upřesnit nabídky, náklady a tržby</button>}
       </Card>
 
       <Card className={`flex flex-col !bg-surface2 ${touched ? 'beam' : ''}`} aria-live="polite">
-        <p className="font-mono text-[12px] uppercase tracking-wider text-muted">Váš výsledek</p>
-        <p className="mt-4 text-[17px] text-muted">Přípravami, zápisy a nabídkami tráví váš tým</p>
-        <p className="mt-1 font-display text-[40px] font-semibold leading-none"><SpringNumber value={r.nonSelling} format={(x) => fmt(x)} /> <span className="text-[20px] font-normal text-muted">hodin týdně</span></p>
+        <p className="font-mono text-[12px] uppercase tracking-wider text-muted">Váš výsledek za rok</p>
+        <p className="mt-4 text-[17px] text-muted">Opatrným odhadem vrátí AI vašemu týmu</p>
+        <p className="mt-1 font-display text-[clamp(2.6rem,6vw,3.4rem)] font-semibold leading-none text-accent"><SpringNumber value={r.savedYear} format={(x) => fmt(x)} /> <span className="text-[20px] font-normal text-muted">hodin ročně</span></p>
+        <p className="mt-3 text-[15px] text-muted">To je <SpringNumber className="text-ink" value={r.savedYearPerRep} format={(x) => fmt(x)} /> hodin na obchodníka za rok, tedy <SpringNumber className="text-ink" value={r.savedPerRep} format={(x) => fmt(x, 1)} /> hodiny týdně. Dnes tým přípravami, zápisy a nabídkami tráví <SpringNumber className="text-ink" value={r.nonSelling} format={(x) => fmt(x)} /> hodin týdně.</p>
 
-        <div className="my-6 h-px bg-line" />
-
-        <p className="text-[17px] text-muted">Opatrným odhadem z toho AI vrátí</p>
-        <p className="mt-1 font-display text-[40px] font-semibold leading-none text-accent"><SpringNumber value={r.saved} format={(x) => fmt(x)} /> <span className="text-[20px] font-normal text-muted">hodin týdně</span></p>
-        <p className="mt-2 text-[15px] text-muted">To je <SpringNumber className="text-ink" value={r.savedPerRep} format={(x) => fmt(x, 1)} /> hodiny na obchodníka, zhruba <SpringNumber className="text-ink" value={r.meetingsGained} format={(x) => fmt(x)} /> schůzek týdně navíc.</p>
-
-        <div className="mt-6 rounded-[12px] border border-line bg-bg p-5">
-          <p className="text-[15px] text-muted">V nákladech ročně</p>
-          <p className="font-display text-[clamp(2rem,5vw,2.9rem)] font-semibold leading-tight text-accent"><SpringNumber value={r.czkYear} format={fmtCzk} /></p>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-[12px] border border-line bg-bg p-5">
+            <p className="text-[14px] text-muted">Ušetřené náklady</p>
+            <p className="mt-1 whitespace-nowrap font-display text-[clamp(1.35rem,2.3vw,1.6rem)] font-semibold leading-tight"><SpringNumber value={r.czkYear} format={fmtMil} /></p>
+            <p className="mt-1 text-[12px] text-muted">ročně, v ceně práce obchodníků</p>
+          </div>
+          <div className="rounded-[12px] border border-accent/50 bg-accent/[0.06] p-5">
+            <p className="text-[14px] text-muted">Potenciál tržeb navíc</p>
+            <p className="mt-1 whitespace-nowrap font-display text-[clamp(1.35rem,2.3vw,1.6rem)] font-semibold leading-tight text-accent"><SpringNumber value={r.revenueYear} format={fmtMil} /></p>
+            <p className="mt-1 text-[12px] text-muted">ročně, když půlku toho času prodávají</p>
+          </div>
         </div>
         {verdict && <p className="mt-4 text-[15px] text-ink">{verdict}</p>}
-        <p className="mt-4 text-[13px] text-muted">Počítáme s úsporou 40 % času a 46 pracovními týdny. V programu míříme výš, ale slibovat budeme až to, co změříme u vás.</p>
+        <details className="mt-4 text-[13px] text-muted">
+          <summary className="min-h-[32px] cursor-pointer underline decoration-line underline-offset-4">Jak to počítáme</summary>
+          <ul className="mt-2 list-disc space-y-1 pl-5">
+            <li>Úspora 40 % času na přípravách, zápisech a nabídkách, 46 pracovních týdnů.</li>
+            <li>Náklady: ušetřené hodiny × náklad na hodinu obchodníka.</li>
+            <li>Tržby: dnes obchodník za hodinu jednání s klienty udělá zhruba <SpringNumber className="text-ink" value={r.revenuePerSellingHour} format={fmtCzk} />. Počítáme, že jen polovinu vráceného času stráví prodejem a že ten čas vynáší stejně jako dnes.</li>
+            <li>Tržby nejsou slib. Je to odhad podle vašich čísel. Garantujeme ušetřený čas, který změříme stopkami.</li>
+          </ul>
+        </details>
 
         <div className="mt-auto pt-6">
           {state === 'done' || state === 'queued' ? (

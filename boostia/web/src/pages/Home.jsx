@@ -45,7 +45,21 @@ export default function Home() {
             <Button href="#kalkulacka" variant="secondary" ctaId="hero_calc" section="hero" arrow={false}>Vyzkoušet kalkulačku</Button>
           </div>
           <p className="mt-4 text-[14px] text-muted">30 minut online · bez závazku · číslo v Kč dostanete i bez spolupráce</p>
-          <ul className="mt-12 grid max-w-[900px] gap-x-8 gap-y-3 text-[15px] text-muted sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="mt-10 grid max-w-[900px] gap-3 sm:grid-cols-3">
+            {[['138 hodin', 'ročně zpět na jednoho obchodníka', '3 hodiny týdně × 46 týdnů'], ['1 380 hodin', 'ročně u týmu deseti lidí', 'zhruba tři čtvrtě úvazku navíc pro obchod'], ['kolik Kč?', 'v nákladech i v tržbách', 'spočítejte si to pro svůj tým']].map(([n, l, s], i) => (
+              <div key={n} className="rounded-[14px] border border-line bg-surface/80 p-5 backdrop-blur-sm">
+                <dt className="sr-only">{l}</dt>
+                <dd>
+                  {i === 2
+                    ? <a href="#kalkulacka" className="num text-[26px] font-medium leading-none text-accent underline decoration-accent/40 underline-offset-4">{n}</a>
+                    : <span className="num text-[26px] font-medium leading-none text-accent">{n}</span>}
+                  <span className="mt-2 block text-[15px] text-ink">{l}</span>
+                  <span className="mt-1 block text-[13px] text-muted">{s}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <ul className="mt-8 grid max-w-[900px] gap-x-8 gap-y-3 text-[15px] text-muted sm:grid-cols-2 lg:grid-cols-4">
             {[[Timer, '50hodinový program'], [ShieldCheck, 'První den na naše riziko'], [FileCheck2, 'Lze čerpat dotaci Úřadu práce'], [GraduationCap, 'Vede obchodník se 17 lety praxe']].map(([I, t]) => (
               <li key={t} className="flex items-center gap-2.5"><I size={18} className="shrink-0 text-accent" aria-hidden="true" />{t}</li>
             ))}
@@ -73,8 +87,8 @@ export default function Home() {
 
       {/* 3 – Kalkulačka */}
       <Section id="kalkulacka" className="scroll-mt-20 border-y border-line bg-surface/40">
-        <SectionHead badge="Kalkulačka" title="Kolik stojí neprodejní práce váš tým? Spočítejte si to.">
-          <p>Sedm čísel, dvě minuty. Výsledek v hodinách týdně a korunách ročně. Bez registrace.</p>
+        <SectionHead badge="Kalkulačka" title="Kolik hodin ročně vrátí AI vašemu obchodu? A kolik to dělá v korunách?">
+          <p>Pár čísel, dvě minuty. Uvidíte, kolik hodin ročně tým získá zpět, kolik to dělá v nákladech a kolik tržeb může ten čas přinést. Bez registrace.</p>
         </SectionHead>
         <Calculator />
       </Section>

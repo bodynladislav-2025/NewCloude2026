@@ -53,6 +53,15 @@ meetingsGained = saved / 1,5                              (schůzka + cesta = 1,
 ```
 Koeficient 0,40 je pracovní odhad, **[PROOF: po pilotu nahradit změřeným průměrem]**.
 
+**Rozšíření: roční hodiny a potenciál tržeb (aktuální podoba na webu)**
+Dva další vstupy: `revenuePerRep` (roční tržby na obchodníka, výchozí 10 mil. Kč) a `sellingHours` (hodin týdně jednání s klienty, výchozí 12).
+```
+savedYear             = saved × 46
+revenuePerSellingHour = revenuePerRep / (sellingHours × 46)
+revenueYear           = savedYear × 0,5 × revenuePerSellingHour
+```
+Hlavní číslo výsledku jsou hodiny ročně, pod ním dvě karty: ušetřené náklady a potenciál tržeb. Koeficient 0,5 znamená, že jen polovinu vráceného času počítáme jako prodejní. Tržby jsou odhad podle čísel návštěvníka, ne slib; garance se dál váže jen na změřený čas.
+
 **Text výsledku**
 > Váš tým tráví přípravami, zápisy a nabídkami **{nonSelling} hodin týdně**.
 > Opatrným odhadem z toho AI vrátí **{saved} hodin týdně**. To je **{savedPerRep} hodiny na obchodníka**.
