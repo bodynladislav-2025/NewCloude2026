@@ -28,6 +28,18 @@ Kompletní podklady pro spuštění: trh, business plán, nabídky, funnel, web 
 | [`leadconnector/`](./leadconnector/) | Seznam vlastních polí, tagů a ukázky dat z webhooků. |
 | [`lovable-prompty/`](./lovable-prompty/) | Alternativa: prompty pro postavení stejného webu v Lovable. |
 
+## Změny po první verzi (platí web, ne starší dokumenty)
+
+Web a PDF už používají novou podobu nabídky. Dokumenty fází 1–10, emaily a prompty pro Lovable ji zatím nemají:
+
+| Co | Původně (dokumenty) | Nyní (web, PDF) |
+|---|---|---|
+| Hlavní slib | 3 hodiny týdně na obchodníka | 12 hodin měsíčně navíc na prodej; důraz na tržby, ne jen ušetřený čas |
+| Cena programu | 290 000 Kč, tým do 12 lidí; zakladatelská cena 220 000 Kč | 197 000 Kč, jedna cena pro tým až 16 lidí; zakladatelská cena zrušena |
+| Dotace | „cca 160 000 Kč po dotaci pro 10 lidí" | při 16 účastnících pokryje příspěvek celou cenu, při 12 lidech 79 %, při 10 lidech 66 % |
+| Garance | Garance 3 hodin (doučení + vrácení 25 %) | první den na naše riziko · bez schválené dotace se neplatí · doučení zdarma až 20 hodin |
+| Primární cílovka | obchodní ředitel | HR / L&D (materiály zdarma), obchodní ředitel a jednatel jako spolurozhodující |
+
 ## Jak číst značky
 - **[PROOF: …]** chybí důkaz (reference, číslo, případová studie). Nic není vymyšlené; dokud ho nedodáte, platí „poctivá verze" textu.
 - **[OVĚŘIT]** údaj z rešerše nebo právní věc, kterou je třeba potvrdit před zveřejněním (hlavně dotace).

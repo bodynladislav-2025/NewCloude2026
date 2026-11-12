@@ -78,7 +78,7 @@ ${P(24, 'Cross-sell', 'V tabulce jsou klienti a produkty, které odebírají (be
 ${P(25, 'Roční hodnocení spolupráce', 'Připrav osnovu ročního hodnocení spolupráce s klientem [obor, co odebírá]: co fungovalo, čísla, co zlepšit, dva návrhy rozšíření.')}
 <div class="note" style="margin-top:14pt"><b>Tohle je 25 jednotlivých kroků.</b> Když je celý tým používá stejně a každý den, bývá to několik hodin týdně na člověka. Kolik přesně u vás? Spočítáme to na auditu zdarma: <b>www.boostia.cz/audit</b></div>`)
 
-const metodika = page('Program AI Obchod 50', 'Metodika měření: <em>stopky, ne dotazník</em>', 'Jak zjišťujeme, kolik času váš obchodní tým získal. Metodika je přílohou smlouvy a na ní stojí Garance 3 hodin.', `
+const metodika = page('Program AI Obchod 50', 'Metodika měření: <em>stopky, ne dotazník</em>', 'Jak zjišťujeme, kolik času váš obchodní tým získal. Metodika je přílohou smlouvy. Podle ní dostane vedení výsledek v hodinách i korunách.', `
 <h2>1. Co měříme</h2>
 <p>Pět činností, které obchodník dělá každý týden a které nejsou jednáním s klientem.</p>
 <table><tr><th>#</th><th>Činnost</th><th>Začátek měření</th><th>Konec měření</th></tr>
@@ -102,12 +102,13 @@ const metodika = page('Program AI Obchod 50', 'Metodika měření: <em>stopky, n
 <li>Záznamy vede účastník sám do sdílené tabulky; lektor je namátkově ověřuje při školicím dni.</li>
 <li>Kvalitu neobětujeme rychlosti: u nabídek a zápisů vedoucí týmu potvrdí, že výstup odpovídá firemnímu standardu.</li>
 <li>Report obsahuje i činnosti, kde se úspora nedostavila.</li></ul>
-<h2>5. Garance 3 hodin</h2>
-<div class="note"><p><b>První den na naše riziko.</b> Když po prvním školicím dni řeknete, že to není ono, rozejdeme se a neplatíte nic.</p>
-<p style="margin:0"><b>Výsledek změříme.</b> Když tým nezíská v průměru aspoň 3 hodiny týdně na obchodníka, školíme dál zdarma, až 20 hodin. Pokud se tam ani tak nedostaneme, vrátíme čtvrtinu ceny.</p></div>
-<p>Podmínky: účast aspoň 80 % hodin a splněné týdenní úkoly. Do průměru se počítají účastníci, kteří podmínky splnili.</p>
+<h2>5. Cíl programu a jistoty</h2>
+<div class="note"><p><b>Cíl:</b> 12 hodin měsíčně navíc na prodej pro každého obchodníka.</p>
+<p><b>První den na naše riziko.</b> Když po prvním školicím dni řeknete, že to není ono, rozejdeme se a neplatíte nic.</p>
+<p><b>Bez dotace neplatíte.</b> Když Úřad práce žádost zamítne, můžete od smlouvy odstoupit bez sankce.</p>
+<p style="margin:0"><b>Doučíme zdarma.</b> Když vedoucí týmu po osmi týdnech řekne, že lidé AI v denní práci nepoužívají, pokračujeme zdarma, až 20 hodin (při účasti aspoň 80 % a splněných úkolech).</p></div>
 <h2>6. Co dostane vedení</h2>
-<ul><li>Tabulku před a po za tým i za jednotlivé činnosti.</li><li>Úsporu v hodinách týdně a v korunách ročně.</li><li>Co fungovalo, co ne, a plán na dalších 90 dní.</li></ul>`)
+<ul><li>Tabulku před a po za tým i za jednotlivé činnosti.</li><li>Úsporu v hodinách měsíčně a ročně, v nákladech a v odhadu tržeb, které ten čas může přinést.</li><li>Co fungovalo, co ne, a plán na dalších 90 dní.</li></ul>`)
 
 const semafor = page('Bezpečné používání AI ve firmě', 'Semafor: <em>co do AI smí a co ne</em>', 'Krátký přehled pro obchodní tým. Vytiskněte, projděte na poradě, doplňte podle svých pravidel. Nenahrazuje právní posouzení.', `
 <div class="cols">
@@ -143,7 +144,7 @@ const report = page('Report z auditu ztraceného času', '<em>[Firma]</em>: koli
 <ol><li>[krok k největší ztrátě: přípravy / zápisy / nabídky]</li><li>Dejte týmu jedno pravidlo pro data (viz Semafor).</li><li>Změřte jednu činnost stopkami před a po.</li></ol>
 <h2>Náš návrh</h2>
 <table><tr><td>Program</td><td>AI Obchod 50: 50 hodin, 8 týdnů, 1 den týdně u vás</td></tr><tr><td>Start</td><td>[datum kohorty]</td></tr>
-<tr><td>Cena</td><td>290 000 Kč bez DPH; s dotací pro váš tým odhadem [ ] Kč</td></tr><tr><td>Garance</td><td>První den na naše riziko. Výsledek 3 hodiny týdně na obchodníka, jinak školíme dál zdarma a vracíme čtvrtinu ceny.</td></tr>
+<tr><td>Cena</td><td>197 000 Kč bez DPH pro tým až 16 lidí; po dotaci pro váš tým odhadem [ ] Kč</td></tr><tr><td>Co to může přinést</td><td>[ ] hodin ročně navíc pro obchod, odhadem [ ] Kč tržeb</td></tr><tr><td>Jistoty</td><td>První den na naše riziko. Bez schválené dotace neplatíte. Když tým AI nepoužívá, doučíme zdarma až 20 hodin.</td></tr>
 <tr><td>Menší krok</td><td>AI Start den za 39 000 Kč, při pokračování se odečte</td></tr><tr><td>Další krok</td><td>[datum a čas domluveného hovoru]; dotační žádost do [datum]</td></tr></table>`)
 
 // ---------- Materiály pro HR a L&D ----------
@@ -170,7 +171,7 @@ ${P(12, 'Kolik to stojí celkem a na osobu a hodinu?', 'Včetně přípravy, mat
 ${['Zaměření na profesi účastníků', 'Učí se na vlastní práci', 'Měření před a po', 'Garance výsledku ve smlouvě', 'Pravidla pro data součástí', 'Co zůstane ve firmě', 'Praxe lektora v oboru', 'Podklady k dotaci', 'Rozsah (hodin) a délka', 'Cena celkem / na osobu a hodinu'].map((r) => `<tr><td>${r}</td><td></td><td></td><td></td></tr>`).join('')}</table>
 <h2>Pět varovných signálů</h2>
 <ul><li>Výsledek popisují jen slovy „inspirace“ a „nadšení účastníků“.</li><li>Jednodenní akce bez jakékoli návaznosti.</li><li>Stejná osnova pro obchod, účetní i výrobu.</li><li>Bezpečnost dat se odbude větou „na to si dejte pozor“.</li><li>Na otázku „jak to změříme“ přijde odpověď „to se měřit nedá“.</li></ul>
-<div class="note"><b>Jak na tyto otázky odpovídá Boostia:</b> program AI Obchod 50 je jen pro obchodní týmy, 50 hodin v 8 týdnech, na vlastních zakázkách, s měřením stopkami na začátku a na konci a s garancí 3 hodin týdně na obchodníka. Projdeme to s vámi na auditu zdarma: <b>www.boostia.cz/audit</b></div>`)
+<div class="note"><b>Jak na tyto otázky odpovídá Boostia:</b> program AI Obchod 50 je jen pro obchodní týmy, 50 hodin v 8 týdnech, na vlastních zakázkách, s měřením stopkami na začátku a na konci. Cíl je 12 hodin měsíčně navíc na prodej pro každého obchodníka. Cena 197 000 Kč pro tým až 16 lidí. Projdeme to s vámi na auditu zdarma: <b>www.boostia.cz/audit</b></div>`)
 
 const hrDotace = page('Pro HR a L&D · zdarma', 'Dotace na AI školení: <em>kontrolní seznam pro HR</em>', 'Co si ověřit, co připravit a v jakém pořadí, když chcete na vzdělávání zaměstnanců čerpat příspěvek. Stav podle veřejných zdrojů k listopadu 2026.', `
 <div class="warn"><b>Nejdřív ověřte.</b> Podmínky a sazby se mění. Údaje níže jsme dohledali ve veřejných zdrojích a nemusí být aktuální. Závazné jsou jen dokumenty Úřadu práce a MPSV a informace vaší krajské pobočky.</div>
@@ -264,9 +265,9 @@ const hrPodklad = page('Pro HR a L&D · šablona', 'Podklad pro vedení: <em>pro
   await pg.setViewportSize({ width: 1200, height: 630 })
   await pg.setContent(`<style>${css} body{background:#07090D;color:#F2F5F9;width:1200px;height:630px;position:relative;overflow:hidden}
   .w{position:absolute;left:72px;top:64px;right:72px}.l{font-family:Tight;font-weight:700;font-size:34px}.t{font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:#9AA6B8;margin-top:70px}
-  h1{font-size:76px;line-height:1.04;margin-top:18px;max-width:900px}h1 em{color:#C8FF3E;font-style:normal}</style>
+  h1{font-size:66px;line-height:1.05;margin-top:18px;max-width:880px}h1 em{color:#C8FF3E;font-style:normal}</style>
   <svg width="1200" height="630" style="position:absolute;inset:0">${[40, 120, 200, 300, 400, 480, 560, 610].map((y) => `<path d="M560 ${y} C 850 ${y}, 950 500, 1060 500" fill="none" stroke="#4DA3FF" stroke-opacity=".28"/>`).join('')}<path d="M1060 500 H1200" stroke="#C8FF3E" stroke-width="3"/><circle cx="1060" cy="500" r="7" fill="#C8FF3E"/></svg>
-  <div class="w"><div class="l">Boostia</div><div class="t">Měřený AI trénink pro obchodní týmy</div><h1>O <em>3 hodiny</em> týdně víc na prodej. Za <em>8 týdnů</em>, změřeno.</h1></div>`)
+  <div class="w"><div class="l">Boostia</div><div class="t">Měřený AI trénink pro obchodní týmy</div><h1><em>12 hodin měsíčně</em> navíc na prodej pro každého obchodníka. <em>Kolik vám vydělají?</em></h1></div>`)
   await pg.evaluate(() => document.fonts.ready)
   await pg.screenshot({ path: path.join(WEB, 'public', 'og.png') })
   console.log('OG image')
