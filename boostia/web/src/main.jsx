@@ -14,6 +14,7 @@ const ONas = lazy(() => import('./pages/ONas'))
 const Audit = lazy(() => import('./pages/Audit'))
 const Dekujeme = lazy(() => import('./pages/Dekujeme'))
 const DekujemePrompty = lazy(() => import('./pages/DekujemePrompty'))
+const Materialy = lazy(() => import('./pages/Materialy'))
 const Kontakt = lazy(() => import('./pages/Kontakt'))
 const Gdpr = lazy(() => import('./pages/Gdpr'))
 const Podminky = lazy(() => import('./pages/Podminky'))
@@ -33,6 +34,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/audit" element={<Audit />} />
             <Route path="/dekujeme" element={<Dekujeme />} />
             <Route path="/dekujeme-prompty" element={<DekujemePrompty />} />
+            <Route path="/materialy-zdarma" element={<Materialy />} />
             <Route path="/kontakt" element={<Kontakt />} />
             <Route path="/ochrana-osobnich-udaju" element={<Gdpr />} />
             <Route path="/obchodni-podminky" element={<Podminky />} />

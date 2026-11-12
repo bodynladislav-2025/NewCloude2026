@@ -38,3 +38,5 @@ Audit,Cena po dotaci,price_after_subsidy,Monetary,
 Audit,Datum follow-upu,followup_date,Date,
 Audit,Důvod prohry,loss_reason,Dropdown,cena|načasování|není priorita|jiný dodavatel|malý tým|bez odpovědi
 Firma,IČO,ico,Text,
+Materiály,Naposledy stažený materiál,material,Text,
+Materiály,Skupina materiálu,audience,Dropdown,hr|sales

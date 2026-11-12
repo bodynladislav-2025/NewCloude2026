@@ -10,6 +10,19 @@
 
 **Vítěz: kalkulačka.** Je nejblíž nákupnímu rozhodnutí: převádí vágní pocit („obchod je pomalý") na číslo v Kč, které je hlavní osou auditu, nabídky i garance. Prompt pack je druhý v pořadí jako doplněk (děkovná stránka, outbound, LinkedIn), semafor jako obsah pro jednatele a HR. Níže je kompletní kalkulačka (logika, texty, e-mailový report) a také kompletní prompt pack, protože se na něj odkazují emaily z fáze 7.
 
+### Doplněk: lead magnety pro HR a L&D
+
+HR je role, která AI školení ve firmě typicky zadává a vybírá. Proto má vlastní sadu materiálů na stránce `/materialy-zdarma` (hotová PDF jsou ve `web/public/materialy/`):
+
+| # | Materiál | Jakou práci za HR udělá | Další krok ve funnelu |
+|---|---|---|---|
+| 1 | **Jak vybrat AI školení, které obhájíte** (12 otázek na dodavatele, srovnávací tabulka, 5 varovných signálů) | Výběrové řízení mezi dodavateli | Audit: „projdeme otázky s vámi" |
+| 2 | **Dotace na AI školení: kontrolní seznam pro HR** | Ověření nároku a podklady k žádosti | Formulář Ověřit nárok |
+| 3 | **Vzor pravidel používání AI a záznam o proškolení** | Interní pravidla a doklad o školení | Nurture, potom audit |
+| 4 | **Podklad pro vedení: proč investovat do AI školení** | Obhajoba rozpočtu u jednatele | Kalkulačka a audit (čísla do šablony) |
+
+Stažení je za e-mail (jeden e-mail odemkne všechny materiály). Kontakt dostane tag `zdroj-material-hr` nebo `zdroj-material-obchod` a pole `material`. Sekvenci 1 je potřeba pro HR upravit: úvodní email doručí materiál a místo příběhu z obchodu nabídne ověření dotace a osnovu programu. **[DOPLNIT: HR varianta sekvence 1]**
+
 ## 8.2 Kalkulačka ztraceného času: kompletní specifikace
 
 **Název:** Kolik stojí neprodejní práce váš obchodní tým?

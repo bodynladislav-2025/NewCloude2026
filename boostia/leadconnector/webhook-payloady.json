@@ -32,5 +32,9 @@
     "form": "contact", "source": "kontakt", "name": "Jan Novák", "company": "Firma s.r.o.", "email": "jan@firma.cz", "phone": "+420 777 123 456", "message": "Mám zájem o Mapu automatizace.",
     "pageUrl": "https://www.boostia.cz/kontakt?tema=mapa", "submittedAt": "2026-11-12T10:20:00.000Z"
   },
+  "VITE_LC_WEBHOOK_MATERIAL": {
+    "form": "material", "email": "hr@firma.cz", "consentMarketing": true, "material": "hr-vyber", "materialTitle": "Jak vybrat AI školení, které obhájíte", "audience": "hr",
+    "pageUrl": "https://www.boostia.cz/materialy-zdarma", "submittedAt": "2026-11-12T10:25:00.000Z"
+  },
   "_presmerovani_po_rezervaci": "V nastavení kalendáře Audit nastavte přesměrování na https://www.boostia.cz/dekujeme?name={{contact.first_name}}&email={{contact.email}}&date={{appointment.start_date}}&time={{appointment.only_start_time}}&start={{appointment.start_time_iso}} (ověřte přesné názvy proměnných v LeadConnectoru)."
 }

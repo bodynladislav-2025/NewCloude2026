@@ -10,6 +10,7 @@ export const WEBHOOKS = {
   calc: import.meta.env.VITE_LC_WEBHOOK_CALC,
   prep: import.meta.env.VITE_LC_WEBHOOK_PREP,
   contact: import.meta.env.VITE_LC_WEBHOOK_CONTACT,
+  material: import.meta.env.VITE_LC_WEBHOOK_MATERIAL,
 }
 
 // UTM parametry si pamatujeme od první návštěvy.
@@ -31,7 +32,7 @@ async function post(url, payload) {
 }
 
 /**
- * @param {'audit'|'calc'|'prep'|'contact'} kind
+ * @param {'audit'|'calc'|'prep'|'contact'|'material'} kind
  * @returns {Promise<{ok: boolean, queued?: boolean, demo?: boolean}>}
  */
 export async function submitLead(kind, data) {

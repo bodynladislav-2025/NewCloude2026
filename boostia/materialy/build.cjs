@@ -146,11 +146,114 @@ const report = page('Report z auditu ztraceného času', '<em>[Firma]</em>: koli
 <tr><td>Cena</td><td>290 000 Kč bez DPH; s dotací pro váš tým odhadem [ ] Kč</td></tr><tr><td>Garance</td><td>První den na naše riziko. Výsledek 3 hodiny týdně na obchodníka, jinak školíme dál zdarma a vracíme čtvrtinu ceny.</td></tr>
 <tr><td>Menší krok</td><td>AI Start den za 39 000 Kč, při pokračování se odečte</td></tr><tr><td>Další krok</td><td>[datum a čas domluveného hovoru]; dotační žádost do [datum]</td></tr></table>`)
 
+// ---------- Materiály pro HR a L&D ----------
+const hrVyber = page('Pro HR a L&D · zdarma', 'Jak vybrat AI školení, <em>které obhájíte</em>', 'Dvanáct otázek na dodavatele, srovnávací tabulka a pět varovných signálů. Aby školení nezůstalo u hezkých slajdů a vy jste měli co vykázat vedení.', `
+<div class="note"><b>Jak s tím pracovat.</b> Pošlete otázky třem dodavatelům předem. Odpovědi zapište do tabulky na straně 2. Kdo se vyhne otázkám 4, 5 a 9, toho nejspíš nevyberete.</div>
+<h2>A) Obsah a přizpůsobení</h2>
+${P(1, 'Pro koho přesně je program postavený?', 'Obecné „AI pro všechny“, nebo pro konkrétní profesi (obchod, HR, finance)? Chtějte osnovu po hodinách.')}
+${P(2, 'Na čem se účastníci učí?', 'Na cvičných příkladech lektora, nebo na vlastní práci (naše nabídky, naši klienti, naše dokumenty)?')}
+${P(3, 'Jaké nástroje a účty jsou potřeba?', 'Pracuje dodavatel s tím, co už máme (Microsoft 365 Copilot, ChatGPT, Claude)? Kdo platí licence a kolik stojí?')}
+<h2>B) Výsledek a jeho měření</h2>
+${P(4, 'Jak poznáme, že školení fungovalo?', 'Dotazník spokojenosti nestačí. Chtějte měřitelný ukazatel (ušetřený čas, rychlost, kvalita výstupu) a způsob měření před a po.')}
+${P(5, 'Co se stane, když výsledek nenastane?', 'Existuje garance? Jaké má podmínky? Je napsaná ve smlouvě?')}
+${P(6, 'Co zůstane ve firmě po skončení?', 'Postupy, šablony, pravidla, nastavené nástroje, osvědčení. Nebo jen prezentace v PDF?')}
+${P(7, 'Jak dodavatel zajistí, že lidé nové postupy opravdu používají?', 'Úkoly mezi setkáními, kontrola po 60 dnech, podpora vedoucího týmu.')}
+<h2>C) Bezpečnost a pravidla</h2>
+${P(8, 'Je součástí práce s daty a firemní pravidla pro AI?', 'Kdy v programu to zazní: na začátku, nebo jako poznámka na konci? Dostaneme vzor pravidel?')}
+${P(9, 'Jak se zachází s našimi daty při školení?', 'Zůstávají v našich účtech? Podepíše dodavatel mlčenlivost a zpracovatelskou smlouvu?')}
+<h2>D) Organizace, dotace, lektor</h2>
+${P(10, 'Kdo školí a jakou má praxi v oboru účastníků?', 'IT lektor, nebo člověk, který práci účastníků sám dělal a řídil?')}
+${P(11, 'Splňuje program podmínky dotace a kdo připraví podklady?', 'Rozsah v hodinách, osnova, prezenční listiny, osvědčení. Co udělá dodavatel a co zůstane na nás?')}
+${P(12, 'Kolik to stojí celkem a na osobu a hodinu?', 'Včetně přípravy, materiálů, cestovného a licencí. Jak vypadá platební kalendář, pokud čerpáme dotaci (hradí se předem, příspěvek přichází zpětně)?')}
+<h2>Srovnávací tabulka</h2>
+<table><tr><th>Kritérium</th><th>Dodavatel A</th><th>Dodavatel B</th><th>Dodavatel C</th></tr>
+${['Zaměření na profesi účastníků', 'Učí se na vlastní práci', 'Měření před a po', 'Garance výsledku ve smlouvě', 'Pravidla pro data součástí', 'Co zůstane ve firmě', 'Praxe lektora v oboru', 'Podklady k dotaci', 'Rozsah (hodin) a délka', 'Cena celkem / na osobu a hodinu'].map((r) => `<tr><td>${r}</td><td></td><td></td><td></td></tr>`).join('')}</table>
+<h2>Pět varovných signálů</h2>
+<ul><li>Výsledek popisují jen slovy „inspirace“ a „nadšení účastníků“.</li><li>Jednodenní akce bez jakékoli návaznosti.</li><li>Stejná osnova pro obchod, účetní i výrobu.</li><li>Bezpečnost dat se odbude větou „na to si dejte pozor“.</li><li>Na otázku „jak to změříme“ přijde odpověď „to se měřit nedá“.</li></ul>
+<div class="note"><b>Jak na tyto otázky odpovídá Boostia:</b> program AI Obchod 50 je jen pro obchodní týmy, 50 hodin v 8 týdnech, na vlastních zakázkách, s měřením stopkami na začátku a na konci a s garancí 3 hodin týdně na obchodníka. Projdeme to s vámi na auditu zdarma: <b>www.boostia.cz/audit</b></div>`)
+
+const hrDotace = page('Pro HR a L&D · zdarma', 'Dotace na AI školení: <em>kontrolní seznam pro HR</em>', 'Co si ověřit, co připravit a v jakém pořadí, když chcete na vzdělávání zaměstnanců čerpat příspěvek. Stav podle veřejných zdrojů k listopadu 2026.', `
+<div class="warn"><b>Nejdřív ověřte.</b> Podmínky a sazby se mění. Údaje níže jsme dohledali ve veřejných zdrojích a nemusí být aktuální. Závazné jsou jen dokumenty Úřadu práce a MPSV a informace vaší krajské pobočky.</div>
+<h2>1. Co jsme k projektu Vzdělávání pro firmy dohledali</h2>
+<table><tr><th>Parametr</th><th>Údaj z veřejných zdrojů</th><th>Ověřeno u ÚP?</th></tr>
+<tr><td>Příspěvek na vzdělávání</td><td>260,73 Kč za hodinu a účastníka</td><td></td></tr>
+<tr><td>Příspěvek na mzdy</td><td>ano, za dobu školení (výši ověřte)</td><td></td></tr>
+<tr><td>Minimální rozsah kurzu</td><td>50 hodin</td><td></td></tr>
+<tr><td>Maximální podpořený rozsah</td><td>80 hodin, u zaměstnanců 50+ až 100 hodin</td><td></td></tr>
+<tr><td>Kdy se žádá</td><td>před zahájením vzdělávání</td><td></td></tr>
+<tr><td>Kdy přijdou peníze</td><td>zpětně, po úspěšném dokončení</td><td></td></tr></table>
+<p>Další možnosti, na které se zeptejte: výzvy Operačního programu Zaměstnanost plus (podnikové vzdělávání) a projekty profesních a podnikatelských sdružení, která žádají pro své členy.</p>
+<h2>2. Než začnete: šest otázek</h2>
+<table><tr><th>Otázka</th><th>Ano / Ne / Zjistit</th></tr>
+${['Má kurz aspoň minimální požadovaný rozsah hodin?', 'Splňuje dodavatel podmínky pro vzdělavatele (akreditace, registrace)?', 'Jsou všichni účastníci v pracovním poměru po celou dobu kurzu?', 'Nemá firma dluhy vůči státu, zdravotním pojišťovnám a správě sociálního zabezpečení?', 'Máme volný limit podpory de minimis?', 'Unese firma úhradu kurzu předem a čekání na příspěvek?'].map((r) => `<tr><td>${r}</td><td></td></tr>`).join('')}</table>
+<h2>3. Podklady, které budete potřebovat</h2>
+<div class="cols" style="grid-template-columns:1fr 1fr">
+<div class="box"><h3>Od dodavatele školení</h3><ul><li>Osnova a hodinová dotace</li><li>Harmonogram s daty a místem</li><li>Profil lektora</li><li>Cenová nabídka</li><li>Vzor osvědčení</li><li>Doklad o oprávnění ke vzdělávání, je-li požadován</li></ul></div>
+<div class="box"><h3>Od vaší firmy</h3><ul><li>Seznam účastníků a jejich pracovní zařazení</li><li>Zdůvodnění potřeby vzdělávání</li><li>Čestná prohlášení a potvrzení o bezdlužnosti</li><li>Přehled čerpané podpory de minimis</li><li>Bankovní spojení a kontaktní osoba</li></ul></div></div>
+<h2>4. Postup a kdo co hlídá</h2>
+<table><tr><th>Krok</th><th>Co se děje</th><th>Na co si dát pozor</th></tr>
+<tr><td>1. Ověření</td><td>Konzultace s krajskou pobočkou ÚP</td><td>Ptejte se na aktuální verzi podmínek a lhůty</td></tr>
+<tr><td>2. Žádost</td><td>Vyplnění a podání s přílohami</td><td>Kurz nesmí začít před schválením</td></tr>
+<tr><td>3. Schválení</td><td>Rozhodnutí a dohoda s ÚP</td><td>Data v dohodě musí sedět s harmonogramem</td></tr>
+<tr><td>4. Kurz</td><td>Vzdělávání podle harmonogramu</td><td>Prezenční listiny každý den, změny termínů hlásit předem</td></tr>
+<tr><td>5. Vyúčtování</td><td>Doložení docházky, osvědčení, úhrady</td><td>Účastník, který nedokončí, obvykle příspěvek krátí</td></tr></table>
+<h2>5. Nejčastější chyby</h2>
+<ul><li>Kurz začal dřív, než byla žádost schválena.</li><li>Změna termínu nebo účastníka bez ohlášení.</li><li>Chybějící podpisy v prezenčních listinách.</li><li>Kurz kratší než požadované minimum (například po zrušeném dni).</li><li>Počítání s příspěvkem v rozpočtu dřív, než dorazí rozhodnutí.</li></ul>
+<div class="note"><b>S čím pomáhá Boostia.</b> Program AI Obchod 50 má 50 hodin. Nárok vám ověříme do dvou pracovních dnů, dodáme osnovu, harmonogram a profil lektora, žádost s vámi předvyplníme, vedeme prezenční listiny a vystavíme osvědčení. Žádá vždy vaše firma a schválení zaručit nemůžeme. Proto máme ve smlouvě, že při zamítnutí můžete odstoupit bez sankce. <b>www.boostia.cz/dotace</b></div>`)
+
+const hrPravidla = page('Pro HR a L&D · vzor k úpravě', 'Vzor: <em>pravidla používání AI</em> a záznam o proškolení', 'Pravidla pro zaměstnance a formulář, kterým doložíte, že jste lidi proškolili. Upravte podle své firmy a nechte zkontrolovat právníkem.', `
+<div class="warn"><b>Vzor, ne právní rada.</b> Dokument je výchozí bod. Nenahrazuje posouzení právníkem ani pověřencem pro ochranu osobních údajů.</div>
+<h2>Pravidla používání nástrojů umělé inteligence</h2>
+<p>Společnost: <span class="fill" style="min-width:160pt">&nbsp;</span> &nbsp; Platnost od: <span class="fill">&nbsp;</span> &nbsp; Odpovědná osoba: <span class="fill" style="min-width:110pt">&nbsp;</span></p>
+<h3>1. Účel</h3><p>Chceme, aby lidé nástroje AI používali, protože šetří čas. Tato pravidla říkají, jak to dělat bezpečně.</p>
+<h3>2. Povolené nástroje</h3><p>Pro pracovní účely používáme pouze nástroje a účty schválené firmou: <span class="fill" style="min-width:200pt">&nbsp;</span>. Osobní a bezplatné účty se pro firemní data nepoužívají.</p>
+<h3>3. Co do AI smí a co ne</h3>
+<table><tr><th>Smí kamkoli</th><th>Jen do firemního účtu</th><th>Nikdy</th></tr>
+<tr><td>Veřejné informace, obecné dotazy, vlastní texty bez osobních údajů</td><td>Zápisy z jednání, nabídky a kalkulace, interní postupy, e-maily od klientů, exporty z firemních systémů</td><td>Rodná čísla, zdravotní údaje, čísla dokladů, hesla, dokumenty s doložkou mlčenlivosti bez svolení</td></tr></table>
+<h3>4. Odpovědnost za výstup</h3><p>AI se může mýlit a vymýšlet si. Každý výstup před použitím zkontroluje člověk, který za něj odpovídá stejně, jako by ho napsal sám.</p>
+<h3>5. Nahrávání a přepisy</h3><p>Jednání nahráváme a přepisujeme jen se souhlasem všech účastníků. Řekneme jim, k čemu záznam slouží a jak dlouho ho uchováme.</p>
+<h3>6. Rozhodování o lidech</h3><p>AI nepoužíváme k samostatnému rozhodování o přijetí, hodnocení ani odměňování lidí. Případné použití v těchto oblastech schvaluje vedení a HR předem.</p>
+<h3>7. Autorská práva a označování</h3><p>Nevydáváme cizí chráněný obsah za vlastní. U obsahu pro veřejnost zvažujeme, zda uvést, že vznikl s pomocí AI.</p>
+<h3>8. Když se něco pokazí</h3><p>Kdo vloží do AI něco, co neměl, oznámí to týž den odpovědné osobě. Včasné oznámení se nepostihuje.</p>
+<h3>9. Dotazy</h3><p>S čímkoli nejasným se obraťte na: <span class="fill" style="min-width:160pt">&nbsp;</span></p>
+<p style="margin-top:12pt">Seznámil(a) jsem se s pravidly: jméno <span class="fill" style="min-width:120pt">&nbsp;</span> datum <span class="fill">&nbsp;</span> podpis <span class="fill" style="min-width:90pt">&nbsp;</span></p>
+<h2>Záznam o proškolení v používání AI</h2>
+<p>Vedení záznamů se obecně doporučuje jako doklad, že firma zajišťuje dostatečnou znalost AI u lidí, kteří s ní pracují (nařízení EU o umělé inteligenci, článek 4). Aktuální znění a rozsah povinnosti si ověřte.</p>
+<table><tr><td style="width:30%">Název školení</td><td></td></tr><tr><td>Datum a rozsah (hodin)</td><td></td></tr><tr><td>Lektor / dodavatel</td><td></td></tr><tr><td>Probíraná témata</td><td>&nbsp;<br>&nbsp;</td></tr><tr><td>Nástroje, kterých se týkalo</td><td></td></tr></table>
+<table><tr><th>#</th><th>Jméno a příjmení</th><th>Pracovní zařazení</th><th>Podpis</th></tr>
+${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => `<tr><td>${i}</td><td></td><td></td><td></td></tr>`).join('')}</table>
+<p>Doporučení: úvodní školení při nástupu a opakování alespoň jednou ročně nebo při zavedení nového nástroje. K záznamu přiložte osnovu a prezentaci.</p>
+<div class="note">V programu AI Obchod 50 tým první den dostane pravidla upravená na míru, podepíše je a každý účastník získá osvědčení s rozsahem a obsahem školení. <b>www.boostia.cz</b></div>`)
+
+const hrPodklad = page('Pro HR a L&D · šablona', 'Podklad pro vedení: <em>proč investovat do AI školení</em>', 'Krátká šablona, se kterou obhájíte rozpočet. Doplňte čísla své firmy. Výpočet můžete udělat v kalkulačce na www.boostia.cz.', `
+<h2>1. Problém jednou větou</h2><div class="box"><p style="margin:0">Náš [obchodní] tým o [ ] lidech tráví přibližně [ ] hodin týdně činnostmi, které dnes umí výrazně zkrátit AI (přípravy, zápisy, nabídky, vyhledávání informací).</p></div>
+<h2>2. Kolik nás to stojí</h2>
+<table><tr><th>Položka</th><th>Hodnota</th><th>Zdroj</th></tr>
+<tr><td>Počet lidí v týmu</td><td>[ ]</td><td>HR</td></tr>
+<tr><td>Hodin týdně na osobu v těchto činnostech</td><td>[ ]</td><td>dotaz u 2–3 lidí nebo měření stopkami</td></tr>
+<tr><td>Plný náklad na hodinu (mzda, odvody, režie)</td><td>[ ] Kč</td><td>finance</td></tr>
+<tr><td>Náklad ročně (hodiny × lidé × náklad × 46 týdnů)</td><td>[ ] Kč</td><td>výpočet</td></tr>
+<tr><td>Opatrný odhad úspory (uvádějte konzervativně, např. 30–40 %)</td><td>[ ] Kč ročně</td><td>výpočet</td></tr></table>
+<h2>3. Co navrhujeme</h2>
+<table><tr><td style="width:30%">Program a dodavatel</td><td>[ ]</td></tr><tr><td>Rozsah a termín</td><td>[ ] hodin, [ ] týdnů, start [ ]</td></tr><tr><td>Účastníci</td><td>[ ]</td></tr><tr><td>Cena</td><td>[ ] Kč bez DPH</td></tr><tr><td>Dotace</td><td>očekávaný příspěvek [ ] Kč, stav žádosti [ ]</td></tr><tr><td>Čistý náklad firmy</td><td>[ ] Kč</td></tr><tr><td>Návratnost</td><td>čistý náklad ÷ měsíční úspora = [ ] měsíců</td></tr></table>
+<h2>4. Jak poznáme výsledek</h2>
+<ul><li>Ukazatel: [např. hodiny týdně na osobu, doba od poptávky po nabídku]</li><li>Měření: před zahájením a po skončení, stejnou metodou</li><li>Kdo vyhodnotí a kdy: [ ]</li><li>Co udělá dodavatel, když se výsledek nedostaví: [garance]</li></ul>
+<h2>5. Rizika a jak je ošetříme</h2>
+<table><tr><th>Riziko</th><th>Opatření</th></tr>
+<tr><td>Lidé se vrátí ke starým postupům</td><td>Úkoly na vlastní práci, podpora vedoucího, kontrola po 60 dnech</td></tr>
+<tr><td>Únik firemních dat</td><td>Firemní účty, písemná pravidla, proškolení první den</td></tr>
+<tr><td>Výpadek kapacity během školení</td><td>Práce na skutečných úkolech, rozložení do týdnů, případně půldny</td></tr>
+<tr><td>Dotace nebude schválena</td><td>Rozhodnutí až po vyjádření ÚP, možnost odstoupit od smlouvy</td></tr></table>
+<h2>6. Co potřebujeme od vedení</h2>
+<ul><li>Schválení rozpočtu [ ] Kč do [datum]</li><li>Účast vedoucího týmu na prvním a posledním dni</li><li>Jmenování odpovědné osoby za pravidla používání AI</li></ul>
+<div class="note">Čísla do oddílu 2 vám pro obchodní tým spočítáme zdarma na 30minutovém auditu a pošleme na jedné straně: <b>www.boostia.cz/audit</b></div>`)
+
 ;(async () => {
   fs.mkdirSync(OUT, { recursive: true })
   const b = await chromium.launch()
   const pg = await b.newPage()
-  const docs = { '25-promptu-pro-obchodnika': [prompts, OUT], 'metodika-mereni': [metodika, OUT], 'semafor-co-do-ai-smi': [semafor, OUT], 'sablona-report-z-auditu': [report, __dirname] }
+  const docs = { '25-promptu-pro-obchodnika': [prompts, OUT], 'metodika-mereni': [metodika, OUT], 'semafor-co-do-ai-smi': [semafor, OUT], 'sablona-report-z-auditu': [report, __dirname],
+    'hr-jak-vybrat-ai-skoleni': [hrVyber, OUT], 'hr-dotace-kontrolni-seznam': [hrDotace, OUT], 'hr-vzor-pravidla-ai-a-zaznam-o-proskoleni': [hrPravidla, OUT], 'hr-podklad-pro-vedeni': [hrPodklad, OUT] }
   for (const [name, [html, dir]] of Object.entries(docs)) {
     const src = path.join(__dirname, name + '.html'); fs.writeFileSync(src, html)
     await pg.goto('file://' + src); await pg.evaluate(() => document.fonts.ready)

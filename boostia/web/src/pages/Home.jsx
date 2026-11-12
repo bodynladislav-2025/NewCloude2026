@@ -6,6 +6,7 @@ import Calculator from '../components/Calculator'
 import { Badge, Button, Card, Container, Faq, Magnetic, Marquee, Placeholder, Reveal, Section, SectionHead, SplitHeadline } from '../components/ui'
 import { FinalCta, FoundingBanner, GuaranteeBlock } from '../components/blocks'
 import { FAQ_HOME, MODULES, PRICE, TOOLS } from '../content'
+import { MATERIALS, MaterialsGrid } from './Materialy'
 
 const AgentDemo = lazy(() => import('../components/AgentDemo'))
 
@@ -183,6 +184,19 @@ export default function Home() {
       <Section tight>
         <SectionHead title="Výsledky" />
         <FoundingBanner />
+      </Section>
+
+      {/* Materiály zdarma */}
+      <Section tight className="border-y border-line bg-surface/40">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+          <div className="max-w-[720px]">
+            <Badge>Materiály zdarma</Badge>
+            <h2 className="mt-5 text-[clamp(1.9rem,4.2vw,3.1rem)]">Řešíte AI školení z pozice HR? Začněte těmito podklady.</h2>
+            <p className="mt-4 text-[18px] text-muted">Jak vybrat dodavatele, jak na dotaci, vzor pravidel pro AI a podklad pro vedení. Pro obchodníky 25 promptů k okamžitému použití.</p>
+          </div>
+          <Button to="/materialy-zdarma" variant="secondary" ctaId="home_materials" section="materialy">Všechny materiály</Button>
+        </div>
+        <MaterialsGrid group="hr" items={MATERIALS.hr.slice(0, 2)} />
       </Section>
 
       {/* 12 – Nástroje */}

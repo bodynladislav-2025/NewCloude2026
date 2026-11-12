@@ -15,6 +15,7 @@ const NAV = [
   ['/ai-agenti', 'AI agenti'],
   ['/jak-to-funguje', 'Jak to funguje'],
   ['/dotace', 'Dotace'],
+  ['/materialy-zdarma', 'Materiály zdarma'],
   ['/pripadove-studie', 'Případové studie'],
   ['/o-nas', 'O nás'],
 ]
@@ -46,14 +47,14 @@ function Header({ bare }) {
         <Logo />
         {!bare && (
           <>
-            <nav aria-label="Hlavní navigace" className="hidden items-center gap-7 lg:flex">
+            <nav aria-label="Hlavní navigace" className="hidden items-center gap-6 xl:flex">
               {NAV.map(([to, label]) => (
-                <NavLink key={to} to={to} end className={({ isActive }) => `text-[15px] transition-colors hover:text-ink ${isActive ? 'text-ink' : 'text-muted'}`}>{label}</NavLink>
+                <NavLink key={to} to={to} end className={({ isActive }) => `whitespace-nowrap text-[14px] xl:text-[15px] transition-colors hover:text-ink ${isActive ? 'text-ink' : 'text-muted'}`}>{label}</NavLink>
               ))}
             </nav>
             <div className="flex items-center gap-3">
               <span className="hidden sm:block"><Button to="/audit" ctaId="header_audit" section="header" className="!min-h-[42px] !px-5 !py-2 !text-[15px]">Audit zdarma</Button></span>
-              <button className="flex h-11 w-11 items-center justify-center rounded-full border border-line lg:hidden" aria-label={open ? 'Zavřít menu' : 'Otevřít menu'} aria-expanded={open} onClick={() => setOpen(!open)}>
+              <button className="flex h-11 w-11 items-center justify-center rounded-full border border-line xl:hidden" aria-label={open ? 'Zavřít menu' : 'Otevřít menu'} aria-expanded={open} onClick={() => setOpen(!open)}>
                 {open ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
@@ -62,7 +63,7 @@ function Header({ bare }) {
         {bare && <a href="tel:+420000000000" className="text-[15px] text-muted hover:text-ink">Potřebujete poradit? Zavolejte</a>}
       </Container>
       {open && (
-        <nav aria-label="Mobilní navigace" className="h-[calc(100dvh-68px)] overflow-y-auto border-t border-line bg-bg px-6 py-8 lg:hidden">
+        <nav aria-label="Mobilní navigace" className="h-[calc(100dvh-68px)] overflow-y-auto border-t border-line bg-bg px-6 py-8 xl:hidden">
           <ul className="space-y-1">
             {NAV.map(([to, label]) => (
               <li key={to}><NavLink to={to} end className="block py-3 font-display text-[26px] font-semibold">{label}</NavLink></li>
