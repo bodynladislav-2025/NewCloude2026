@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /dekujeme
+Disallow: /dekujeme-prompty
+Sitemap: https://www.boostia.cz/sitemap.xml
