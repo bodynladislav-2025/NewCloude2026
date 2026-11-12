@@ -1,7 +1,7 @@
 // Bloky, které se opakují na více stránkách.
 import { ShieldCheck } from 'lucide-react'
 import { Button, Card, Container, Magnetic, Placeholder, Reveal } from './ui'
-import { COHORT, PRICE } from '../content'
+import { COHORT } from '../content'
 
 export function GuaranteeBlock() {
   return (
@@ -10,18 +10,22 @@ export function GuaranteeBlock() {
         <div className="grid gap-8 lg:grid-cols-[auto_1fr]">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-accentink"><ShieldCheck size={30} /></div>
           <div>
-            <h2 className="text-[clamp(1.9rem,4.2vw,3.1rem)]">Garance 3 hodin</h2>
-            <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            <h2 className="text-[clamp(1.9rem,4.2vw,3.1rem)]">Jdete do toho bez rizika</h2>
+            <div className="mt-6 grid gap-6 lg:grid-cols-3">
               <div>
                 <h3 className="text-[21px]">První den na naše riziko</h3>
                 <p className="mt-2 text-muted">Když po prvním dni řeknete, že to není ono, rozejdeme se a neplatíte nic.</p>
               </div>
               <div>
-                <h3 className="text-[21px]">Výsledek změříme</h3>
-                <p className="mt-2 text-muted">Když váš tým při závěrečném měření nezíská v průměru aspoň 3 hodiny týdně na obchodníka, školíme dál zdarma, až 20 hodin. A pokud se tam ani tak nedostaneme, vrátíme vám čtvrtinu ceny.</p>
+                <h3 className="text-[21px]">Bez dotace neplatíte</h3>
+                <p className="mt-2 text-muted">Když Úřad práce vaši žádost zamítne, můžete od smlouvy odstoupit bez sankce. Rozhodujete se, až znáte výsledek.</p>
+              </div>
+              <div>
+                <h3 className="text-[21px]">Doučíme zdarma</h3>
+                <p className="mt-2 text-muted">Když vedoucí týmu po osmi týdnech řekne, že lidé AI v denní práci nepoužívají, pokračujeme zdarma, až 20 hodin.</p>
               </div>
             </div>
-            <p className="mt-6 text-[14px] text-muted">Platí pro týmy s účastí aspoň 80 % a splněnými týdenními úkoly. Jiné podmínky v tom nejsou.</p>
+            <p className="mt-6 text-[14px] text-muted">Doučení platí pro týmy s účastí aspoň 80 % a splněnými týdenními úkoly.</p>
           </div>
         </div>
       </div>
@@ -44,10 +48,9 @@ export function FoundingBanner() {
     <Card className="!border-flow/40">
       <p className="font-mono text-[12px] uppercase tracking-wider text-flow">Poctivě: první týmy právě měříme</p>
       <h3 className="mt-3 text-[26px]">Výsledky zveřejníme tady. I ty, které nedopadnou podle plánu.</h3>
-      <p className="mt-3 max-w-[64ch] text-muted">Boostia je nová firma a nechceme vám ukazovat čísla, která nemáme. Chcete být mezi prvními? Zakládající klienti mají cenu {PRICE.founding} místo {PRICE.program} výměnou za měření a souhlas s případovou studií.</p>
-      <p className="mt-4 num text-[15px]">Volná místa: <span className="text-accent">{COHORT.foundingLeft} ze 3</span></p>
+      <p className="mt-3 max-w-[64ch] text-muted">Boostia je nová firma a nechceme vám ukazovat čísla, která nemáme. Do té doby si můžete projít metodiku měření a spočítat vlastní čísla v kalkulačce. Prvním týmům věnujeme víc času výměnou za souhlas s případovou studií.</p>
       <div className="mt-5 flex flex-wrap gap-3">
-        <Button to="/audit" ctaId="founding_audit" section="proof">Chci být zakládající klient</Button>
+        <Button to="/audit" ctaId="founding_audit" section="proof">Chci být mezi prvními</Button>
         <Button href="/materialy/metodika-mereni.pdf" variant="secondary" ctaId="metodika_pdf" section="proof" arrow={false}>Stáhnout metodiku měření (PDF)</Button>
       </div>
     </Card>

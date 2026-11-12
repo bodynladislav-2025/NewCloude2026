@@ -14,10 +14,10 @@ export default function Podminky() {
       <ul><li>Program AI Obchod 50: 50 % před zahájením, 50 % po 4. týdnu.</li><li>AI Start den: předem.</li><li>AI agenti: po milnících 40 % při startu, 40 % po předvedení na datech objednatele, 20 % po akceptaci.</li><li>Splatnost faktur 14 dní. Ceny jsou uvedeny bez DPH.</li></ul>
       <h2>4. Termíny, přesun a storno</h2>
       <p>Termín školení lze bezplatně přesunout nejpozději 7 dní předem.<Placeholder>storno podmínky</Placeholder></p>
-      <h2>5. Garance 3 hodin</h2>
+      <h2>5. Garance</h2>
       <p><strong>První den na naše riziko.</strong> Pokud objednatel po prvním školicím dni oznámí, že v programu nechce pokračovat, smlouva končí a Boostia neúčtuje nic.</p>
-      <p><strong>Garance výsledku.</strong> Pokud tým s účastí alespoň 80 % hodin a splněnými týdenními úkoly nedosáhne při závěrečném měření průměrné úspory 3 hodin týdně na obchodníka, pokračuje Boostia ve školení zdarma v rozsahu až 20 hodin. Pokud ani poté není úspory dosaženo, vrátí Boostia 25 % ceny programu formou dobropisu.</p>
-      <p>Způsob měření popisuje Metodika měření, která je přílohou smlouvy.</p>
+      <p><strong>Doučení zdarma.</strong> Pokud vedoucí týmu objednatele do 14 dnů po skončení programu písemně oznámí, že tým s účastí alespoň 80 % hodin a splněnými týdenními úkoly nepoužívá AI v denní práci, pokračuje Boostia ve školení zdarma v rozsahu až 20 hodin.</p>
+      <p>Výsledek programu se měří podle Metodiky měření, která je přílohou smlouvy.</p>
       <h2>6. Odstoupení při zamítnutí dotace</h2>
       <p>Pokud Úřad práce žádost objednatele o příspěvek zamítne, může objednatel od smlouvy odstoupit bez sankce do 5 pracovních dnů od doručení rozhodnutí.</p>
       <h2>7. Autorská práva</h2>

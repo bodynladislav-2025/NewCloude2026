@@ -22,7 +22,7 @@ export default function JakToFunguje() {
         <Container className="pb-16 lg:pb-24">
           <Card className="text-center">
             <p className="text-muted">Součet za týden</p>
-            <p className="mt-2 font-display text-[clamp(2rem,5vw,3.2rem)] font-semibold text-accent">3+ hodiny týdně zpět</p>
+            <p className="mt-2 font-display text-[clamp(2rem,5vw,3.2rem)] font-semibold text-accent">12 hodin měsíčně navíc na prodej</p>
             <p className="mt-2 text-muted">Cíl programu na jednoho obchodníka. Vaše číslo změříme.<Placeholder kind="PROOF">průměr z pilotu</Placeholder></p>
           </Card>
         </Container>

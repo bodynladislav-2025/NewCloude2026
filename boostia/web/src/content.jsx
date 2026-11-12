@@ -1,8 +1,8 @@
 // Sdílený obsah: ceny, moduly, FAQ. Mění se na jednom místě.
-export const PRICE = { program: '290 000 Kč', founding: '220 000 Kč', startDay: '39 000 Kč', map: '45 000 Kč', provoz: '19 000 Kč', klub: '9 900 Kč' }
+export const PRICE = { program: '197 000 Kč', startDay: '39 000 Kč', map: '45 000 Kč', provoz: '19 000 Kč', klub: '9 900 Kč' }
 
 // Termíny kohort a volná místa. DOPLNIT skutečná data, pak nastavte `set: true`.
-export const COHORT = { set: false, date: '', spots: 3, of: 3, foundingLeft: 3 }
+export const COHORT = { set: false, date: '', spots: 3, of: 3 }
 
 export const MODULES = [
   ['01', 'Bezpečná AI', 'Co do AI smí a co ne. Tým odchází s podepsanou směrnicí a firemními účty.'],
@@ -32,10 +32,11 @@ export const FAQ_HOME = [
   { q: 'Jaké nástroje budeme potřebovat?', a: 'Firemní účet ChatGPT, Microsoft Copilot nebo Claude, podle toho, co už máte nebo co vám doporučíme. Licence stojí řádově stovky korun na osobu měsíčně a nejsou v ceně.' },
   { q: 'Co když někdo z týmu s počítačem moc nekamarádí?', a: 'Každý účastník má individuální konzultaci s lektorem a pracujeme ve dvojicích. Kdo umí napsat e-mail, zvládne i tohle.' },
   { q: 'Jak je to s bezpečností dat?', a: 'Je to první téma programu. Nastavíme účty, kde se vaše data nepoužívají k trénování modelů, a tým podepíše pravidla, co do AI nepatří.' },
-  { q: 'Jak přesně měříte výsledek?', a: 'Stopujeme pět činností (příprava schůzky, zápis, follow-up, nabídka, vyhledání informací) u každého účastníka první a osmý týden. Metodiku dostanete předem.' },
-  { q: 'Co když dotaci nedostaneme?', a: 'Rozhodnete se až po ověření nároku. Když Úřad práce žádost zamítne, můžete od smlouvy odstoupit bez sankce.' },
+  { q: 'Jak přesně měříte výsledek?', a: 'Stopujeme pět činností (příprava schůzky, zápis, follow-up, nabídka, vyhledání informací) u každého účastníka první a osmý týden. Vedení dostane rozdíl v hodinách a korunách. Metodiku dostanete předem.' },
+  { q: 'Opravdu to celé zaplatí Úřad práce?', a: 'Záleží na počtu účastníků. Příspěvek je 260,73 Kč za hodinu a účastníka, při 50 hodinách tedy zhruba 13 000 Kč na člověka. Při 16 účastnících pokryje celou cenu 197 000 Kč, při 10 účastnících zhruba dvě třetiny. Přesné číslo ukáže kalkulačka v sekci Cena. K tomu stát přispívá i na mzdy za dobu školení.' },
+  { q: 'Co když dotaci nedostaneme?', a: 'Rozhodnete se až po ověření nároku. Když Úřad práce žádost zamítne, můžete od smlouvy odstoupit bez sankce a neplatíte nic.' },
   { q: 'Děláte i otevřené kurzy pro jednotlivce?', a: 'Zatím ne. Program stojí na tom, že se mění práce celého týmu.' },
-  { q: 'Čím se lišíte od běžného AI školení?', a: 'Délkou (8 týdnů místo jednoho dne), zaměřením (jen obchod) a tím, že výsledek měříme a ručíme za něj.' },
+  { q: 'Čím se lišíte od běžného AI školení?', a: 'Délkou (8 týdnů místo jednoho dne), zaměřením (jen obchod) a tím, že výsledek měříme v hodinách a korunách.' },
 ]
 
 export const FAQ_AGENTI = [

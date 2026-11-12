@@ -38,8 +38,8 @@ export default function Studie() {
               <FoundingBanner />
               <Reveal className="mt-4 grid gap-4 md:grid-cols-3">
                 <Card><h3 className="text-[21px]">Metodika měření</h3><p className="mt-3 text-muted">Pět činností, stopky, každý účastník, první a osmý týden. Můžete si ji projít předem.</p></Card>
-                <Card><h3 className="text-[21px]">Garance 3 hodin</h3><p className="mt-3 text-muted">První den na naše riziko. Když tým výsledku nedosáhne, školíme dál zdarma a vracíme čtvrtinu ceny.</p></Card>
-                <Card><h3 className="text-[21px]">Zakladatelská cena</h3><p className="mt-3 text-muted">{PRICE.founding} pro první tři týmy výměnou za měření a případovou studii.</p></Card>
+                <Card><h3 className="text-[21px]">Bez rizika</h3><p className="mt-3 text-muted">První den na naše riziko. Bez schválené dotace neplatíte. Když tým AI nepoužívá, doučíme zdarma.</p></Card>
+                <Card><h3 className="text-[21px]">Jedna cena</h3><p className="mt-3 text-muted">{PRICE.program} pro celý tým. Při 16 účastnících ji pokryje dotace Úřadu práce.</p></Card>
               </Reveal>
             </>
           )}

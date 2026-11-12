@@ -1,12 +1,11 @@
 import { Info } from 'lucide-react'
 import Seo, { faqSchema } from '../components/Seo'
 import { SubsidyForm } from '../components/Forms'
-import { Button, Card, CheckList, Faq, NumberTicker, Placeholder, Reveal, Section, SectionHead, SplitHeadline } from '../components/ui'
+import SubsidyCalc from '../components/SubsidyCalc'
+import { Button, Card, CheckList, Faq, Placeholder, Reveal, Section, SectionHead, SplitHeadline } from '../components/ui'
 import { PageHero } from '../components/blocks'
 import { FAQ_DOTACE } from '../content'
 
-// Výpočet ze sazby 260,73 Kč / hodina / účastník a 50 hodin. OVĚŘIT před zveřejněním.
-const ROWS = [[8, 104292, 185708], [10, 130365, 159635], [12, 156438, 133562]]
 const STEPS = [
   ['Ověření', '2 dny', 'Pošlete IČO a počet účastníků. Řekneme, jestli a z čeho můžete čerpat.'],
   ['Žádost', '1–2 týdny', 'Dodáme osnovu, harmonogram, hodinovou dotaci a profil lektora. Žádost s vaším HR předvyplníme. Podáváte vy.'],
@@ -22,28 +21,15 @@ export default function Dotace() {
         description="Program má 50 hodin a lze na něj čerpat příspěvek Úřadu práce. Nárok ověříme do 2 dnů a žádost připravíme s vaším HR." schema={[faqSchema(FAQ_DOTACE)]} />
       <PageHero badge="Dotace"
         parts={<SplitHeadline className="max-w-[20ch] text-[clamp(2.2rem,5.4vw,4rem)]" parts={[{ t: 'Na AI Obchod 50 můžete čerpat dotaci. ' }, { t: 'Papíry připravíme s vámi.', hl: true }]} />}
-        sub={<>Program má 50 hodin, což je minimální rozsah pro projekt Vzdělávání pro firmy Úřadu práce. Pro tým deseti lidí jde o příspěvek přes 130 000 Kč na školení a k tomu příspěvek na mzdy.<Placeholder kind="OVĚŘIT" /></>}>
+        sub={<>Program má 50 hodin, což je minimální rozsah pro projekt Vzdělávání pro firmy Úřadu práce. Při 16 účastnících pokryje příspěvek celou cenu 197 000 Kč, při deseti zhruba dvě třetiny. K tomu stát přispívá na mzdy.<Placeholder kind="OVĚŘIT" /></>}>
         <Button href="#overit" ctaId="dotace_hero" section="hero">Ověřit nárok do 2 pracovních dnů</Button>
       </PageHero>
 
       <Section tight>
-        <SectionHead title="Kolik to dělá" />
-        <Reveal className="grid gap-4 md:grid-cols-3">
-          {ROWS.map(([n, sub, after]) => (
-            <Card key={n} className={n === 10 ? '!border-accent/60 !bg-surface2' : ''}>
-              <p className="font-mono text-[12px] uppercase tracking-wider text-muted">Tým {n} lidí</p>
-              <dl className="mt-5 space-y-3 text-[15px]">
-                <div className="flex justify-between gap-4"><dt className="text-muted">Cena programu</dt><dd className="num">290 000 Kč</dd></div>
-                <div className="flex justify-between gap-4"><dt className="text-muted">Příspěvek na vzdělávání</dt><dd className="num text-flow">−<NumberTicker value={sub} suffix=" Kč" /></dd></div>
-              </dl>
-              <div className="mt-5 border-t border-line pt-5">
-                <p className="text-[14px] text-muted">Cena po dotaci</p>
-                <p className="text-[34px] font-medium leading-tight text-accent"><NumberTicker value={after} suffix=" Kč" /></p>
-              </div>
-            </Card>
-          ))}
-        </Reveal>
-        <p className="mt-5 max-w-[84ch] text-[14px] text-muted">Výpočet vychází ze sazby 260,73 Kč za hodinu a účastníka<Placeholder kind="OVĚŘIT">sazba a datum platnosti</Placeholder>. K tomu stát přispívá na mzdy za dobu školení. Konečnou výši určuje Úřad práce. Ceny bez DPH.</p>
+        <SectionHead title="Kolik to dělá">
+          <p>Program stojí 197 000 Kč bez DPH pro tým až 16 lidí. Posuňte počet účastníků a uvidíte, kolik pokryje příspěvek a kolik doplatíte.</p>
+        </SectionHead>
+        <SubsidyCalc />
       </Section>
 
       <Section tight className="border-y border-line bg-surface/40">

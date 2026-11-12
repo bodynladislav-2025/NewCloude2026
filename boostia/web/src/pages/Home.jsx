@@ -3,6 +3,7 @@ import { CalendarCheck, FileCheck2, GraduationCap, Ruler, ShieldCheck, Target, T
 import Seo, { ORG, faqSchema } from '../components/Seo'
 import HeroBackground from '../components/HeroBackground'
 import Calculator from '../components/Calculator'
+import SubsidyCalc from '../components/SubsidyCalc'
 import { Badge, Button, Card, Container, Faq, Magnetic, Marquee, Placeholder, Reveal, Section, SectionHead, SplitHeadline } from '../components/ui'
 import { FinalCta, FoundingBanner, GuaranteeBlock } from '../components/blocks'
 import { FAQ_HOME, MODULES, PRICE, TOOLS } from '../content'
@@ -22,14 +23,14 @@ const COURSE = {
   description: 'Osmitýdenní měřený AI trénink pro obchodní týmy: příprava schůzek, zápisy, nabídky, prospecting a práce se stávajícími klienty.',
   provider: { '@type': 'Organization', name: 'Boostia' }, inLanguage: 'cs',
   hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'onsite', courseWorkload: 'PT50H' },
-  offers: { '@type': 'Offer', price: '290000', priceCurrency: 'CZK', category: 'Paid' },
+  offers: { '@type': 'Offer', price: '197000', priceCurrency: 'CZK', category: 'Paid' },
 }
 
 export default function Home() {
   return (
     <>
       <Seo title="AI školení pro obchodní týmy s měřeným výsledkem · Boostia" path="/"
-        description="Za 8 týdnů naučíme váš obchodní tým používat AI na schůzky, zápisy a nabídky. Cíl: 3 hodiny týdně na obchodníka. Změřeno, s garancí a dotací."
+        description="12 hodin měsíčně navíc na prodej pro každého obchodníka. Osmitýdenní AI trénink obchodního týmu za 197 000 Kč, s dotací Úřadu práce a měřeným výsledkem."
         schema={[ORG, COURSE, faqSchema(FAQ_HOME)]} />
 
       {/* 1 – Hero */}
@@ -37,16 +38,16 @@ export default function Home() {
         <HeroBackground />
         <Container className="relative">
           <Badge>Měřený AI trénink pro obchodní týmy</Badge>
-          <SplitHeadline className="mt-6 max-w-[17ch] text-[clamp(2.4rem,6.4vw,4.75rem)] leading-[1.03]"
-            parts={[{ t: 'O ' }, { t: '3 hodiny', hl: true }, { t: ' týdně víc na prodej pro každého obchodníka. Za ' }, { t: '8 týdnů', hl: true }, { t: ', změřeno.' }]} />
-          <p className="mt-6 max-w-[58ch] text-[19px] text-muted">Naučíme váš obchodní tým používat AI na přípravu schůzek, zápisy, nabídky a follow-upy. Bezpečně a na vašich zakázkách. <span className="hidden sm:inline">Výsledek změříme stopkami, ne dotazníkem spokojenosti.</span></p>
+          <SplitHeadline className="mt-6 max-w-[18ch] text-[clamp(2.4rem,6.2vw,4.6rem)] leading-[1.03]"
+            parts={[{ t: '12 hodin měsíčně', hl: true }, { t: ' navíc na prodej pro každého obchodníka. ' }, { t: 'Kolik vám vydělají?', hl: true }]} />
+          <p className="mt-6 max-w-[60ch] text-[19px] text-muted">Čas, který dnes spolknou přípravy, zápisy a nabídky, vrátíme obchodu. Za 8 týdnů naučíme váš tým pracovat s AI bezpečně a na vlastních zakázkách. <span className="hidden sm:inline">Výsledek změříme v hodinách i v korunách.</span></p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <Magnetic><Button to="/audit" ctaId="hero_audit" section="hero">Spočítat ztracený čas (audit zdarma)</Button></Magnetic>
-            <Button href="#kalkulacka" variant="secondary" ctaId="hero_calc" section="hero" arrow={false}>Vyzkoušet kalkulačku</Button>
+            <Magnetic><Button href="#kalkulacka" ctaId="hero_calc" section="hero">Spočítat, kolik to vydělá</Button></Magnetic>
+            <Button to="/audit" variant="secondary" ctaId="hero_audit" section="hero" arrow={false}>Audit zdarma (30 min)</Button>
           </div>
-          <p className="mt-4 text-[14px] text-muted">30 minut online · bez závazku · číslo v Kč dostanete i bez spolupráce</p>
+          <p className="mt-4 text-[14px] text-muted">Cena 197 000 Kč pro celý tým · při 16 účastnících ji pokryje dotace Úřadu práce</p>
           <dl className="mt-10 grid max-w-[900px] gap-3 sm:grid-cols-3">
-            {[['138 hodin', 'ročně zpět na jednoho obchodníka', '3 hodiny týdně × 46 týdnů'], ['1 380 hodin', 'ročně u týmu deseti lidí', 'zhruba tři čtvrtě úvazku navíc pro obchod'], ['kolik Kč?', 'v nákladech i v tržbách', 'spočítejte si to pro svůj tým']].map(([n, l, s], i) => (
+            {[['144 hodin', 'ročně navíc na jednoho obchodníka', '12 hodin měsíčně, cíl programu'], ['1 440 hodin', 'ročně u týmu deseti lidí', 'skoro celý úvazek navíc pro obchod'], ['13 mil. Kč', 'tržeb ročně navíc, modelový tým', '10 lidí, 10 mil. Kč tržeb na obchodníka. Spočítejte si svoje.']].map(([n, l, s], i) => (
               <div key={n} className="rounded-[14px] border border-line bg-surface/80 p-5 backdrop-blur-sm">
                 <dt className="sr-only">{l}</dt>
                 <dd>
@@ -60,7 +61,7 @@ export default function Home() {
             ))}
           </dl>
           <ul className="mt-8 grid max-w-[900px] gap-x-8 gap-y-3 text-[15px] text-muted sm:grid-cols-2 lg:grid-cols-4">
-            {[[Timer, '50hodinový program'], [ShieldCheck, 'První den na naše riziko'], [FileCheck2, 'Lze čerpat dotaci Úřadu práce'], [GraduationCap, 'Vede obchodník se 17 lety praxe']].map(([I, t]) => (
+            {[[Timer, '50 hodin, 8 týdnů'], [ShieldCheck, 'První den na naše riziko'], [FileCheck2, 'Dotace Úřadu práce'], [GraduationCap, 'Vede obchodník se 17 lety praxe']].map(([I, t]) => (
               <li key={t} className="flex items-center gap-2.5"><I size={18} className="shrink-0 text-accent" aria-hidden="true" />{t}</li>
             ))}
           </ul>
@@ -154,29 +155,24 @@ export default function Home() {
 
       {/* 9 – Cena a dotace */}
       <Section id="cena" className="scroll-mt-20">
-        <SectionHead title="Kolik to stojí" />
-        <Reveal className="grid gap-4 lg:grid-cols-3">
-          <Card>
-            <p className="font-mono text-[12px] uppercase tracking-wider text-muted">AI Obchod 50</p>
-            <p className="mt-4 num text-[38px] font-medium leading-none">{PRICE.program}</p>
-            <p className="mt-2 text-[14px] text-muted">bez DPH · tým do 12 lidí</p>
-            <ul className="mt-6 space-y-2 text-[15px] text-muted"><li>50 hodin u vás ve firmě</li><li>Měření před a po, report pro vedení</li><li>Playbook a 4 týmoví asistenti</li><li>AI směrnice a semafor dat</li><li>3 měsíce Boostia Klubu</li></ul>
-          </Card>
+        <SectionHead title="Kolik to stojí">
+          <p>Jedna cena pro celý tým. A většinu nebo celou částku může pokrýt dotace Úřadu práce.</p>
+        </SectionHead>
+        <Reveal className="grid gap-4 lg:grid-cols-[1.1fr_1fr]">
           <Card className="!border-accent/60 !bg-surface2">
-            <p className="font-mono text-[12px] uppercase tracking-wider text-accent">S dotací</p>
-            <p className="mt-4 num text-[38px] font-medium leading-none text-accent">cca 160 000 Kč</p>
-            <p className="mt-2 text-[14px] text-muted">pro tým 10 lidí <Placeholder kind="OVĚŘIT" /></p>
-            <ul className="mt-6 space-y-2 text-[15px] text-muted"><li>Příspěvek 260,73 Kč na hodinu a účastníka</li><li>Projekt Vzdělávání pro firmy (Úřad práce)</li><li>K tomu příspěvek na mzdy za dobu školení</li><li>Žádost připravíme s vaším HR</li></ul>
-            <div className="mt-6"><Button to="/dotace" ctaId="price_subsidy" section="cena" className="w-full">Ověřit nárok na dotaci</Button></div>
+            <p className="font-mono text-[12px] uppercase tracking-wider text-accent">AI Obchod 50</p>
+            <p className="mt-4 num text-[clamp(2.6rem,6vw,3.6rem)] font-medium leading-none">{PRICE.program}</p>
+            <p className="mt-3 text-[15px] text-muted">bez DPH · jedna cena pro tým až 16 lidí · 50 hodin u vás ve firmě</p>
+            <ul className="mt-6 grid gap-2 text-[15px] text-muted sm:grid-cols-2"><li>Měření před a po, report pro vedení</li><li>Playbook a 4 týmoví asistenti</li><li>AI směrnice a semafor dat</li><li>Pomoc s dotací v ceně</li><li>Osvědčení pro každého účastníka</li><li>3 měsíce Boostia Klubu</li></ul>
           </Card>
-          <Card>
-            <p className="font-mono text-[12px] uppercase tracking-wider text-muted">AI Start den</p>
-            <p className="mt-4 num text-[38px] font-medium leading-none">{PRICE.startDay}</p>
-            <p className="mt-2 text-[14px] text-muted">bez DPH · jeden den s celým týmem</p>
-            <ul className="mt-6 space-y-2 text-[15px] text-muted"><li>Pravidla pro data a firemní účty</li><li>Příprava schůzky a zápis s AI</li><li>Změříme váš výchozí stav</li><li>Když pak půjdete do programu, celou částku odečteme</li></ul>
+          <Card className="flex flex-col justify-center !border-flow/50">
+            <p className="font-mono text-[12px] uppercase tracking-wider text-flow">Dotace Úřadu práce</p>
+            <p className="mt-4 font-display text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">Při 16 účastnících zaplatí <span className="text-accent">celých 197 000 Kč</span> Úřad práce.</p>
+            <p className="mt-4 text-muted">U menšího týmu pokryje příspěvek většinu ceny: při 12 lidech zhruba 79 %, při 10 lidech 66 %. K tomu stát přispívá na mzdy za dobu školení. Žádost připravíme s vaším HR.<Placeholder kind="OVĚŘIT">sazba 260,73 Kč/h a podmínky</Placeholder></p>
           </Card>
         </Reveal>
-        <p className="mt-5 max-w-[80ch] text-[14px] text-muted">O dotaci žádá vaše firma a rozhoduje Úřad práce. Nárok vám ověříme do dvou pracovních dnů.</p>
+        <div className="mt-4"><SubsidyCalc /></div>
+        <p className="mt-5 max-w-[84ch] text-[14px] text-muted">Chcete to nejdřív vyzkoušet? AI Start den s celým týmem stojí {PRICE.startDay} a při pokračování do programu se odečte. O dotaci žádá vaše firma a rozhoduje Úřad práce; nárok vám ověříme do dvou pracovních dnů.</p>
       </Section>
 
       {/* 10 – Kdo vás bude učit */}
