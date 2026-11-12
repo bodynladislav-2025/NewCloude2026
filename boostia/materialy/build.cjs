@@ -270,7 +270,7 @@ const hrPodklad = page('Pro HR a L&D · šablona', 'Podklad pro vedení: <em>pro
   .w{position:absolute;left:72px;top:64px;right:72px}.l{font-family:Tight;font-weight:700;font-size:34px}.t{font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:#9AA6B8;margin-top:70px}
   h1{font-size:66px;line-height:1.05;margin-top:18px;max-width:880px}h1 em{color:#C8FF3E;font-style:normal}</style>
   <svg width="1200" height="630" style="position:absolute;inset:0">${[40, 120, 200, 300, 400, 480, 560, 610].map((y) => `<path d="M560 ${y} C 850 ${y}, 950 500, 1060 500" fill="none" stroke="#4DA3FF" stroke-opacity=".28"/>`).join('')}<path d="M1060 500 H1200" stroke="#C8FF3E" stroke-width="3"/><circle cx="1060" cy="500" r="7" fill="#C8FF3E"/></svg>
-  <div class="w"><div class="l">Boostia</div><div class="t">Měřený AI trénink pro obchodní týmy</div><h1>Každý obchodník získá <em>12 hodin měsíčně</em> navíc na prodej. Školení vám proplatí Úřad práce.</h1></div>`)
+  <div class="w"><div class="l">Boostia</div><div class="t">Měřený AI trénink pro obchodní týmy</div><h1>Naučte 15 obchodníků <em>prodávat s AI.</em> Školení vám celé proplatí Úřad práce.</h1></div>`)
   await pg.evaluate(() => document.fonts.ready)
   await pg.screenshot({ path: path.join(WEB, 'public', 'og.png') })
   console.log('OG image')

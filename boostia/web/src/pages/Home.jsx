@@ -44,8 +44,8 @@ function StepsLine() {
 export default function Home() {
   return (
     <>
-      <Seo title="AI školení pro obchodní týmy s měřeným výsledkem · Boostia" path="/"
-        description="12 hodin měsíčně navíc na prodej pro každého obchodníka. AI školení obchodního týmu v 9 dnech. Celé ho proplatí Úřad práce."
+      <Seo title="AI školení pro obchodníky, které proplatí Úřad práce · Boostia" path="/"
+        description="Naučte 15 obchodníků prodávat s AI. Školení v 9 dnech u vás ve firmě, které vám celé proplatí Úřad práce. 12 hodin měsíčně navíc na prodej pro každého."
         schema={[ORG, COURSE, faqSchema(FAQ_HOME)]} />
 
       {/* 1 – Hero: slib, dotace a kalkulačka hned nahoře */}
@@ -54,15 +54,15 @@ export default function Home() {
         <Container className="relative grid items-start gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12">
           <div className="lg:pt-6">
             <Badge>AI školení pro obchodní týmy · až 15 lidí</Badge>
-            <h1 className="mt-6 text-[clamp(1.9rem,7.4vw,2.6rem)] font-bold leading-[1.08] lg:text-[clamp(2.2rem,3.35vw,2.95rem)] lg:[&_.rise]:whitespace-nowrap" aria-label="Každý obchodník získá 12 hodin měsíčně navíc na prodej. Školení vám proplatí Úřad práce.">
+            <h1 className="mt-6 text-[clamp(2rem,8.2vw,2.8rem)] font-bold leading-[1.08] lg:text-[clamp(2.4rem,3.9vw,3.5rem)] lg:[&_.rise]:whitespace-nowrap" aria-label="Naučte 15 obchodníků prodávat s AI. Školení vám celé proplatí Úřad práce.">
               <span aria-hidden="true">
-                <span className="rise" style={{ '--i': 0 }}>Každý obchodník získá</span>
-                <span className="rise" style={{ '--i': 1 }}><span className="marker">12 hodin měsíčně</span></span>
-                <span className="rise" style={{ '--i': 2 }}>navíc na prodej. Školení</span>
-                <span className="rise" style={{ '--i': 3 }}>vám proplatí Úřad práce.</span>
+                <span className="rise" style={{ '--i': 0 }}>Naučte 15 obchodníků</span>
+                <span className="rise" style={{ '--i': 1 }}><span className="marker">prodávat s AI.</span></span>
+                <span className="rise" style={{ '--i': 2 }}>Školení vám celé</span>
+                <span className="rise" style={{ '--i': 3 }}>proplatí Úřad práce.</span>
               </span>
             </h1>
-            <p className="mt-6 max-w-[54ch] text-[18px] text-muted">Až <span className="text-ink">23 909 Kč</span> za každého zaměstnance, který kurz dokončí. To pokryje celou cenu kurzu. Za 9 školicích dní u vás ve firmě naučíme obchodní tým pracovat s AI na vlastních zakázkách.</p>
+            <p className="mt-6 max-w-[54ch] text-[18px] text-muted">Až <span className="text-ink">23 909 Kč</span> za každého zaměstnance, který kurz dokončí. To pokryje celou cenu kurzu. Za 9 školicích dní u vás ve firmě získá každý obchodník <span className="text-ink">12 hodin měsíčně navíc na prodej</span>.</p>
             <p className="mt-3 flex items-center gap-2 text-[16px] font-medium"><ShieldCheck size={18} className="shrink-0 text-accent" aria-hidden="true" />Když Úřad práce žádost neschválí, neplatíte nic.</p>
             <div className="mt-7 flex flex-wrap items-center gap-3 lg:hidden">
               <Button href="#kalkulacka" ctaId="hero_calc" section="hero" shine>Spočítat příspěvek a přínos</Button>
