@@ -136,7 +136,7 @@ export default function Materialy() {
           <Card className="grid items-center gap-6 lg:grid-cols-[1fr_auto]">
             <div>
               <h2 className="text-[26px]">Chcete rovnou číslo pro svůj tým?</h2>
-              <p className="mt-2 max-w-[60ch] text-muted">Kalkulačka za dvě minuty ukáže, kolik hodin a korun ročně padne na neprodejní práci. Výsledek se hodí do podkladu pro vedení.</p>
+              <p className="mt-2 max-w-[60ch] text-muted">Kalkulačka ukáže, kolik zaplatí Úřad práce, kolik doplatíte a co může školení obchodu přinést. Výsledek se hodí do podkladu pro vedení.</p>
             </div>
             <Button to="/#kalkulacka" ctaId="materialy_calc" section="materialy">Otevřít kalkulačku</Button>
           </Card>

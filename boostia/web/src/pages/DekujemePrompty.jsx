@@ -17,7 +17,7 @@ export default function DekujemePrompty() {
               <Button href="/materialy/semafor-co-do-ai-smi.pdf" variant="secondary" arrow={false}>Semafor: co do AI smí</Button>
             </div>
           </Card>
-          <p className="mt-6"><Button to="/#kalkulacka" variant="ghost">Spočítat si ztracený čas v kalkulačce</Button></p>
+          <p className="mt-6"><Button to="/#kalkulacka" variant="ghost">Spočítat příspěvek Úřadu práce v kalkulačce</Button></p>
         </Container>
       </section>
     </>

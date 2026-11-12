@@ -14,6 +14,12 @@
     "form": "audit", "stage": "dotace", "source": "dotace", "subsidyInterest": "Ano", "name": "Eva Dvořáková", "email": "eva@firma.cz", "phone": "+420 777 000 111", "company": "Firma s.r.o.", "ico": "12345678", "participants": "10",
     "pageUrl": "https://www.boostia.cz/dotace", "submittedAt": "2026-11-12T10:05:00.000Z"
   },
+  "VITE_LC_WEBHOOK_AUDIT__overeni_dotace": {
+    "form": "audit", "stage": "overeni-dotace", "source": "kalkulacka", "subsidyInterest": "Ano", "ico": "12345678", "email": "hr@firma.cz", "participants": 15,
+    "calc_revenue_per_rep_mil": 10, "calc_subsidy": 358643, "calc_pay": 0, "calc_revenue_year": 19565000,
+    "pageUrl": "https://www.boostia.cz/", "submittedAt": "2026-11-12T10:08:00.000Z"
+  },
+  "_poznamka_calc": "Webhook CALC se už nepoužívá: velká kalkulačka byla nahrazena jednou jednoduchou, která posílá data přes AUDIT se stage overeni-dotace.",
   "VITE_LC_WEBHOOK_CALC": {
     "form": "calc", "email": "jan@firma.cz", "consentMarketing": true,
     "calc_reps": 10, "calc_meetings": 5, "calc_prep_min": 40, "calc_notes_min": 40, "calc_offers": 1.5, "calc_offer_hours": 2, "calc_hour_cost": 600,

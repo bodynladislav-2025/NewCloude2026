@@ -133,3 +133,14 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
   .tilt { rotate: none !important; }
   * { scroll-behavior: auto !important; }
 }
+
+/* Zvýrazňovač v nadpisu: barevný pruh se „namaluje" zleva */
+.marker { position: relative; display: inline-block; padding: 0 .16em; margin: 0 -.06em; color: var(--color-accentink); isolation: isolate; }
+.marker::before { content: ""; position: absolute; inset: .06em 0 .02em; z-index: -1; border-radius: 6px; background: var(--color-accent); transform: scaleX(0); transform-origin: left; animation: marker-draw .7s cubic-bezier(0.22,1,0.36,1) .55s forwards; }
+@keyframes marker-draw { to { transform: scaleX(1); } }
+.rise { display: block; animation: rise .8s cubic-bezier(0.22,1,0.36,1) both; animation-delay: calc(var(--i, 0) * 90ms + 60ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .marker::before { animation: none; transform: scaleX(1); }
+  .rise { animation: none; }
+}

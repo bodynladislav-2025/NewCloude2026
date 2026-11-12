@@ -18,8 +18,8 @@ export default function Podminky() {
       <p><strong>První den na naše riziko.</strong> Pokud objednatel po prvním školicím dni oznámí, že v programu nechce pokračovat, smlouva končí a Boostia neúčtuje nic.</p>
       <p><strong>Doučení zdarma.</strong> Pokud vedoucí týmu objednatele do 14 dnů po skončení programu písemně oznámí, že tým s účastí alespoň 80 % hodin a splněnými týdenními úkoly nepoužívá AI v denní práci, pokračuje Boostia ve školení zdarma v rozsahu až 20 hodin.</p>
       <p>Výsledek programu se měří podle Metodiky měření, která je přílohou smlouvy.</p>
-      <h2>6. Odstoupení při zamítnutí dotace</h2>
-      <p>Pokud Úřad práce žádost objednatele o příspěvek zamítne, může objednatel od smlouvy odstoupit bez sankce do 5 pracovních dnů od doručení rozhodnutí.</p>
+      <h2>6. Účinnost smlouvy při čerpání příspěvku</h2>
+      <p>Pokud objednatel žádá o příspěvek z projektu Vzdělávání pro firmy, nabývá smlouva účinnosti až dnem účinnosti dohody objednatele s Úřadem práce. Není-li žádost schválena, smlouva nevznikne a objednatel nic neplatí.</p>
       <h2>7. Autorská práva</h2>
       <p>Materiály a Playbook smí objednatel užívat interně bez omezení. Nesmí je dále prodávat ani poskytovat třetím stranám.</p>
       <h2>8. Mlčenlivost a ochrana dat</h2>

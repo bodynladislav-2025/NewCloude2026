@@ -18,7 +18,7 @@ export function GuaranteeBlock() {
               </div>
               <div>
                 <h3 className="text-[21px]">Bez dotace neplatíte</h3>
-                <p className="mt-2 text-muted">Když Úřad práce vaši žádost zamítne, můžete od smlouvy odstoupit bez sankce. Rozhodujete se, až znáte výsledek.</p>
+                <p className="mt-2 text-muted">Smlouva s námi začne platit až s vaší dohodou s Úřadem práce. Když žádost neprojde, neplatíte nic.</p>
               </div>
               <div>
                 <h3 className="text-[21px]">Doučíme zdarma</h3>
@@ -48,7 +48,7 @@ export function FoundingBanner() {
     <Card className="!border-flow/40">
       <p className="font-mono text-[12px] uppercase tracking-wider text-flow">Poctivě: první týmy právě měříme</p>
       <h3 className="mt-3 text-[26px]">Výsledky zveřejníme tady. I ty, které nedopadnou podle plánu.</h3>
-      <p className="mt-3 max-w-[64ch] text-muted">Boostia je nová firma a nechceme vám ukazovat čísla, která nemáme. Do té doby si můžete projít metodiku měření a spočítat vlastní čísla v kalkulačce. Prvním týmům věnujeme víc času výměnou za souhlas s případovou studií.</p>
+      <p className="mt-3 max-w-[64ch] text-muted">Boostia je nová firma a nechceme vám ukazovat čísla, která nemáme. Do té doby si můžete projít metodiku měření a spočítat vlastní čísla v kalkulačce na úvodní stránce. Prvním týmům věnujeme víc času výměnou za souhlas s případovou studií.</p>
       <div className="mt-5 flex flex-wrap gap-3">
         <Button to="/audit" ctaId="founding_audit" section="proof">Chci být mezi prvními</Button>
         <Button href="/materialy/metodika-mereni.pdf" variant="secondary" ctaId="metodika_pdf" section="proof" arrow={false}>Stáhnout metodiku měření (PDF)</Button>
@@ -57,7 +57,7 @@ export function FoundingBanner() {
   )
 }
 
-export function FinalCta({ title = 'Začněte číslem', text = 'Za 30 minut budete vědět, kolik hodin a korun váš obchod každý týden ztrácí. Co s tím uděláte, je na vás.', cta = 'Rezervovat audit zdarma', to = '/audit', id = 'final_audit' }) {
+export function FinalCta({ title = 'Zjistěte, kolik vám zaplatí Úřad práce', text = 'Stačí IČO a počet lidí. Do dvou pracovních dnů pošleme přesný výpočet příspěvku, podmínky a osnovu kurzu. Zdarma a bez hovoru.', cta = 'Spočítat a ověřit nárok', to = '/#kalkulacka', id = 'final_verify' }) {
   return (
     <section className="pb-24 lg:pb-36">
       <Container>
@@ -70,7 +70,7 @@ export function FinalCta({ title = 'Začněte číslem', text = 'Za 30 minut bud
             <div className="relative">
               <h2 className="text-[clamp(2.1rem,5vw,3.6rem)]">{title}</h2>
               <p className="mx-auto mt-5 max-w-[54ch] text-[18px] text-muted">{text}</p>
-              <div className="mt-8"><Magnetic><Button to={to} ctaId={id} section="final" shine>{cta}</Button></Magnetic></div>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3"><Magnetic><Button to={to} ctaId={id} section="final" shine>{cta}</Button></Magnetic><Button to="/audit" variant="secondary" ctaId="final_audit" section="final" arrow={false}>Raději 30minutový hovor</Button></div>
               <CohortLine className="mt-6" />
             </div>
           </div>

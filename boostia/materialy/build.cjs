@@ -105,7 +105,7 @@ const metodika = page('Program AI Obchod 50', 'Metodika měření: <em>stopky, n
 <h2>5. Cíl programu a jistoty</h2>
 <div class="note"><p><b>Cíl:</b> 12 hodin měsíčně navíc na prodej pro každého obchodníka.</p>
 <p><b>První den na naše riziko.</b> Když po prvním školicím dni řeknete, že to není ono, rozejdeme se a neplatíte nic.</p>
-<p><b>Bez dotace neplatíte.</b> Když Úřad práce žádost zamítne, můžete od smlouvy odstoupit bez sankce.</p>
+<p><b>Bez dotace neplatíte.</b> Smlouva začne platit až s vaší dohodou s Úřadem práce.</p>
 <p style="margin:0"><b>Doučíme zdarma.</b> Když vedoucí týmu po devíti dnech programu řekne, že lidé AI v denní práci nepoužívají, pokračujeme zdarma, až 20 hodin (při účasti aspoň 80 % a splněných úkolech).</p></div>
 <h2>6. Co dostane vedení</h2>
 <ul><li>Tabulku před a po za tým i za jednotlivé činnosti.</li><li>Úsporu v hodinách měsíčně a ročně, v nákladech a v odhadu tržeb, které ten čas může přinést.</li><li>Co fungovalo, co ne, a plán na dalších 90 dní.</li></ul>`)
@@ -171,18 +171,21 @@ ${P(12, 'Kolik to stojí celkem a na osobu a hodinu?', 'Včetně přípravy, mat
 ${['Zaměření na profesi účastníků', 'Učí se na vlastní práci', 'Měření před a po', 'Garance výsledku ve smlouvě', 'Pravidla pro data součástí', 'Co zůstane ve firmě', 'Praxe lektora v oboru', 'Podklady k dotaci', 'Rozsah (hodin) a délka', 'Cena celkem / na osobu a hodinu'].map((r) => `<tr><td>${r}</td><td></td><td></td><td></td></tr>`).join('')}</table>
 <h2>Pět varovných signálů</h2>
 <ul><li>Výsledek popisují jen slovy „inspirace“ a „nadšení účastníků“.</li><li>Jednodenní akce bez jakékoli návaznosti.</li><li>Stejná osnova pro obchod, účetní i výrobu.</li><li>Bezpečnost dat se odbude větou „na to si dejte pozor“.</li><li>Na otázku „jak to změříme“ přijde odpověď „to se měřit nedá“.</li></ul>
-<div class="note"><b>Jak na tyto otázky odpovídá Boostia:</b> program AI Obchod 50 je jen pro obchodní týmy, 50 hodin v 9 školicích dnech, na vlastních zakázkách, s měřením stopkami na začátku a na konci. Cíl je 12 hodin měsíčně navíc na prodej pro každého obchodníka. Cena 197 000 Kč pro tým až 15 lidí. Projdeme to s vámi na auditu zdarma: <b>www.boostia.cz/audit</b></div>`)
+<div class="note"><b>Jak na tyto otázky odpovídá Boostia:</b> program AI Obchod 50 je jen pro obchodní týmy, 50 hodin v 9 školicích dnech, na vlastních zakázkách, s měřením stopkami na začátku a na konci. Cíl je 12 hodin měsíčně navíc na prodej pro každého obchodníka. Cena 197 000 Kč pro tým až 15 lidí; od devíti účastníků ji celou pokryje příspěvek Úřadu práce. Projdeme to s vámi na auditu zdarma: <b>www.boostia.cz/audit</b></div>`)
 
 const hrDotace = page('Pro HR a L&D · zdarma', 'Dotace na AI školení: <em>kontrolní seznam pro HR</em>', 'Co si ověřit, co připravit a v jakém pořadí, když chcete na vzdělávání zaměstnanců čerpat příspěvek. Stav podle veřejných zdrojů k listopadu 2026.', `
 <div class="warn"><b>Nejdřív ověřte.</b> Podmínky a sazby se mění. Údaje níže jsme dohledali ve veřejných zdrojích a nemusí být aktuální. Závazné jsou jen dokumenty Úřadu práce a MPSV a informace vaší krajské pobočky.</div>
 <h2>1. Co jsme k projektu Vzdělávání pro firmy dohledali</h2>
 <table><tr><th>Parametr</th><th>Údaj z veřejných zdrojů</th><th>Ověřeno u ÚP?</th></tr>
-<tr><td>Příspěvek na vzdělávání</td><td>260,73 Kč za hodinu a účastníka</td><td></td></tr>
-<tr><td>Příspěvek na mzdy</td><td>ano, za dobu školení (výši ověřte)</td><td></td></tr>
+<tr><td>Příspěvek</td><td>478,19 Kč za hodinu výuky a účastníka</td><td></td></tr>
+<tr><td>Docházka</td><td>aspoň 80 % výuky; počítají se odseděné hodiny</td><td></td></tr>
+<tr><td>Velikost skupiny</td><td>nejvýš 15 lidí v jednom běhu</td><td></td></tr>
+<tr><td>Příjem žádostí</td><td>1. 7. 2026 až 31. 8. 2028</td><td></td></tr>
 <tr><td>Minimální rozsah kurzu</td><td>50 hodin</td><td></td></tr>
 <tr><td>Maximální podpořený rozsah</td><td>80 hodin, u zaměstnanců 50+ až 100 hodin</td><td></td></tr>
 <tr><td>Kdy se žádá</td><td>před zahájením vzdělávání</td><td></td></tr>
-<tr><td>Kdy přijdou peníze</td><td>zpětně, po úspěšném dokončení</td><td></td></tr></table>
+<tr><td>Kdy přijdou peníze</td><td>zpětně, po skončení kurzu a doložení docházky; příspěvek není nárokový</td><td></td></tr></table>
+<p>Projekt Úřadu práce ČR Vzdělávání pro firmy, reg. č. CZ.03.01.03/00/23_048/0006351. Úplné podmínky: up.gov.cz/vzdelavani-pro-firmy.</p>
 <p>Další možnosti, na které se zeptejte: výzvy Operačního programu Zaměstnanost plus (podnikové vzdělávání) a projekty profesních a podnikatelských sdružení, která žádají pro své členy.</p>
 <h2>2. Než začnete: šest otázek</h2>
 <table><tr><th>Otázka</th><th>Ano / Ne / Zjistit</th></tr>
@@ -194,13 +197,13 @@ ${['Má kurz aspoň minimální požadovaný rozsah hodin?', 'Splňuje dodavatel
 <h2>4. Postup a kdo co hlídá</h2>
 <table><tr><th>Krok</th><th>Co se děje</th><th>Na co si dát pozor</th></tr>
 <tr><td>1. Ověření</td><td>Konzultace s krajskou pobočkou ÚP</td><td>Ptejte se na aktuální verzi podmínek a lhůty</td></tr>
-<tr><td>2. Žádost</td><td>Vyplnění a podání s přílohami</td><td>Kurz nesmí začít před schválením</td></tr>
+<tr><td>2. Žádost</td><td>Podává zaměstnavatel online; pomoci může nezávislý dotační poradce</td><td>Žádost nesmí připravovat dodavatel kurzu. Kurz nesmí začít před účinností dohody.</td></tr>
 <tr><td>3. Schválení</td><td>Rozhodnutí a dohoda s ÚP</td><td>Data v dohodě musí sedět s harmonogramem</td></tr>
 <tr><td>4. Kurz</td><td>Vzdělávání podle harmonogramu</td><td>Prezenční listiny každý den, změny termínů hlásit předem</td></tr>
 <tr><td>5. Vyúčtování</td><td>Doložení docházky, osvědčení, úhrady</td><td>Účastník, který nedokončí, obvykle příspěvek krátí</td></tr></table>
 <h2>5. Nejčastější chyby</h2>
 <ul><li>Kurz začal dřív, než byla žádost schválena.</li><li>Změna termínu nebo účastníka bez ohlášení.</li><li>Chybějící podpisy v prezenčních listinách.</li><li>Kurz kratší než požadované minimum (například po zrušeném dni).</li><li>Počítání s příspěvkem v rozpočtu dřív, než dorazí rozhodnutí.</li></ul>
-<div class="note"><b>S čím pomáhá Boostia.</b> Program AI Obchod 50 má 50 hodin. Nárok vám ověříme do dvou pracovních dnů, dodáme osnovu, harmonogram a profil lektora, žádost s vámi předvyplníme, vedeme prezenční listiny a vystavíme osvědčení. Žádá vždy vaše firma a schválení zaručit nemůžeme. Proto máme ve smlouvě, že při zamítnutí můžete odstoupit bez sankce. <b>www.boostia.cz/dotace</b></div>`)
+<div class="note"><b>S čím pomáhá Boostia.</b> Program AI Obchod 50 má 50 hodin. Při 478,19 Kč za hodinu je to až 23 909 Kč na účastníka, takže od devíti lidí pokryje příspěvek celou cenu 197 000 Kč. Projdeme s vámi podmínky, dodáme osnovu, harmonogram a podklady ke kurzu, vedeme prezenční listiny a vystavíme osvědčení. Žádost podáváte vy. Smlouva s námi začne platit až s vaší dohodou s Úřadem práce: když žádost neprojde, neplatíte nic. <b>www.boostia.cz/dotace</b></div>`)
 
 const hrPravidla = page('Pro HR a L&D · vzor k úpravě', 'Vzor: <em>pravidla používání AI</em> a záznam o proškolení', 'Pravidla pro zaměstnance a formulář, kterým doložíte, že jste lidi proškolili. Upravte podle své firmy a nechte zkontrolovat právníkem.', `
 <div class="warn"><b>Vzor, ne právní rada.</b> Dokument je výchozí bod. Nenahrazuje posouzení právníkem ani pověřencem pro ochranu osobních údajů.</div>
@@ -244,7 +247,7 @@ const hrPodklad = page('Pro HR a L&D · šablona', 'Podklad pro vedení: <em>pro
 <tr><td>Lidé se vrátí ke starým postupům</td><td>Úkoly na vlastní práci, podpora vedoucího, kontrola po 60 dnech</td></tr>
 <tr><td>Únik firemních dat</td><td>Firemní účty, písemná pravidla, proškolení první den</td></tr>
 <tr><td>Výpadek kapacity během školení</td><td>Práce na skutečných úkolech, rozložení do týdnů, případně půldny</td></tr>
-<tr><td>Dotace nebude schválena</td><td>Rozhodnutí až po vyjádření ÚP, možnost odstoupit od smlouvy</td></tr></table>
+<tr><td>Dotace nebude schválena</td><td>Smlouva s dodavatelem platí až s dohodou s Úřadem práce</td></tr></table>
 <h2>6. Co potřebujeme od vedení</h2>
 <ul><li>Schválení rozpočtu [ ] Kč do [datum]</li><li>Účast vedoucího týmu na prvním a posledním dni</li><li>Jmenování odpovědné osoby za pravidla používání AI</li></ul>
 <div class="note">Čísla do oddílu 2 vám pro obchodní tým spočítáme zdarma na 30minutovém auditu a pošleme na jedné straně: <b>www.boostia.cz/audit</b></div>`)
@@ -267,7 +270,7 @@ const hrPodklad = page('Pro HR a L&D · šablona', 'Podklad pro vedení: <em>pro
   .w{position:absolute;left:72px;top:64px;right:72px}.l{font-family:Tight;font-weight:700;font-size:34px}.t{font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:#9AA6B8;margin-top:70px}
   h1{font-size:66px;line-height:1.05;margin-top:18px;max-width:880px}h1 em{color:#C8FF3E;font-style:normal}</style>
   <svg width="1200" height="630" style="position:absolute;inset:0">${[40, 120, 200, 300, 400, 480, 560, 610].map((y) => `<path d="M560 ${y} C 850 ${y}, 950 500, 1060 500" fill="none" stroke="#4DA3FF" stroke-opacity=".28"/>`).join('')}<path d="M1060 500 H1200" stroke="#C8FF3E" stroke-width="3"/><circle cx="1060" cy="500" r="7" fill="#C8FF3E"/></svg>
-  <div class="w"><div class="l">Boostia</div><div class="t">Měřený AI trénink pro obchodní týmy</div><h1><em>12 hodin měsíčně</em> navíc na prodej pro každého obchodníka. <em>Kolik vám vydělají?</em></h1></div>`)
+  <div class="w"><div class="l">Boostia</div><div class="t">Měřený AI trénink pro obchodní týmy</div><h1>Každý obchodník získá <em>12 hodin měsíčně</em> navíc na prodej. Školení vám proplatí Úřad práce.</h1></div>`)
   await pg.evaluate(() => document.fonts.ready)
   await pg.screenshot({ path: path.join(WEB, 'public', 'og.png') })
   console.log('OG image')

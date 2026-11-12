@@ -36,10 +36,12 @@ Web a PDF už používají novou podobu nabídky. Dokumenty fází 1–10, email
 |---|---|---|
 | Hlavní slib | 3 hodiny týdně na obchodníka | 12 hodin měsíčně navíc na prodej; důraz na tržby, ne jen ušetřený čas |
 | Cena programu | 290 000 Kč, tým do 12 lidí; zakladatelská cena 220 000 Kč | 197 000 Kč, jedna cena pro tým až 16 lidí; zakladatelská cena zrušena |
-| Dotace | „cca 160 000 Kč po dotaci pro 10 lidí" | při 16 účastnících pokryje příspěvek celou cenu, při 12 lidech 79 %, při 10 lidech 66 % |
+| Dotace | sazba 260,73 Kč/h, „cca 160 000 Kč po dotaci pro 10 lidí" | sazba 478,19 Kč/h (až 23 909 Kč na člověka); od 9 lidí pokryje celou cenu; žádost podává firma, dodavatel kurzu ji připravovat nesmí |
+| Hlavní výzva | rezervace 30min auditu | ověření nároku na dotaci (IČO + e-mail) přímo v kalkulačce v úvodu; audit je druhá možnost |
+| Kalkulačka | velká kalkulačka ztraceného času | jedna jednoduchá: počet lidí a tržby → doplatek a potenciál tržeb |
 | Garance | Garance 3 hodin (doučení + vrácení 25 %) | první den na naše riziko · bez schválené dotace se neplatí · doučení zdarma až 20 hodin |
 | Rozsah | 50 hodin, 8 týdnů (3 h + 6 × 7 h + 5 h) | 50 hodin v 9 školicích dnech (4 h + 7 × 6 h + 4 h) |
-| Velikost běhu | do 12 lidí | nejvýš 15 lidí; dotace pak pokryje 99 % ceny |
+| Velikost běhu | do 12 lidí | nejvýš 15 lidí (pravidlo projektu) |
 | Vzhled | jen tmavý režim | tmavý i světlý režim s přepínačem v hlavičce |
 | Primární cílovka | obchodní ředitel | HR / L&D (materiály zdarma), obchodní ředitel a jednatel jako spolurozhodující |
 

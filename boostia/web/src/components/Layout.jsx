@@ -16,7 +16,6 @@ const NAV = [
   ['/jak-to-funguje', 'Jak to funguje'],
   ['/dotace', 'Dotace'],
   ['/materialy-zdarma', 'Materiály zdarma'],
-  ['/pripadove-studie', 'Případové studie'],
   ['/o-nas', 'O nás'],
 ]
 const BARE = ['/audit', '/dekujeme', '/dekujeme-prompty'] // stránky bez navigace
@@ -81,14 +80,14 @@ function Header({ bare }) {
         <Logo />
         {!bare && (
           <>
-            <nav aria-label="Hlavní navigace" className="hidden items-center gap-4 xl:flex 2xl:gap-6">
+            <nav aria-label="Hlavní navigace" className="hidden items-center gap-5 xl:flex">
               {NAV.map(([to, label]) => (
                 <NavLink key={to} to={to} end className={({ isActive }) => `whitespace-nowrap text-[14px] transition-colors hover:text-ink ${isActive ? 'text-ink' : 'text-muted'}`}>{label}</NavLink>
               ))}
             </nav>
             <div className="flex items-center gap-2 sm:gap-3">
               <ThemeToggle />
-              <span className="hidden sm:block"><Button to="/audit" ctaId="header_audit" section="header" className="!min-h-[42px] !px-5 !py-2 !text-[15px]">Audit zdarma</Button></span>
+              <span className="hidden sm:block"><Button to="/#kalkulacka" ctaId="header_verify" section="header" className="!min-h-[42px] !px-5 !py-2 !text-[15px]">Kolik zaplatí Úřad práce?</Button></span>
               <button className="flex h-11 w-11 items-center justify-center rounded-full border border-line xl:hidden" aria-label={open ? 'Zavřít menu' : 'Otevřít menu'} aria-expanded={open} onClick={() => setOpen(!open)}>
                 {open ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -105,7 +104,8 @@ function Header({ bare }) {
             ))}
             <li><NavLink to="/kontakt" className="block py-3 font-display text-[26px] font-semibold">Kontakt</NavLink></li>
           </ul>
-          <Button to="/audit" ctaId="mobilemenu_audit" section="menu" className="mt-8 w-full">Audit zdarma</Button>
+          <Button to="/#kalkulacka" ctaId="mobilemenu_verify" section="menu" className="mt-8 w-full">Kolik zaplatí Úřad práce?</Button>
+          <Button to="/audit" variant="secondary" ctaId="mobilemenu_audit" section="menu" className="mt-3 w-full" arrow={false}>Audit zdarma (30 min)</Button>
         </nav>
       )}
     </header>
@@ -126,7 +126,9 @@ function Footer() {
           <p className="mb-3 font-mono text-[12px] uppercase tracking-wider text-muted">Web</p>
           <ul className="space-y-2 text-[15px]">
             {NAV.map(([to, label]) => <li key={to}><Link className="text-muted hover:text-ink" to={to}>{label}</Link></li>)}
+            <li><Link className="text-muted hover:text-ink" to="/pripadove-studie">Případové studie</Link></li>
             <li><Link className="text-muted hover:text-ink" to="/audit">Audit zdarma</Link></li>
+            <li><Link className="text-muted hover:text-ink" to="/kontakt">Kontakt</Link></li>
           </ul>
         </div>
         <div>
@@ -156,7 +158,7 @@ function StickyCta() {
       {show && (
         <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ duration: 0.3, ease: EASE }}
           className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/95 p-3 backdrop-blur md:hidden">
-          <Button to="/audit" ctaId="sticky_audit" section="sticky" className="w-full">Audit zdarma (30 min)</Button>
+          <Button to="/#kalkulacka" ctaId="sticky_verify" section="sticky" className="w-full">Kolik zaplatí Úřad práce?</Button>
         </motion.div>
       )}
     </AnimatePresence>
