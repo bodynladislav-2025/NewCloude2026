@@ -110,7 +110,7 @@ export default function Calculator() {
                   onChange={(e) => { setEmail(e.target.value); if (state === 'error') setState('idle') }}
                   aria-invalid={state === 'error'} aria-describedby={state === 'error' ? 'calc-email-err' : undefined}
                   className="min-h-[48px] flex-1 rounded-full border border-line bg-bg px-5 text-[16px] outline-none placeholder:text-muted/60 focus:border-accent" />
-                <Button type="submit" disabled={state === 'sending'} ctaId="calc_email" section="kalkulacka" arrow={false}>{state === 'sending' ? 'Odesílám…' : 'Poslat výpočet'}</Button>
+                <Button type="submit" disabled={state === 'sending'} ctaId="calc_email" section="kalkulacka" arrow={false} className="whitespace-nowrap">{state === 'sending' ? 'Odesílám…' : 'Poslat výpočet'}</Button>
               </div>
               {state === 'error' && <p id="calc-email-err" className="text-[14px] text-warn">Zkontrolujte prosím e-mail.</p>}
               <label className="flex items-start gap-2 text-[13px] text-muted"><input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-4 w-4 accent-[#C8FF3E]" /> Chci jednou za 14 dní dostávat praktický tip pro obchod s AI. Odhlásit se dá kdykoli.</label>

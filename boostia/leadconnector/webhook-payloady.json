@@ -1,0 +1,36 @@
+{
+  "_poznamka": "Ukázky dat, která web posílá na Inbound Webhook jednotlivých workflow. Použijte je v LeadConnectoru jako testovací požadavek pro mapování polí. Každý payload navíc nese utm_source, utm_medium, utm_campaign, utm_content, gclid, fbclid, li_fat_id, landing_page a referrer, pokud jsou známé.",
+  "VITE_LC_WEBHOOK_AUDIT__krok1": {
+    "form": "audit", "stage": "step1", "firstName": "Jan", "lastName": "Novák", "email": "jan@firma.cz", "phone": "+420 777 123 456", "company": "Firma s.r.o.",
+    "pageUrl": "https://www.boostia.cz/audit", "submittedAt": "2026-11-12T10:00:00.000Z"
+  },
+  "VITE_LC_WEBHOOK_AUDIT__dokonceno": {
+    "form": "audit", "stage": "complete", "firstName": "Jan", "lastName": "Novák", "email": "jan@firma.cz", "phone": "+420 777 123 456", "company": "Firma s.r.o.",
+    "salesTeamSize": "8–15", "role": "Obchodní ředitel / vedoucí obchodu", "crm": "Raynet", "decisionMaker": "Já s někým dalším", "timeline": "Do 2 měsíců", "subsidyInterest": "Ano",
+    "biggestPain": "Nabídky nám trvají týden.", "score": 13, "route": "audit",
+    "pageUrl": "https://www.boostia.cz/audit", "submittedAt": "2026-11-12T10:02:00.000Z"
+  },
+  "VITE_LC_WEBHOOK_AUDIT__dotace": {
+    "form": "audit", "stage": "dotace", "source": "dotace", "subsidyInterest": "Ano", "name": "Eva Dvořáková", "email": "eva@firma.cz", "phone": "+420 777 000 111", "company": "Firma s.r.o.", "ico": "12345678", "participants": "10",
+    "pageUrl": "https://www.boostia.cz/dotace", "submittedAt": "2026-11-12T10:05:00.000Z"
+  },
+  "VITE_LC_WEBHOOK_CALC": {
+    "form": "calc", "email": "jan@firma.cz", "consentMarketing": true,
+    "calc_reps": 10, "calc_meetings": 5, "calc_prep_min": 40, "calc_notes_min": 40, "calc_offers": 1.5, "calc_offer_hours": 2, "calc_hour_cost": 600,
+    "calc_hours_week": 39, "calc_czk_year": 1067000, "calc_biggest": "pripravy",
+    "pageUrl": "https://www.boostia.cz/", "submittedAt": "2026-11-12T10:10:00.000Z"
+  },
+  "VITE_LC_WEBHOOK_PREP__priprava": {
+    "form": "prep", "email": "jan@firma.cz", "prep_minutes_meeting": "45", "prep_minutes_notes": "30", "prep_hours_offer": "3", "prep_meetings_week": "6",
+    "pageUrl": "https://www.boostia.cz/dekujeme", "submittedAt": "2026-11-12T10:15:00.000Z"
+  },
+  "VITE_LC_WEBHOOK_PREP__pozvanka": {
+    "form": "prep", "email": "jan@firma.cz", "inviteEmail": "reditel@firma.cz",
+    "pageUrl": "https://www.boostia.cz/dekujeme", "submittedAt": "2026-11-12T10:16:00.000Z"
+  },
+  "VITE_LC_WEBHOOK_CONTACT": {
+    "form": "contact", "source": "kontakt", "name": "Jan Novák", "company": "Firma s.r.o.", "email": "jan@firma.cz", "phone": "+420 777 123 456", "message": "Mám zájem o Mapu automatizace.",
+    "pageUrl": "https://www.boostia.cz/kontakt?tema=mapa", "submittedAt": "2026-11-12T10:20:00.000Z"
+  },
+  "_presmerovani_po_rezervaci": "V nastavení kalendáře Audit nastavte přesměrování na https://www.boostia.cz/dekujeme?name={{contact.first_name}}&email={{contact.email}}&date={{appointment.start_date}}&time={{appointment.only_start_time}}&start={{appointment.start_time_iso}} (ověřte přesné názvy proměnných v LeadConnectoru)."
+}

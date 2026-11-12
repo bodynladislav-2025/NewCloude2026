@@ -42,7 +42,7 @@ export function Button({ to, href, onClick, variant = 'primary', children, ctaId
   }[variant]
   const inner = (
     <>
-      <span>{children}</span>
+      <span className="sm:whitespace-nowrap">{children}</span>
       {arrow && variant !== 'ghost' && <ArrowRight size={18} aria-hidden="true" className="shrink-0 transition-transform duration-200 group-hover:translate-x-1" />}
     </>
   )

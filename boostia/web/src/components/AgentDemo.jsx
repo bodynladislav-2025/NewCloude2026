@@ -57,6 +57,7 @@ export default function AgentDemo() {
 
   // Spustit, až je ukázka z poloviny vidět
   useEffect(() => {
+    if (prefersReducedMotion()) { setStarted(true); return }
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setStarted(true); io.disconnect() } }, { threshold: 0.5 })
     io.observe(box.current)
     return () => io.disconnect()

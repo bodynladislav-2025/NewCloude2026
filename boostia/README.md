@@ -18,6 +18,16 @@ Kompletní podklady pro spuštění: trh, business plán, nabídky, funnel, web 
 | 9 | [LeadConnector a spuštění](./09-leadconnector-a-spusteni.md) | Pipelines, tagy, pole, 17 workflows, checklist, 30denní testy |
 | – | [Finální výstup](./10-finalni-vystup.md) | Kontrola celku, shrnutí, předpoklady, placeholdery, úkoly |
 
+## Hotové soubory k použití
+
+| Složka | Obsah |
+|---|---|
+| [`web/`](./web/) | **Funkční web** (React, Tailwind, GSAP, Lenis): 12 stránek, kalkulačka, ukázka AI, kvalifikační formulář, napojení na LeadConnector. Návod v [`web/README.md`](./web/README.md). |
+| [`web/public/materialy/`](./web/public/materialy/) | PDF ke stažení: 25 promptů pro obchodníka, Metodika měření, Semafor co do AI smí. |
+| [`materialy/`](./materialy/) | Zdroje PDF, šablona reportu z auditu a skript, který je generuje. |
+| [`leadconnector/`](./leadconnector/) | Seznam vlastních polí, tagů a ukázky dat z webhooků. |
+| [`lovable-prompty/`](./lovable-prompty/) | Alternativa: prompty pro postavení stejného webu v Lovable. |
+
 ## Jak číst značky
 - **[PROOF: …]** chybí důkaz (reference, číslo, případová studie). Nic není vymyšlené; dokud ho nedodáte, platí „poctivá verze" textu.
 - **[OVĚŘIT]** údaj z rešerše nebo právní věc, kterou je třeba potvrdit před zveřejněním (hlavně dotace).

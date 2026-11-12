@@ -1,0 +1,40 @@
+skupina,nazev_pole,klic,typ,moznosti
+Kontakt,Role,role,Dropdown,Jednatel / majitel|Obchodní ředitel / vedoucí obchodu|HR / vzdělávání|Obchodník|Jiná
+Kontakt,Velikost obchodního týmu,sales_team_size,Dropdown,1–3|4–7|8–15|16–40|41+
+Kontakt,CRM systém,crm_system,Dropdown,Raynet|Pipedrive|HubSpot|Salesforce|eWay-CRM|Jiné|Excel|Žádné
+Kontakt,Kdo rozhoduje,decision_maker,Dropdown,Já|Já s někým dalším|Někdo jiný
+Kontakt,Časový horizont,timeline,Dropdown,Do 2 měsíců|Do půl roku|Zatím jen zjišťuji
+Kontakt,Zájem o dotaci,subsidy_interest,Dropdown,Ano|Ne|Nevím, co to obnáší
+Kontakt,Největší potíž,biggest_pain,Large text,
+Kontakt,Skóre leadu,lead_score,Number,
+Kontakt,Větev,route,Dropdown,audit|uvodni|nurture
+Kontakt,UTM source,utm_source,Text,
+Kontakt,UTM medium,utm_medium,Text,
+Kontakt,UTM campaign,utm_campaign,Text,
+Kontakt,UTM content,utm_content,Text,
+Kontakt,Souhlas s marketingem,consent_marketing,Checkbox,
+Kalkulačka,Počet obchodníků,calc_reps,Number,
+Kalkulačka,Schůzek týdně,calc_meetings,Number,
+Kalkulačka,Minut příprava,calc_prep_min,Number,
+Kalkulačka,Minut zápis a CRM,calc_notes_min,Number,
+Kalkulačka,Nabídek týdně,calc_offers,Number,
+Kalkulačka,Hodin na nabídku,calc_offer_hours,Number,
+Kalkulačka,Náklad na hodinu,calc_hour_cost,Number,
+Kalkulačka,Úspora hodin týdně,calc_hours_week,Number,
+Kalkulačka,Úspora Kč ročně,calc_czk_year,Monetary,
+Kalkulačka,Největší ztráta,calc_biggest,Dropdown,pripravy|zapisy|nabidky
+Příprava auditu,Minut příprava schůzky,prep_minutes_meeting,Number,
+Příprava auditu,Minut zápis,prep_minutes_notes,Number,
+Příprava auditu,Hodin nabídka,prep_hours_offer,Number,
+Příprava auditu,Schůzek týdně,prep_meetings_week,Number,
+Příprava auditu,E-mail pozvaného kolegy,invite_email,Text,
+Audit,Neprodejní hodiny týmu,audit_nonselling_hours,Number,
+Audit,Úspora hodin týdně,audit_hours_week,Number,
+Audit,Úspora Kč ročně,audit_czk_year,Monetary,
+Audit,Citace největší potíže,audit_pain_quote,Large text,
+Audit,Počet účastníků,participants,Number,
+Audit,Výše dotace,subsidy_amount,Monetary,
+Audit,Cena po dotaci,price_after_subsidy,Monetary,
+Audit,Datum follow-upu,followup_date,Date,
+Audit,Důvod prohry,loss_reason,Dropdown,cena|načasování|není priorita|jiný dodavatel|malý tým|bez odpovědi
+Firma,IČO,ico,Text,

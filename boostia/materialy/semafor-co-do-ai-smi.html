@@ -1,0 +1,53 @@
+<!doctype html><html lang="cs"><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;src:url(file:///home/user/NewCloude2026/boostia/web/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2);font-weight:100 900;unicode-range:U+0000-00FF,U+2000-206F,U+20AC}
+@font-face{font-family:Inter;src:url(file:///home/user/NewCloude2026/boostia/web/node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2);font-weight:100 900;unicode-range:U+0100-02AF,U+1E00-1EFF}
+@font-face{font-family:Tight;src:url(file:///home/user/NewCloude2026/boostia/web/node_modules/@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2);font-weight:100 900;unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:Tight;src:url(file:///home/user/NewCloude2026/boostia/web/node_modules/@fontsource-variable/inter-tight/files/inter-tight-latin-ext-wght-normal.woff2);font-weight:100 900;unicode-range:U+0100-02AF,U+1E00-1EFF}
+@page{size:A4;margin:18mm 17mm 20mm}
+*{box-sizing:border-box}
+body{font-family:Inter,sans-serif;font-size:10.5pt;line-height:1.55;color:#12161d;margin:0}
+h1,h2,h3{font-family:Tight,Inter,sans-serif;letter-spacing:-.02em;line-height:1.1;margin:0}
+h1{font-size:30pt;font-weight:700}
+h2{font-size:15pt;font-weight:650;margin:22pt 0 8pt;padding-top:10pt;border-top:1.5pt solid #12161d;break-after:avoid}
+h3{font-size:11pt;font-weight:650;margin:0 0 3pt}
+p{margin:0 0 7pt}
+.cover{background:#07090D;color:#F2F5F9;margin:-18mm -17mm 14pt;padding:22mm 17mm 14mm}
+.cover .tag{font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:#C8FF3E}
+.cover h1{margin:10pt 0 8pt}.cover h1 em{color:#C8FF3E;font-style:normal}
+.cover p{color:#9AA6B8;max-width:150mm;margin:0}
+.logo{font-family:Tight;font-weight:700;font-size:13pt;margin-bottom:26pt}
+.box{border:1pt solid #cfd6df;border-radius:7pt;padding:9pt 11pt;margin:0 0 7pt;break-inside:avoid}
+.box .n{font-size:8pt;color:#5d6a7c;font-weight:600;letter-spacing:.06em}
+.box .q{background:#f1f4f7;border-radius:5pt;padding:7pt 9pt;margin-top:5pt;font-size:9.8pt}
+.note{background:#f4fbdc;border-left:3pt solid #9ccc10;padding:8pt 11pt;margin:0 0 10pt;break-inside:avoid}
+.warn{background:#fff1e8;border-left:3pt solid #FF8A4C;padding:8pt 11pt;margin:0 0 10pt;break-inside:avoid}
+table{width:100%;border-collapse:collapse;margin:0 0 10pt;font-size:9.8pt}
+th,td{text-align:left;padding:6pt 7pt;border-bottom:.7pt solid #cfd6df;vertical-align:top}
+th{font-size:8.5pt;text-transform:uppercase;letter-spacing:.06em;color:#5d6a7c}
+ul,ol{margin:0 0 8pt;padding-left:15pt}li{margin-bottom:3pt}
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8pt}
+.g{border-top:4pt solid #39a845}.o{border-top:4pt solid #f0a020}.r{border-top:4pt solid #d8452e}
+.foot{margin-top:16pt;padding-top:9pt;border-top:.7pt solid #cfd6df;font-size:9pt;color:#5d6a7c}
+.fill{display:inline-block;min-width:60pt;border-bottom:.7pt solid #12161d}
+</style></head><body>
+<div class="cover"><div class="logo">Boostia</div><div class="tag">Bezpečné používání AI ve firmě</div><h1>Semafor: <em>co do AI smí a co ne</em></h1><p>Krátký přehled pro obchodní tým. Vytiskněte, projděte na poradě, doplňte podle svých pravidel. Nenahrazuje právní posouzení.</p></div>
+<div class="cols">
+<div class="box g"><h3>Zelená: smí</h3><ul><li>Veřejné informace o klientovi (web, tiskové zprávy, výroční zprávy).</li><li>Vlastní poznámky bez jmen a osobních údajů.</li><li>Obecné dotazy: struktura nabídky, formulace, otázky na schůzku.</li><li>Vlastní texty k úpravě a zkrácení.</li><li>Trénink vyjednávání a námitek.</li></ul></div>
+<div class="box o"><h3>Oranžová: jen ve firemním účtu</h3><ul><li>Zápisy a přepisy schůzek.</li><li>Nabídky a cenové kalkulace.</li><li>Export z CRM pro analýzu.</li><li>Interní postupy a ceníky.</li><li>E-maily od klientů.</li></ul><p style="margin:0"><b>Podmínka:</b> firemní licence, kde se data nepoužívají k trénování modelů.</p></div>
+<div class="box r"><h3>Červená: nikdy</h3><ul><li>Rodná čísla, zdravotní údaje, čísla dokladů.</li><li>Přihlašovací údaje a hesla.</li><li>Smlouvy s doložkou mlčenlivosti, pokud to výslovně nedovolují.</li><li>Cokoli do osobního nebo bezplatného účtu, co patří do oranžové.</li></ul></div></div>
+<h2>Pět pravidel na jednu poradu</h2>
+<ol><li><b>Pracovní věci jen z firemního účtu.</b> Osobní účty na firemní data nepoužíváme.</li>
+<li><b>Výstup vždy čte člověk.</b> AI se plete a vymýšlí si. Za nabídku i e-mail ručí obchodník.</li>
+<li><b>Nahráváme jen se souhlasem.</b> Klientovi řekneme proč a co se záznamem bude.</li>
+<li><b>Když si nejsem jistý, ptám se.</b> Kontaktní osoba: <span class="fill">&nbsp;</span></li>
+<li><b>Chybu hlásím hned.</b> Vložil jsem něco, co jsem neměl? Řeknu to ten den, bez postihu.</li></ol>
+<h2>Kontrola pro vedení</h2>
+<table><tr><th>Otázka</th><th>Ano / Ne</th></tr>
+<tr><td>Víme, které AI nástroje lidé ve firmě používají?</td><td></td></tr>
+<tr><td>Máme firemní licence s vypnutým trénováním na našich datech?</td><td></td></tr>
+<tr><td>Mají zaměstnanci písemná pravidla a podepsali je?</td><td></td></tr>
+<tr><td>Je určen člověk, kterého se mohou zeptat?</td><td></td></tr>
+<tr><td>Máme se zpracovateli uzavřené zpracovatelské smlouvy?</td><td></td></tr>
+<tr><td>Proškolili jsme lidi a máme o tom záznam?</td><td></td></tr></table>
+<div class="note">Zákaz AI nefunguje: lidé ji používají dál z osobních účtů a vedení o tom neví. Fungují firemní účty, jednoduchá pravidla a někdo, koho se lze zeptat. V programu AI Obchod 50 je to první školicí den.</div>
+<div class="foot">Boostia · Měřený AI trénink pro obchodní týmy · www.boostia.cz · Audit zdarma: www.boostia.cz/audit</div></body></html>

@@ -52,7 +52,7 @@ function Header({ bare }) {
               ))}
             </nav>
             <div className="flex items-center gap-3">
-              <Button to="/audit" ctaId="header_audit" section="header" className="hidden !min-h-[42px] !px-5 !py-2 !text-[15px] sm:inline-flex">Audit zdarma</Button>
+              <span className="hidden sm:block"><Button to="/audit" ctaId="header_audit" section="header" className="!min-h-[42px] !px-5 !py-2 !text-[15px]">Audit zdarma</Button></span>
               <button className="flex h-11 w-11 items-center justify-center rounded-full border border-line lg:hidden" aria-label={open ? 'Zavřít menu' : 'Otevřít menu'} aria-expanded={open} onClick={() => setOpen(!open)}>
                 {open ? <X size={20} /> : <Menu size={20} />}
               </button>

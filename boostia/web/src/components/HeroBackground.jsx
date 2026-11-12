@@ -27,7 +27,7 @@ export default function HeroBackground({ animated = true }) {
   }, [animated])
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div className="absolute inset-0 opacity-70 [mask-image:linear-gradient(to_right,transparent,#000_30%,#000)] lg:[mask-image:linear-gradient(to_right,transparent_10%,#000_55%)]">
+      <div className="absolute inset-0 opacity-35 lg:opacity-70 [mask-image:linear-gradient(to_right,transparent,#000_30%,#000)] lg:[mask-image:linear-gradient(to_right,transparent_10%,#000_55%)]">
         {live ? <Suspense fallback={<FlowFallback />}><FlowField /></Suspense> : <FlowFallback />}
       </div>
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bg to-transparent" />
